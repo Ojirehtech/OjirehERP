@@ -7,7 +7,7 @@ require( "dotenv" ).config();
  * User account signup
  */
 exports.signup = ( req, res ) => {
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
   if ( !email ) return res.status( 400 ).json( {
     error: "No email provided. Your email is required"
   } );
@@ -22,7 +22,8 @@ exports.signup = ( req, res ) => {
           if ( !hashedPassword ) return res.status( 400 ).json( { error: "Password hashing failed. Please try signup again" } );
           let newUser = new User( {
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            username
           } )
 
           newUser.save();
