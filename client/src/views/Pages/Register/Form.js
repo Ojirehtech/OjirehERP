@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button, Card, CardBody, Alert, Col, Container, Form, Spinner, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 
 const RegisterationForm = ( { registration, onRegister, handleChange, email, username, password}) => {
@@ -58,6 +59,7 @@ const RegisterationForm = ( { registration, onRegister, handleChange, email, use
                   )}
                   
                 </Form>
+                <p className="mt-3">Already have an account? <Link to="/login">Login</Link></p>
               </CardBody>
             </Card>
           </Col>

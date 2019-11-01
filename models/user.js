@@ -28,7 +28,8 @@ const userSchema = new Schema( {
     time: { type: String },
     status: { type: Boolean }
   } ],
-  role: { type: String, enum: [ "admin", "agent" ], default: "agent"}
+  role: { type: String, enum: [ "admin", "agent" ], default: "agent" },
+  profileUpdated: { type: Boolean, default: false },
 },{
   timestamps: true,
   toJSON: {

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import LoginForm from './LoginForm';
+import { onLogin } from "../../../store/actions/action_login";
+import { isAuthenticated } from "../../../helper/authenticate";
 
 class Login extends Component {
   state = {
@@ -28,12 +31,43 @@ class Login extends Component {
     } catch(err) {}
   }
   render() {
+    const { login } = this.props;
+    const { email, password } = this.state;
+    const profileUpdated = isAuthenticated().user ? isAuthenticated().user.profileUpdated : null;
+
+    if ( profileUpdated === true && login.success === true) {
+      return <Redirect to="/dashboard" />
+    }
+          
+    if ( !profileUpdated ) {
+      return <Redirect to="/editProfile" />
+    }
+
     return (
       <div className="app flex-row align-items-center">
-        <LoginForm />
+        <LoginForm
+          email={email}
+          password={password}
+          login={login}
+          handleChange={this.handleChange}
+          onLogin={this.onLogin}
+        />
       </div>
     );
   }
 }
 
-export default Login;
+const mapStateToProps = ( state ) => {
+  return {
+    login: state.login
+  }
+}
+
+const mapDispatchToProps = ( dispatch ) => {
+  const dispatchProps = {
+    onLogin: (data) => dispatch(onLogin(data))
+  }
+  return dispatchProps;
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
