@@ -1,124 +1,79 @@
 import React, { Component } from 'react';
-import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import EditForm from './EditForm';
+import { onEdit } from "../../../store/actions/action_edit";
 
 class EditPage extends Component {
+  state = {
+    firstName: "",
+    lastName: "",
+    phone: "",
+    refererPhone: "",
+    state: "",
+    city: "",
+    street: "",
+
+  }
+
+  handleChange = ( e, name ) => {
+    let fields = this.state;
+    fields[ name ] = e.target.value;
+    this.setState( { fields } );
+    console.log( this.state );
+  }
+
+  onEdit = async ( e ) => {
+    e.preventDefault();
+    const { onEdit } = this.props;
+    const { firstName, lastName, phone, refererPhone, city, state, street } = this.state;
+    const data = {
+      firstName, lastName, phone, refererPhone, city, state, street
+    }
+
+    try {
+      await onEdit(data)
+    } catch ( err ) { }
+    this.setState( {
+      
+    })
+  }
+
   render() {
+    const { firstName, lastName, phone, refererPhone, city, state, street } = this.state;
+    const { edit } = this.props;
+    if ( edit.success === true ) {
+      return <Redirect to="/dashboard" />
+    }
     return (
-      <div className="app flex-row align-items-center">
-        <Container>
-          <Row className="justify-content-center">
-            <Col md="8">
-              <CardGroup>
-                <Card className="p-4">
-                  <CardBody>
-                    <Form>
-                      <h1>Edit profile</h1>
-                      <p className="text-muted">Edit your account to continue</p>
-                      <Row>
-                        <Col xs="6">
-                          <InputGroup className="mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-user"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input type="text" placeholder="First name" autoComplete="username" />
-                          </InputGroup>
-                        </Col>
-                        <Col xs="6" className="text-right">
-                          <InputGroup className="mb-4">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-user"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input type="password" placeholder="Last name" />
-                          </InputGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs="6">
-                          <InputGroup className="mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-phone"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input type="text" placeholder="Referer phone" />
-                          </InputGroup>
-                        </Col>
-                        <Col xs="6" className="text-right">
-                          <InputGroup className="mb-4">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-phone"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input type="password" placeholder="Your phone number" />
-                          </InputGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs="6">
-                          <InputGroup className="mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-home"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input type="text" placeholder="State" />
-                          </InputGroup>
-                        </Col>
-                        <Col xs="6" className="text-right">
-                          <InputGroup className="mb-4">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-home"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input type="text" placeholder="City" />
-                          </InputGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs="12">
-                          <InputGroup className="mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-home"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input type="text" placeholder="Street" />
-                          </InputGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs="6">
-                          <Button color="primary" className="px-4">Edit</Button>
-                        </Col>
-                      </Row>
-                    </Form>
-                  </CardBody>
-                </Card>
-                {/* <Card className="text-white bg-primary py-5 d-md-down-none" >
-                  <CardBody className="text-center">
-                    <div>
-                      <h2>Sign up</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
-                      <Link to="/register">
-                        <Button color="primary" className="mt-3" active tabIndex={-1}>Register Now!</Button>
-                      </Link>
-                    </div>
-                  </CardBody>
-                </Card> */}
-              </CardGroup>
-            </Col>
-          </Row>
-        </Container>
+      <div>
+        <EditForm
+          firstName={firstName}
+          lastName={lastName}
+          edit={edit}
+          phone={phone}
+          refererPhone={refererPhone}
+          city={city}
+          state={state}
+          street={street}
+          handleChange={this.handleChange}
+          onEdit={this.onEdit}
+        />
       </div>
     );
   }
 }
 
-export default EditPage;
+const mapStateToProps = ( state ) => {
+  return {
+    edit: state.edit
+  }
+}
+
+const mapDispatchToProps = ( dispatch ) => {
+  const dispatchProps = {
+    onEdit: (data) => dispatch(onEdit(data))
+  }
+  return dispatchProps;
+}
+export default connect(mapStateToProps, mapDispatchToProps)(EditPage);

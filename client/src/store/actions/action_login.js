@@ -50,7 +50,7 @@ export const onLogin = ( data ) => {
           dispatch( loginFailed( resp.error ) );
           return;
         }
-        Auth.authenticateUser( resp );
+        Auth.authenticateUser( JSON.stringify(resp ));
         dispatch( loginSuccess( resp ) )
       } )
       .catch( err => {

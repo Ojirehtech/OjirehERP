@@ -39,7 +39,7 @@ class Login extends Component {
       return <Redirect to="/dashboard" />
     }
           
-    if ( !profileUpdated ) {
+    if ( profileUpdated === false) {
       return <Redirect to="/editProfile" />
     }
 

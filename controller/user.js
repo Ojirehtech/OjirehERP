@@ -58,7 +58,7 @@ exports.signIn = ( req, res ) => {
           const refererLink = `http://localhost:3030/api/v1/ojirehprime/agent/${_id}`
           res.cookie( "token", token, { expire: new Date() + 9999 } );
           // We respond 
-          res.json( { token, user: { _id, email, userType, role, firstName, lastName, refererLink } } );
+          res.json( { token, user: { _id, email, userType, role, firstName, lastName, refererLink, profileUpdated } } );
         } )
         .catch( err => {
           res.status( 400 ).json( { error: err.message } );
@@ -98,7 +98,7 @@ exports.fetchUser = ( req, res ) => {
     .select("firstName lastName email refererId phone balance useraname address -password")
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: `User does not exist` } );
-      return res.json( user )
+      return res.json( user );
     } )
     .catch( err => {
       res.status( 400 ).json( { error: err.message } );
@@ -110,6 +110,7 @@ exports.fetchUser = ( req, res ) => {
  */
 exports.updateUserInfo = ( req, res ) => {
   const { userId } = req.params;
+  if ( !userId ) return res.status( 400 ).json( { error: "Unknown user ID. Please login to update your profile" } );
   const {
     firstName,
     lastName,
@@ -117,29 +118,37 @@ exports.updateUserInfo = ( req, res ) => {
     city,
     state,
     phone,
-    referPhone
+    refererPhone
   } = req.body;
-  const { refererId } = req.cookie;
+  // const { refererId } = req.cookie;
+  console.log( req.cookie, " req.cookie" );
   if ( !userId ) return res.status( 400 ).json( { error: "User ID is required for this operation" } );
   User.findByIdAndUpdate( { _id: userId } )
     .then( user => {
-      if ( !user ) return res.status( 400 ).json( { error: `User not found` } );
+      if ( !user ) return res.status( 400 ).json( { error: `User with ID ${userId} not found` } );
       if ( firstName ) user.firstName = firstName;
       if ( lastName ) user.lastName = lastName;
       if ( street ) user.address.street = street;
       if ( city ) user.address.city = city;
       if ( state ) user.address.state = state;
       if ( phone ) user.phone = phone;
-      if ( referPhone ) user.referPhone = referPhone;
-      user.parentId = parentId;
-
+      if ( refererPhone ) user.referPhone = refererPhone;
+      // if ( refererId ) user.parentId = refererId;
       user.save();
-      res.json( user );
+      User.findByIdAndUpdate( { _id: userId }, { $set: { profileUpdated: true } }, { new: true } )
+        .then( resp => {
+          console.log( resp )
+          res.json( resp );
+        } );
     } )
     .catch( err => {
       res.status( 400 ).json( { error: err.message } );
     } );
 }
+
+// exports.profileUpdated = ( req, res ) => {
+  
+// }
 
 /**
  * Deletes user account
