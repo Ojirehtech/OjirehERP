@@ -12,6 +12,7 @@ import {
 
 const initialState = {
   users: [],
+  user: {},
   singleLoading: false,
   singleSuccess: false,
   usersLoading: false,
@@ -33,7 +34,7 @@ const userReducers = ( state = initialState, action ) => {
         ...state,
         singleSuccess: true,
         singleLoading: false,
-        users: action.data
+        user: action.data
       }
     case GET_USER_FAILED:
       return {

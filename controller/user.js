@@ -95,7 +95,6 @@ exports.fetchUser = ( req, res ) => {
   const { userId } = req.params;
   if ( !userId ) return res.status( 400 ).json( { error: "The user ID is required for you to get this user" } );
   User.findById( { _id: userId } )
-    .select("firstName lastName email refererId phone balance useraname address -password")
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: `User does not exist` } );
       return res.json( user );

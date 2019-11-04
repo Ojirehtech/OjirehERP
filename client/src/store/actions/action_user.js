@@ -33,13 +33,16 @@ export const getUserFailed = ( error ) => {
 
 export const getUser = () => {
   const userId = isAuthenticated().user._id;
+  const token = isAuthenticated().token;
   return dispatch => {
     dispatch( getUserStart() );
     fetch( `${ BASE_URL }/user/${ userId }`, {
       method: "GET",
-      ACCEPT: "application/json",
-      "Content-Type": "application/json",
-      "x-auth-token": isAuthenticated().token
+      headers: {
+        ACCEPT: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": token
+      }
     } )
       .then( response => response.json() )
       .then( resp => {
