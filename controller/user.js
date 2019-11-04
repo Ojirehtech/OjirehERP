@@ -145,9 +145,42 @@ exports.updateUserInfo = ( req, res ) => {
     } );
 }
 
-// exports.profileUpdated = ( req, res ) => {
-  
-// }
+/**
+ * Gets the profile photo of an agent
+ */
+exports.photo = ( req, res, next ) => {
+  const { userId } = req.params;
+
+  User.findById( { _id: userId } )
+    .then( user => {
+      if ( !user ) return res.status( 400 ).json( { error: "User not found" } );
+      res.set( "Content-Type", user.photo.ContentType );
+      return res.send( user.photo.data );
+    } )
+    .catch( err => {
+      res.json( { error: err.message } );
+    } )
+}
+
+/**
+ * Uploads profile photos
+ */
+exports.uploadPhoto = ( req, res ) => {
+  const { userId } = req.params;
+  // Assigned the path to a new constant @photo
+  const photo = req.file.path;
+  User.findByIdAndUpdate( { _id: userId } )
+    .then( user => {
+      if ( !user ) return res.status( 400 ).json( { error: "User does not exist" } );
+      user.photo.data = fs.readFileSync( req.file.path );
+      user.photo.contentType = "image/jpg";
+      user.save();
+      res.json( user );
+    } )
+    .catch( err => {
+      res.json( { error: err.message } );
+    } );
+}
 
 /**
  * Deletes user account

@@ -28,6 +28,7 @@ const userSchema = new Schema( {
     time: { type: String },
     status: { type: Boolean }
   } ],
+  photo: { data: Buffer, ContentType: String },
   role: { type: String, enum: [ "admin", "agent" ], default: "agent" },
   profileUpdated: { type: Boolean, default: false },
 },{

@@ -1,4 +1,5 @@
 const express = require( "express" );
+const upload = require( "../middleware/fileupload" );
 const {
   signIn,
   signup,
@@ -6,7 +7,9 @@ const {
   deleteUser,
   updateUserInfo,
   fetchUser,
-  fetchUsers
+  fetchUsers,
+  uploadPhoto,
+  photo,
 } = require( "../controller/user" );
 const requireLogin = require( "../config/auth" );
 
@@ -16,7 +19,9 @@ router.post( "/signup", signup );
 router.post( "/login", signIn );
 router.get( "/signout", signup );
 router.get( "/users", requireLogin, fetchUsers );
-router.get( "/user/:userId", requireLogin, fetchUser);
+router.get( "/user/:userId", requireLogin, fetchUser );
+router.get( "/profile/photo/:userId", photo );
+router.put( "/profile/upload/:userId", upload.single("photo"), requireLogin, uploadPhoto );
 router.put( "/user/update/:userId", requireLogin, updateUserInfo );
 router.delete( "/user/:userId", requireLogin, deleteUser );
 

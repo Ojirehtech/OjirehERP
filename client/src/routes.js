@@ -25,7 +25,7 @@ const routes = [
   // { path: '/theme', exact: true, name: 'Theme', component: Colors },
   { path: '/my_network', name: 'Network', component: Network },
   { path: '/account', exact: true, name: 'Account', component: Account },
-  { path: '/buttons', exact: true, name: 'Buttons', component: Profile },
+  { path: '/profile', exact: true, name: 'Buttons', component: Profile },
   { path: '/icons', exact: true, name: 'Icons', component: CoreUIIcons },
   { path: '/icons/coreui-icons', name: 'CoreUI Icons', component: CoreUIIcons },
   { path: '/icons/flags', name: 'Flags', component: Flags },
