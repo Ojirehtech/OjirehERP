@@ -45,7 +45,7 @@ exports.signIn = ( req, res ) => {
   if ( !email ) return res.status( 400 ).json( { error: "No email provided. Your email is required for login" } );
 
   if ( !password ) return res.status( 400 ).json( { error: "Password must be provided to login" } );
-  const refererId = req.cookie.refererId ? req.cookie.refererId : "8jdu493029492jjdsh3";
+  // const refererId = req.cookie.refererId ? req.cookie.refererId : "8jdu493029492jjdsh3";
   User.findOne( { email } )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: `User with the email ${ email } does not exist` } );
@@ -56,13 +56,13 @@ exports.signIn = ( req, res ) => {
            * We get the user token @user.generatetoken() send it with the json response
            */
           const token = user.generateToken();
-          const { _id, email, firstName, lastName, userType, role, profileUpdated } = user;
+          const { _id, email, firstName, cardBought, parentId, lastName, userType, role, profileUpdated } = user;
           const refererLink = `http://localhost:3030/api/v1/ojirehprime/agent/${_id}`
           res.cookie( "token", token, { expire: new Date() + 9999 } );
           // We respond 
           res.json( {
             token,
-            user: { _id, email, userType, cardBought, refererId, role, firstName, lastName, refererLink, profileUpdated }
+            user: { _id, email, userType, cardBought, parentId, role, firstName, lastName, refererLink, profileUpdated }
           } );
         } )
         .catch( err => {
@@ -125,7 +125,6 @@ exports.updateUserInfo = ( req, res ) => {
     refererPhone
   } = req.body;
   // const { refererId } = req.cookie;
-  console.log( req.cookie, " req.cookie" );
   if ( !userId ) return res.status( 400 ).json( { error: "User ID is required for this operation" } );
   User.findByIdAndUpdate( { _id: userId } )
     .then( user => {
@@ -193,16 +192,18 @@ exports.uploadPhoto = ( req, res ) => {
  */
 exports.cardBought = ( req, res ) => {
   const { userId } = req.params;
-  if ( !userId ) return res.status( 400 ).json( { error: "You have no access to this operation" } );
+  if ( !userId ) return res.status( 400 ).json( { error: "Unknown user" } );
   User.findByIdAndUpdate( { _id: userId }, { $set: { cardBought: true } }, { new: true } )
-    .then( resp => {
-      if ( !resp ) return res.status( 400 ).json( { error: "Could not update user information. Please try again" } )
-      res.json( resp )
+    .then( user => {
+      if ( !user ) return res.status( 400 ).json( { error: "User not found" } );
+      res.json( user )
     } )
     .catch( err => {
       res.status( 400 ).json( { error: err.message } );
     } );
+    
 }
+
 /**
  * Deletes user account
  */

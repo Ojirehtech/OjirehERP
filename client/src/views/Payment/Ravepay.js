@@ -20,10 +20,10 @@ class Ravepay extends Component {
   }
 
   callback = async ( response ) => {
-    console.log( response, " This is the response from ravepayment" );
+    const { payIncentives } = this.props;
     if ( response.success === true ) {
       try {
-        // awai
+        await payIncentives()
       } catch ( err ) { }
     }
     
