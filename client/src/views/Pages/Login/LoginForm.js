@@ -7,7 +7,7 @@ const LoginForm = ({ login, email, password, handleChange, onLogin}) =>{
   return (
     <div className="app flex-row align-items-center">
       <Container>
-        <Row className="justify-content-center">
+        <Row className="justify-content-md-center">
           <Col md="8">
             <CardGroup>
               <Card className="p-4">
@@ -60,7 +60,7 @@ const LoginForm = ({ login, email, password, handleChange, onLogin}) =>{
               <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
                 <CardBody className="text-center">
                   <div>
-                    <h2>Sign up</h2>
+                    <h2>Make Payment</h2>
                     <p>You don't have an account with us yet? Click on the register button to register and start enjoying our awesome services and incentives</p>
                     <Link to="/register">
                       <Button color="primary" className="mt-3" active tabIndex={-1}>Register Now!</Button>

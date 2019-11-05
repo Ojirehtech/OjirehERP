@@ -28,8 +28,10 @@ const userSchema = new Schema( {
     time: { type: String },
     status: { type: Boolean }
   } ],
+  network: [ { type: String }],
+  cardBought: { type: Boolean, default: false },
   photo: { data: Buffer, ContentType: String },
-  role: { type: String, enum: [ "admin", "agent" ], default: "agent" },
+  role: { type: String, enum: [ "admin", "agent", "support" ], default: "agent" },
   profileUpdated: { type: Boolean, default: false },
 },{
   timestamps: true,

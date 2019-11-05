@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { Row, Col } from "reactstrap";
 import EditForm from './EditForm';
 import { onEdit } from "../../../store/actions/action_edit";
+import { isAuthenticated } from "../../../helper/authenticate";
+import Ravepay from '../../Payment/Ravepay';
 
 class EditPage extends Component {
   state = {
@@ -42,7 +45,11 @@ class EditPage extends Component {
   render() {
     const { firstName, lastName, phone, refererPhone, city, state, street } = this.state;
     const { edit } = this.props;
-    if ( edit.success === true ) {
+    const payed = isAuthenticated().user.payed;
+    const email = isAuthenticated().user.email;
+    const userPhone = isAuthenticated().user.phone;
+    const pubKey = "FLWPUBK_TEST-5873159f7e4700f2fd468cc2527ea6cd-X";
+    if ( edit.success === true && payed === true) {
       return <Redirect to="/dashboard" />
     }
     return (
@@ -59,6 +66,18 @@ class EditPage extends Component {
           handleChange={this.handleChange}
           onEdit={this.onEdit}
         />
+        <Row className="justify-content-md-center">
+          <Col xs="12" xl="3">
+            <div style={{ display: payed === true ? 'none' : "block",}}>
+              <Ravepay
+                email={email}
+                phone={userPhone}
+                amount={"1000"}
+                pubKey={pubKey}
+              />
+            </div>
+          </Col>
+        </Row>
       </div>
     );
   }

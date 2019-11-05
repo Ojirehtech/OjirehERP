@@ -1,6 +1,9 @@
 const { User } = require( "../models/user" );
 require( "dotenv" ).config();
 
+/**
+ * Refers 
+ */
 exports.refer = ( req, res ) => {
   const { userId } = req.params;
 
@@ -21,12 +24,12 @@ exports.refer = ( req, res ) => {
  * updating parentId field of the agent
  */
 exports.updateParentId = ( req, res ) => {
-  const { userId, role, parentId } = req.params;
-  // const { parentId } = req.cookie;
+  const { userId, role } = req.params;
+  const { refererId } = req.cookie;
   if ( !userId ) return res.status( 400 ).json( { error: "Unknow user" } );
   if ( role !== "agent" ) return res.status( 400 ).json( { error: "Only agents are allowed this operation" } );
 
-  User.findByIdAndUpdate( { _id: userId }, { $set: { parentId: parentId } }, { new: true } )
+  User.findByIdAndUpdate( { _id: userId }, { $set: { parentId: refererId } }, { new: true } )
     .then( resp => {
       if ( !resp ) return res.status( 400 ).json( { error: "Could not update parent ID. Try again" } )
       res.json( resp );

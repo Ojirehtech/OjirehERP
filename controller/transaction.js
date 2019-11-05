@@ -5,7 +5,7 @@ const { User } = require( "../models/user" );
  */
 exports.withdrawalRequest = ( req, res ) => {
   const { userId, role } = req.params;
-  const { amount, balance, name } = req.body;
+  const { amount, balance, name } = req.body;  
   const { _id } = req.user;
 
   if ( !userId ) return res.status( 400 ).json( { error: "Unknown user. Please ensure you are an agent" } );

@@ -45,6 +45,7 @@ exports.signIn = ( req, res ) => {
   if ( !email ) return res.status( 400 ).json( { error: "No email provided. Your email is required for login" } );
 
   if ( !password ) return res.status( 400 ).json( { error: "Password must be provided to login" } );
+  const refererId = req.cookie.refererId ? req.cookie.refererId : "8jdu493029492jjdsh3";
   User.findOne( { email } )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: `User with the email ${ email } does not exist` } );
@@ -59,7 +60,10 @@ exports.signIn = ( req, res ) => {
           const refererLink = `http://localhost:3030/api/v1/ojirehprime/agent/${_id}`
           res.cookie( "token", token, { expire: new Date() + 9999 } );
           // We respond 
-          res.json( { token, user: { _id, email, userType, role, firstName, lastName, refererLink, profileUpdated } } );
+          res.json( {
+            token,
+            user: { _id, email, userType, cardBought, refererId, role, firstName, lastName, refererLink, profileUpdated }
+          } );
         } )
         .catch( err => {
           res.status( 400 ).json( { error: err.message } );
@@ -183,6 +187,22 @@ exports.uploadPhoto = ( req, res ) => {
     } );
 }
 
+
+/**
+ * This api confirms that the user has bought a card
+ */
+exports.cardBought = ( req, res ) => {
+  const { userId } = req.params;
+  if ( !userId ) return res.status( 400 ).json( { error: "You have no access to this operation" } );
+  User.findByIdAndUpdate( { _id: userId }, { $set: { cardBought: true } }, { new: true } )
+    .then( resp => {
+      if ( !resp ) return res.status( 400 ).json( { error: "Could not update user information. Please try again" } )
+      res.json( resp )
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
 /**
  * Deletes user account
  */
