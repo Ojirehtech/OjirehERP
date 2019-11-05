@@ -85,7 +85,6 @@ export const uploadPhotoFailed = ( error ) => {
 }
 
 export const uploadProfilePhoto = ( data ) => {
-  console.log( data , " data");
   const token = isAuthenticated().token;
   const userId = isAuthenticated().user._id;
 
@@ -93,9 +92,9 @@ export const uploadProfilePhoto = ( data ) => {
     dispatch( uploadPhotoStart() );
     fetch( `${ BASE_URL }/profile/upload/${userId}`, {
       method: "PUT",
-      headers: {
-        "x-auth-token": token
-      },
+      // headers: {
+      //   "x-auth-token": token
+      // },
       body: data
     } )
       .then( response => response.json() )

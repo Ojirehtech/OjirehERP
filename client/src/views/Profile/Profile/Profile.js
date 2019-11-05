@@ -21,18 +21,18 @@ class Profile extends Component{
     } catch(err) {}
   }
   onChange = ( e ) => {
-    let photo = this.state; 
-    photo[ e.target.name ] = e.target.files[ 0 ];
-    this.setState( { photo } );
+    let photo = e.target.files[0]; 
+    
+    this.setState( { photo: photo } );
+    console.log(this.state.photo, " from onhandleChange")
   }
 
   handleSubmit = async (e) => {
     e.preventDefault();
     console.log("you clicked to submit")
     const { uploadProfilePhoto } = this.props;
-    const { photo } = this.state;
-    const formData = new FormData();
-    formData.append( "photo", photo );
+    let formData = new FormData();
+    formData.append( "photo", this.state.photo );
     try {
       await uploadProfilePhoto(formData)
     } catch(err) {}
@@ -52,7 +52,7 @@ class Profile extends Component{
                     src={`${ BASE_URL }/profile/photo/${ user._id }`}
                     style={{
                       width: "100%",
-                      height: "auto",
+                      height: "200px",
                       padding: 0
                     }}
                     onError={i => i.target.src = `${ avatar }`}
@@ -230,7 +230,7 @@ class Profile extends Component{
                 <InputGroup className="mb-3">
                   <Input
                     type="file"
-                    name="photo"
+                    name={this.state.photo}
                     onChange={(e) => this.onChange(e)}
                   />
                 </InputGroup>

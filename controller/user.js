@@ -1,6 +1,7 @@
 const { User } = require( "../models/user" );
 const bcrypt = require( "bcrypt" );
 const winston = require( "winston" );
+const fs = require( "fs" );
 require( "dotenv" ).config();
 
 /**
