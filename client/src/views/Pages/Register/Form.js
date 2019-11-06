@@ -2,7 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Card, CardBody, Alert, Col, Container, Form, Spinner, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 
-const RegisterationForm = ( { registration, onRegister, handleChange, email, username, password}) => {
+const RegisterationForm = ( {
+  registration,
+  onRegister,
+  handleChange,
+  email,
+  phone,
+  lastName,
+  firstName,
+  refererPhone,
+  city,
+  state,
+  street
+} ) => {
   return (
     <div className="app flex-row align-items-center">
       <Container>
@@ -14,6 +26,7 @@ const RegisterationForm = ( { registration, onRegister, handleChange, email, use
                   <h1>Register</h1>
                   {registration.error && registration.error.length > 0 ? <Alert color="danger">{registration.error}</Alert> : null}
                   <p className="text-muted">Create your account</p>
+                  
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
@@ -22,10 +35,9 @@ const RegisterationForm = ( { registration, onRegister, handleChange, email, use
                     </InputGroupAddon>
                     <Input
                       type="text"
-                      placeholder="Username"
-                      autoComplete="username"
-                      value={username}
-                      onChange={(e) => handleChange(e, "username")}
+                      placeholder="First name"
+                      value={firstName}
+                      onChange={( e ) => handleChange( e, "firstName" )}
                     />
                   </InputGroup>
                   <InputGroup className="mb-3">
@@ -34,8 +46,20 @@ const RegisterationForm = ( { registration, onRegister, handleChange, email, use
                     </InputGroupAddon>
                     <Input
                       type="text"
+                      placeholder="Last name"
+                      value={lastName}
+                      onChange={(e) => handleChange(e, "lastName")}
+                    />
+                  </InputGroup>
+                  <InputGroup className="mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="icon-lock"></i>
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input
+                      type="email"
                       placeholder="Email"
-                      autoComplete="email"
                       value={email}
                       onChange={(e) => handleChange(e, "email")}
                     />
@@ -47,11 +71,62 @@ const RegisterationForm = ( { registration, onRegister, handleChange, email, use
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input
-                      type="password"
-                      placeholder="Password"
-                      autoComplete="new-password"
-                      value={password}
-                      onChange={(e) => handleChange(e, "password")}
+                      type="text"
+                      placeholder="Your phone number"
+                      value={phone}
+                      onChange={( e ) => handleChange( e, "phone" )}
+                    />
+                  </InputGroup>
+                  <InputGroup className="mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="icon-lock"></i>
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input
+                      type="text"
+                      placeholder="Referer phone number"
+                      value={refererPhone}
+                      onChange={( e ) => handleChange( e, "refererPhone" )}
+                    />
+                  </InputGroup>
+                  <InputGroup className="mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="icon-lock"></i>
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input
+                      type="text"
+                      placeholder="State"
+                      value={state}
+                      onChange={( e ) => handleChange( e, "state" )}
+                    />
+                  </InputGroup>
+                  <InputGroup className="mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="icon-lock"></i>
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input
+                      type="text"
+                      placeholder="City"
+                      value={city}
+                      onChange={( e ) => handleChange( e, "city" )}
+                    />
+                  </InputGroup>
+                  <InputGroup className="mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="icon-lock"></i>
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input
+                      type="text"
+                      placeholder="Street"
+                      value={street}
+                      onChange={( e ) => handleChange( e, "street" )}
                     />
                   </InputGroup>
                   {registration.loading === true ? <Spinner color="primary" /> : (

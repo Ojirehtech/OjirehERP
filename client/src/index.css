@@ -1,1 +1,8 @@
 
+.App button {
+  background: #4dbd74 !important;
+  border-radius: 5px !important;
+  padding: 10px !important;
+  width: 200px !important;
+  color: #fff;
+}

@@ -1,19 +1,13 @@
 import React, { Component } from "react";
 import Rave from 'react-flutterwave-rave'
+import { Row, Col } from "reactstrap";
+import cue from "../../assets/img/brand/cue.jpg";
 
 class Ravepay extends Component {
   constructor( props ) {
     super( props );
     this.state = {
-      key: "FLWPUBK-XXXXXXXXXXXXXXXXXXXXXXXXXXXX-X", // RavePay PUBLIC KEY
-      phone: "0000000000000",
-      amount: 2000,
-      firstname: "Oluwole",
-      lastname: "Adebiyi",
-      email: "test@test.com",
-      room_number: "23A",
-      hostel: "Silver 1",
-      ticket_number: 3,
+      
     }
     this.callback = this.callback.bind( this );
     this.close = this.close.bind( this );
@@ -26,7 +20,6 @@ class Ravepay extends Component {
         await payIncentives()
       } catch ( err ) { }
     }
-    
   }
 
   close = () => {
@@ -37,22 +30,36 @@ class Ravepay extends Component {
     const { phone, email, amount, pubKey } = this.props;
     
     return (
-      <div className="App">
-        <Rave
-          pay_button_text="Pay With Rave"
-          className="btn btn-info"
-          metadata={[
-            { metaname: 'Card', metavalue: "OjirehPrime Card" }
-          ]}
-          payment_method="card"
-          customer_email={email}
-          customer_phone={phone}
-          amount={"" + amount + ""}
-          ravePubKey={pubKey}
-          callback={this.callback}
-          onclose={this.close}
-        />
-      </div>
+      <Row className="justify-content-md-center mt-5">
+        <Col xs="12" xl="10">
+          <Row className="justify-content-md-center">
+            <Col xs="12" xl="6">
+              <div className="App">
+                <Rave
+                  pay_button_text="Pay With Rave"
+                  className="btn btn-info"
+                  metadata={[
+                    { metaname: 'Card', metavalue: "OjirehPrime Card" }
+                  ]}
+                  payment_method="card"
+                  customer_email={email}
+                  customer_phone={phone}
+                  amount={"" + amount + ""}
+                  ravePubKey={pubKey}
+                  callback={this.callback}
+                  onclose={this.close}
+                />
+              </div>
+            </Col>
+            <Col xs="12" xl="6">
+              <img src={cue} alt="" style={{
+                width: "100%",
+                height: 250
+              }} />
+            </Col>
+          </Row>
+          </Col>
+      </Row>
     );
   }
 }

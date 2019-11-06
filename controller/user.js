@@ -8,32 +8,46 @@ require( "dotenv" ).config();
  * User account signup
  */
 exports.signup = ( req, res ) => {
-  const { email, password, username } = req.body;
-  if ( !email ) return res.status( 400 ).json( {
-    error: "No email provided. Your email is required"
-  } );
+  const {
+    email,
+    phone,
+    lastName,
+    firstName,
+    refererPhone,
+    city,
+    state,
+    street
+  } = req.body;
+  
 
-  if ( !password ) return res.status( 400 ).json( { error: "Password must be provided to continue" } );
+  if ( !phone ) return res.status( 400 ).json( { error: "Phone number is missing" } );
+  if ( !firstName ) return res.status( 400 ).json( { error: "Your first name is required" } );
+  if ( !lastName ) return res.status( 400 ).json( { error: "Your last name is required" } );
+  if ( !street ) return res.status( 400 ).json( { error: "Street name is not provided" } );
+  if ( !city ) return res.status( 400 ).json( { error: "Your city of residence is required" } );
+  if ( !state ) return res.status( 400 ).json( { error: "State is not provided" } );
+  if (!refererPhone) return res.status(400).json({ error: "Your referer phone number is required"});
 
-  User.findOne( { email } )
+  User.findOne( { phone } )
     .then( user => {
-      if ( user ) return res.status( 400 ).json( { error: `User with the email ${email} already exists` } );
-      return bcrypt.hash( password, 12 )
-        .then( hashedPassword => {
-          if ( !hashedPassword ) return res.status( 400 ).json( { error: "Password hashing failed. Please try signup again" } );
-          let newUser = new User( {
-            email,
-            password: hashedPassword,
-            username
-          } )
+      if ( user ) return res.status( 400 ).json( { error: `The phone number ${ phone } has been used by someone else` } );
+      let newUser = new User( {
+        email,
+        firstName,
+        lastName,
+        phone,
+        refererPhone,
+        "address.state": state,
+        "address.city": city,
+        "address.street": street
+      } )
 
-          newUser.save();
-          const token = newUser.generateToken();
-          res.header( "x-auth-token", token ).json( newUser );
-        } )
-        .catch( err => {
-          res.status( 400 ).json( { error: err.message } );
-        } );
+      newUser.save();
+      const token = newUser.generateToken();
+      res.header( "x-auth-token", token ).json( newUser );
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
     } );
 }
 

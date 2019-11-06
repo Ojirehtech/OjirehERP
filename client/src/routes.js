@@ -16,6 +16,7 @@ const Network = React.lazy(() => import('./views/MyNetwork/Network/Network'));
 const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy( () => import( './views/Users/User' ) );
+
 // const Home = React.lazy( () => import( "./views/home/Home" ) );
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config

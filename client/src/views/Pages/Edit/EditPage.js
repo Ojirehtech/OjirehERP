@@ -5,8 +5,6 @@ import { Row, Col } from "reactstrap";
 import EditForm from './EditForm';
 import { onEdit } from "../../../store/actions/action_edit";
 import { isAuthenticated } from "../../../helper/authenticate";
-import Ravepay from '../../Payment/Ravepay';
-import { payIncentives } from '../../../store/actions/action_pay_incentives';
 
 class EditPage extends Component {
   state = {
@@ -45,19 +43,18 @@ class EditPage extends Component {
 
   render() {
     const { firstName, lastName, phone, refererPhone, city, state, street } = this.state;
-    const { edit, payIncentives, incentives } = this.props;
+    const { edit, incentives } = this.props;
     const cardBought = isAuthenticated().user.cardBought;
     const email = isAuthenticated().user.email;
     const userPhone = isAuthenticated().user.phone;
-    const pubKey = "FLWPUBK_TEST-5873159f7e4700f2fd468cc2527ea6cd-X";
     
-    if ( edit.success === true && cardBought === true) {
-      return <Redirect to="/dashboard" />
-    }
+    // if ( edit.success === true && cardBought === true) {
+      // return <Redirect to="/dashboard" />
+    // }
 
     return (
       <div>
-        <EditForm
+        {/* <EditForm
           firstName={firstName}
           lastName={lastName}
           incentives={incentives}
@@ -69,17 +66,11 @@ class EditPage extends Component {
           street={street}
           handleChange={this.handleChange}
           onEdit={this.onEdit}
-        />
+        /> */}
         <Row className="justify-content-md-center">
           <Col xs="12" xl="3">
             <div style={{ display: cardBought === true ? 'none' : "block",}}>
-              <Ravepay
-                email={email}
-                phone={userPhone}
-                amount={"1000"}
-                pubKey={pubKey}
-                payIncentives={payIncentives}
-              />
+              
             </div>
           </Col>
         </Row>
@@ -98,7 +89,6 @@ const mapStateToProps = ( state ) => {
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
     onEdit: ( data ) => dispatch( onEdit( data ) ),
-    payIncentives: () => dispatch( payIncentives() ),
   }
   return dispatchProps;
 }
