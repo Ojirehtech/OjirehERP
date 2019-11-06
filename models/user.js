@@ -7,16 +7,11 @@ const { Schema } = mongoose;
  */
 const userSchema = new Schema( {
   email: { type: String, unique: true },
-  firstName: { type: String },
-  lastName: { type: String },
+  name: { type: String },
   parentId: { type: String },
   phone: { type: String, required: [ true, "Your phone number is required"], unique: true },
   refererPhone: { type: String },
-  address: {
-    street: { type: String },
-    city: { type: String },
-    state: { type: String }
-  },
+  address: { type: String, required: [ true, "Address is not provided"]},
   balance: { type: Number, default: 0 },
   request: [ {
     name: { type: String },

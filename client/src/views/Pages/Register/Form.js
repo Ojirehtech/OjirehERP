@@ -1,6 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, CardBody, Alert, Col, Container, Form, Spinner, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import {
+  // Button,
+  Card,
+  CardBody,
+  Alert,
+  Col,
+  Container,
+  Form,
+  // Spinner,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Row
+} from 'reactstrap';
+import Ravepay from "../../Payment/Ravepay";
 
 const RegisterationForm = ( {
   registration,
@@ -8,12 +23,12 @@ const RegisterationForm = ( {
   handleChange,
   email,
   phone,
-  lastName,
-  firstName,
+  name,
+  address,
   refererPhone,
-  city,
-  state,
-  street
+  payIncentives,
+  incentives,
+  pubKey,
 } ) => {
   return (
     <div className="app flex-row align-items-center">
@@ -35,26 +50,15 @@ const RegisterationForm = ( {
                     </InputGroupAddon>
                     <Input
                       type="text"
-                      placeholder="First name"
-                      value={firstName}
-                      onChange={( e ) => handleChange( e, "firstName" )}
-                    />
-                  </InputGroup>
-                  <InputGroup className="mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>@</InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      type="text"
-                      placeholder="Last name"
-                      value={lastName}
-                      onChange={(e) => handleChange(e, "lastName")}
+                      placeholder="Your name"
+                      value={name}
+                      onChange={( e ) => handleChange( e, "name" )}
                     />
                   </InputGroup>
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="icon-lock"></i>
+                        <i className="icon-envelope-closed"></i>
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input
@@ -67,7 +71,20 @@ const RegisterationForm = ( {
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="icon-lock"></i>
+                        <i className="icon-home"></i>
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input
+                      type="text"
+                      placeholder="Address"
+                      value={address}
+                      onChange={( e ) => handleChange( e, "address" )}
+                    />
+                  </InputGroup>
+                  <InputGroup className="mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="icon-phone"></i>
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input
@@ -80,7 +97,7 @@ const RegisterationForm = ( {
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="icon-lock"></i>
+                        <i className="icon-phone"></i>
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input
@@ -90,51 +107,22 @@ const RegisterationForm = ( {
                       onChange={( e ) => handleChange( e, "refererPhone" )}
                     />
                   </InputGroup>
-                  <InputGroup className="mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="icon-lock"></i>
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      type="text"
-                      placeholder="State"
-                      value={state}
-                      onChange={( e ) => handleChange( e, "state" )}
-                    />
-                  </InputGroup>
-                  <InputGroup className="mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="icon-lock"></i>
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      type="text"
-                      placeholder="City"
-                      value={city}
-                      onChange={( e ) => handleChange( e, "city" )}
-                    />
-                  </InputGroup>
-                  <InputGroup className="mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="icon-lock"></i>
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      type="text"
-                      placeholder="Street"
-                      value={street}
-                      onChange={( e ) => handleChange( e, "street" )}
-                    />
-                  </InputGroup>
-                  {registration.loading === true ? <Spinner color="primary" /> : (
+                  
+                  
+                  {/* {registration.loading === true ? <Spinner color="primary" /> : (
                     <Button color="success" block>Register</Button>
-                  )}
+                  )} */}
                   
                 </Form>
-                <p className="mt-3">Already have an account? <Link to="/login">Login</Link></p>
+                <Ravepay
+                  email={email}
+                  phone={phone}
+                  amount={"1000"}
+                  refererPhone={refererPhone}
+                  pubKey={pubKey}
+                  payIncentives={payIncentives}
+                  incentives={incentives}
+                />
               </CardBody>
             </Card>
           </Col>

@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.get( "/ojirehprime/agent/:userId", refer );
 router.put( "/refer/:userId/:role/:parentId", updateParentId );
-router.put( "/refer/:parentId", refererSettlement );
+router.put( "/refer/:refererPhone", refererSettlement );
 
 module.exports = router;

@@ -30,11 +30,10 @@ export const payIncentivesFailed = ( error ) => {
   }
 }
 
-export const payIncentives = () => {
-  const refererId = isAuthenticated().user.parentId;
+export const payIncentives = ( refererPhone ) => {
   return dispatch => {
     dispatch( payIncentiveStart() );
-    fetch( `${ BASE_URL }/refer/${ refererId }`, {
+    fetch( `${ BASE_URL }/refer/${ refererPhone }`, {
       method: "PUT",
       headers: {
         ACCEPT: 'application/json',
@@ -50,9 +49,9 @@ export const payIncentives = () => {
         }
         dispatch( payIncentivesSuccess( resp ) );
       } )
-      .then( () => {
-        dispatch(cardBought())
-      })
+      // .then( () => {
+      //   dispatch(cardBought())
+      // })
       .catch( err => {
         dispatch( payIncentivesFailed( "Request failed. Network Error" ) );
       } );

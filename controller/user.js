@@ -11,21 +11,14 @@ exports.signup = ( req, res ) => {
   const {
     email,
     phone,
-    lastName,
-    firstName,
+    name,
     refererPhone,
-    city,
-    state,
-    street
+    address
   } = req.body;
   
-
   if ( !phone ) return res.status( 400 ).json( { error: "Phone number is missing" } );
-  if ( !firstName ) return res.status( 400 ).json( { error: "Your first name is required" } );
-  if ( !lastName ) return res.status( 400 ).json( { error: "Your last name is required" } );
-  if ( !street ) return res.status( 400 ).json( { error: "Street name is not provided" } );
-  if ( !city ) return res.status( 400 ).json( { error: "Your city of residence is required" } );
-  if ( !state ) return res.status( 400 ).json( { error: "State is not provided" } );
+  if ( !name ) return res.status( 400 ).json( { error: "Your first name is required" } );
+  if ( !address ) return res.status( 400 ).json( { error: "Your last name is required" } );
   if (!refererPhone) return res.status(400).json({ error: "Your referer phone number is required"});
 
   User.findOne( { phone } )
@@ -33,13 +26,10 @@ exports.signup = ( req, res ) => {
       if ( user ) return res.status( 400 ).json( { error: `The phone number ${ phone } has been used by someone else` } );
       let newUser = new User( {
         email,
-        firstName,
-        lastName,
+        name,
         phone,
         refererPhone,
-        "address.state": state,
-        "address.city": city,
-        "address.street": street
+        address
       } )
 
       newUser.save();
@@ -55,10 +45,9 @@ exports.signup = ( req, res ) => {
  * User account login 
  */
 exports.signIn = ( req, res ) => {
-  const { email, password } = req.body;
-  if ( !email ) return res.status( 400 ).json( { error: "No email provided. Your email is required for login" } );
+  const { phone } = req.body;
 
-  if ( !password ) return res.status( 400 ).json( { error: "Password must be provided to login" } );
+  if ( !phone ) return res.status( 400 ).json( { error: "Enter your phone number" } );
   // const refererId = req.cookie.refererId ? req.cookie.refererId : "8jdu493029492jjdsh3";
   User.findOne( { email } )
     .then( user => {

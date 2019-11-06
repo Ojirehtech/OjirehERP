@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Rave from 'react-flutterwave-rave'
+import Rave from 'react-flutterwave-rave';
+import { Redirect } from "react-router-dom";
 import { Row, Col } from "reactstrap";
-import cue from "../../assets/img/brand/cue.jpg";
 
 class Ravepay extends Component {
   constructor( props ) {
@@ -14,10 +14,10 @@ class Ravepay extends Component {
   }
 
   callback = async ( response ) => {
-    const { payIncentives } = this.props;
+    const { payIncentives, refererPhone } = this.props;
     if ( response.success === true ) {
       try {
-        await payIncentives()
+        await payIncentives( refererPhone );
       } catch ( err ) { }
     }
   }
@@ -27,7 +27,10 @@ class Ravepay extends Component {
   }
 
   render() {
-    const { phone, email, amount, pubKey } = this.props;
+    const { phone, email, amount, pubKey, incentives } = this.props;
+    if ( incentives.success === true ) {
+      window.location.href = "/#/login";
+    }
     
     return (
       <Row className="justify-content-md-center mt-5">
@@ -36,7 +39,7 @@ class Ravepay extends Component {
             <Col xs="12" xl="6">
               <div className="App">
                 <Rave
-                  pay_button_text="Pay With Rave"
+                  pay_button_text="Pay For Card"
                   className="btn btn-info"
                   metadata={[
                     { metaname: 'Card', metavalue: "OjirehPrime Card" }
@@ -51,14 +54,8 @@ class Ravepay extends Component {
                 />
               </div>
             </Col>
-            <Col xs="12" xl="6">
-              <img src={cue} alt="" style={{
-                width: "100%",
-                height: 250
-              }} />
-            </Col>
           </Row>
-          </Col>
+        </Col>
       </Row>
     );
   }

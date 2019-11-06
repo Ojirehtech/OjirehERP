@@ -43,18 +43,18 @@ exports.updateParentId = ( req, res ) => {
  * Referers settlement
  */
 exports.refererSettlement = ( req, res ) => {
-  const { parentId } = req.params;
+  const { refererPhone } = req.params;
 
-  if ( !parentId ) return res.status( 400 ).json( { error: "Unknown referer. You must have a refer to complete this operation" } );
-  User.findByIdAndUpdate( { _id: parentId }, { $inc: { balance: +200 } }, { new: true } )
+  if ( !refererPhone ) return res.status( 400 ).json( { error: "Unknown referer. You must have a refer to complete this operation" } );
+  User.findOneAndUpdate( { refererPhone: refererPhone }, { $inc: { balance: +200 } }, { new: true } )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
-      const grandParentId = user.parentId;
-      User.findByIdAndUpdate( { _id: grandParentId }, { $inc: { balance: +50 } }, { new: true } )
+      const grandParentId = user.refererPhone;
+      User.findOneAndUpdate( { refererPhone: grandParentId }, { $inc: { balance: +50 } }, { new: true } )
         .then( resp => {
           if ( !resp ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } )
-          const ancestralParentId = resp.parentId;
-          User.findByIdAndUpdate( { _id: ancestralParentId }, { $inc: { balance: +8 } }, { new: true } )
+          const ancestralParentId = resp.refererPhone;
+          User.findOneAndUpdate( { refererPhone: ancestralParentId }, { $inc: { balance: +8 } }, { new: true } )
             .then( response => {
               if ( !response ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
             } )
