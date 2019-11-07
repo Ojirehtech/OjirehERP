@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
-import EditForm from './EditForm';
 import { onEdit } from "../../../store/actions/action_edit";
 import { isAuthenticated } from "../../../helper/authenticate";
 
@@ -42,11 +40,8 @@ class EditPage extends Component {
   }
 
   render() {
-    const { firstName, lastName, phone, refererPhone, city, state, street } = this.state;
-    const { edit, incentives } = this.props;
+   
     const cardBought = isAuthenticated().user.cardBought;
-    const email = isAuthenticated().user.email;
-    const userPhone = isAuthenticated().user.phone;
     
     // if ( edit.success === true && cardBought === true) {
       // return <Redirect to="/dashboard" />

@@ -49,8 +49,8 @@ exports.refererSettlement = ( req, res ) => {
   User.findOneAndUpdate( { refererPhone: refererPhone }, { $inc: { balance: +200 } }, { new: true } )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
-      const grandParentId = user.refererPhone;
-      User.findOneAndUpdate( { refererPhone: grandParentId }, { $inc: { balance: +50 } }, { new: true } )
+      const directReferer = user.refererPhone;
+      User.findOneAndUpdate( { refererPhone: directReferer }, { $inc: { balance: +50 } }, { new: true } )
         .then( resp => {
           if ( !resp ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } )
           const ancestralParentId = resp.refererPhone;

@@ -20,11 +20,11 @@ class DefaultHeader extends Component {
 
   handleLogout = async () => {
     const { logout } = this.props;
-    Auth.deauthenticateUser();
     try {
       await logout();
+      await Auth.deauthenticateUser();
+      return <Redirect to="/login" />;
     } catch ( err ) { }
-    return <Redirect to="/login" />;
   }
 
   render() {

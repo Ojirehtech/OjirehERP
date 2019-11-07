@@ -1,5 +1,6 @@
 import React from 'react';
-import { Alert, Button, Card, CardBody, CardGroup, Spinner, Col, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Link } from "react-router-dom";
+import { Button, Card, CardBody, CardGroup, Spinner, Col, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 
 
 const OtpLogin = ( { login, phone, handleChange, onSubmitOtp } ) => {
@@ -34,6 +35,9 @@ const OtpLogin = ( { login, phone, handleChange, onSubmitOtp } ) => {
                       )}
                     </Col>
                   </Row>
+                  
+                  <p className="mt-3">Don't have an account? <Link to="/register">Register</Link></p>
+                  
                 </Form>
               </CardBody>
             </Card>

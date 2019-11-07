@@ -34,6 +34,7 @@
     "react-dom": "^16.8.6",
     "react-flutterwave-rave": "^1.0.4",
     "react-redux": "^6.0.0",
+    "react-router": "^5.1.2",
     "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-share": "^3.0.1",

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Rave from 'react-flutterwave-rave';
-import { Redirect } from "react-router-dom";
 import history from "../../helper/history"
 import { Row, Col } from "reactstrap";
 

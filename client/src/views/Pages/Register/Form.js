@@ -123,7 +123,9 @@ const RegisterationForm = ( {
                   payIncentives={payIncentives}
                   incentives={incentives}
                 />
+                <p className="mt-3">Already have an account? <Link to="/login">Login</Link></p>
               </CardBody>
+              
             </Card>
           </Col>
         </Row>

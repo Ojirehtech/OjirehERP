@@ -92,9 +92,9 @@ export const uploadProfilePhoto = ( data ) => {
     dispatch( uploadPhotoStart() );
     fetch( `${ BASE_URL }/profile/upload/${userId}`, {
       method: "PUT",
-      // headers: {
-      //   "x-auth-token": token
-      // },
+      headers: {
+        "x-auth-token": token
+      },
       body: data
     } )
       .then( response => response.json() )
