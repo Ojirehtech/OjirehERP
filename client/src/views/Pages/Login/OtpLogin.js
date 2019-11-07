@@ -1,8 +1,8 @@
 import React from 'react';
-import {Alert, Button, Card, CardBody, CardGroup, Spinner, Col, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Alert, Button, Card, CardBody, CardGroup, Spinner, Col, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 
 
-const LoginForm = ({ login, otp, handleChange, onLogin}) =>{
+const OtpLogin = ( { login, phone, handleChange, onSubmitOtp } ) => {
   return (
     <div className="mt-5">
       <Row className="justify-content-md-center mt-5">
@@ -10,28 +10,27 @@ const LoginForm = ({ login, otp, handleChange, onLogin}) =>{
           <CardGroup>
             <Card>
               <CardBody>
-                <Form onSubmit={onLogin}>
-                  <h1>Code verification</h1>
-                  {login.error && login.error.length > 0 ? <Alert color="danger">{login.error}</Alert> : null}
-                  <p className="text-muted">Enter the code sent to your phone here</p>
+                <Form onSubmit={onSubmitOtp}>
+                  <h3>Verify your phone number</h3>
+                  {/* {login.error && login.error.length > 0 ? <Alert color="danger">{login.error}</Alert> : null} */}
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="icon-user"></i>
+                        <i className="icon-phone"></i>
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input
                       type="text"
                       placeholder="Your phone number"
-                      value={otp}
-                      onChange={(e) => handleChange(e, "otp")}
+                      value={phone}
+                      onChange={( e ) => handleChange( e, "phone" )}
                     />
                   </InputGroup>
-                
+
                   <Row>
                     <Col xs="12">
-                      {login.loading === true ? <Spinner color="primary" /> : (
-                        <Button color="primary" className="px-4">Send</Button>
+                      {login.otpLoading === true ? <Spinner color="primary" /> : (
+                        <Button color="primary" className="px-4">Verify your phone number</Button>
                       )}
                     </Col>
                   </Row>
@@ -46,4 +45,4 @@ const LoginForm = ({ login, otp, handleChange, onLogin}) =>{
 }
 
 
-export default LoginForm;
+export default OtpLogin;

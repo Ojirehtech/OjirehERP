@@ -90,9 +90,10 @@ export const sendOTPFailed = ( error ) => {
 }
 
 export const sendOTP = ( userId ) => {
+  console.log("inside send otp")
   return dispatch => {
     dispatch( sendOTPStart() );
-    fetch( `${ BASE_URL }/otp/${ userId }`, {
+    fetch( `${ BASE_URL }/user/otp/${ userId }`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -101,6 +102,7 @@ export const sendOTP = ( userId ) => {
     } )
       .then( response => response.json() )
       .then( resp => {
+        console.log(resp, "response from action ")
         if ( resp.error ) {
           dispatch( sendOTPFailed( resp.error ) );
           return;

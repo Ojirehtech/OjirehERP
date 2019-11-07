@@ -13,13 +13,11 @@ import {
 } from 'react-share';
 import { isAuthenticated } from "../../helper/authenticate";
 
-const url = isAuthenticated().user.refererLink;
-
 const SocialShare = ({
-  url = url, // to share current page
-  title = "Steadylearner Website",
+  url = isAuthenticated().user.refererLink, // to share current page
+  title = "Ojirehprime website",
   shareImage = "https://www.steadylearner.com/static/images/brand/prop-passer.png",
-  size = "3.5rem",
+  size = 50,
 }) => { 
   return (
     <div style={{ display: "flex"}}>

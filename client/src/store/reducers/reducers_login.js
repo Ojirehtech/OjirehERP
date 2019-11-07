@@ -14,6 +14,8 @@ const initialState = {
   agent: {},
   loading: false,
   success: false,
+  otpLoading: false,
+  otpSuccess: false,
   error: ""
 }
 
@@ -57,20 +59,20 @@ const loginReducers = ( state = initialState, action ) => {
     case SEND_OTP_START:
       return {
         ...state,
-        loading: true,
+        otpLoading: true,
       }
     case SEND_OTP_SUCCESS:
       return {
         ...state,
-        loading: false,
-        success: true,
+        otpLoading: false,
+        otpSuccess: true,
         agent: action.data,
       }
     case SEND_OTP_FAILED:
       return {
         ...state,
-        loading: false,
-        success: false,
+        otpLoading: false,
+        otpSuccess: false,
         error: action.error
       }
     default:

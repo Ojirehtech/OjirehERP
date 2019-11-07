@@ -48,24 +48,29 @@ exports.signup = ( req, res ) => {
 exports.generateOTP = ( req, res ) => {
   const otpCode = Math.floor( 1000 + Math.random() * 9000 );
   const { userId } = req.params;
-  const sender = "OjirehPrime"
-  const url = `https://kullsms.com/customer/api/?username=${process.env.SMS_USERNAME}&password=${process.env.SMS_PASS}&message=${otpCode}&sender=${sender}&mobiles=${userId}`
+  console.log(userId)
+  const sender = "OjirehPrime";
+  const username = "onoja";
+  const password = "igochemat7@@"
+  const message = `Your verification pass code is ${otpCode}`
+  console.log(otpCode, " otpcode")
+  // const url = `https://kullsms.com/customer/api/?username=${username}&password=${password}&message=${message}&sender=${sender}&mobiles=${userId}`
+  const url = `http://www.jamasms.com/smsapi/?username=${username}&password=${password}&sender=${sender}&numbers=${userId}&message=${message}
+`
   if ( !userId ) return res.status( 400 ).json( { error: "Your phone is required" } );
-  User.findOne( { phone: userId } )
+  User.findOneAndUpdate( { phone: userId } )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: `User with the phone number ${ userId } does not exist` } );
       user.otp = otpCode;
       user.save();
+      console.log(user)
       fetch( url, {
         method: "POST",
         headers: {
-          ACCEPT: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "text/html"
         }
       } )
-        .then( response => response.json() )
         .then( resp => {
-          if ( resp.error ) return res.status( 400 ).json( { error: resp.error } );
           return res.json( resp );
         } )
         .catch( err => {
@@ -84,35 +89,28 @@ exports.signIn = ( req, res ) => {
   // const refererId = req.cookie.refererId ? req.cookie.refererId : "8jdu493029492jjdsh3";
   User.findOne( { otp } )
     .then( user => {
-      if ( !user ) return res.status( 400 ).json( { error: `User with the email ${ email } does not exist` } );
-      return bcrypt.compare( otp, user.otp )
-        .then( otpMatch => {
-          if ( !otpMatch ) return res.status( 400 ).json( { error: "Invalid emal or password" } );
-          /**
-           * We get the user token @user.generatetoken() send it with the json response
-           */
-          const token = user.generateToken();
-          var val = Math.floor( 1000 + Math.random() * 9000 );
-
-          const { _id, email, name, cardBought, parentId, role, profileUpdated } = user;
-          const refererLink = `http://localhost:3030/api/v1/ojirehprime/agent/${ _id }`;
-          res.cookie( "token", token, { expire: new Date() + 9999 } );
-          // We respond 
-          res.json( {
-            token,
-            user: { _id, email, cardBought, parentId, role, name, refererLink, profileUpdated }
-          } );
-        } )
-        .catch( err => {
-          res.status( 400 ).json( { error: err.message } );
-        } );
+      if ( user.otp !== otp ) return res.status( 400 ).json( { error: `Verification failed. Invalid code` } );
+      /**
+       * We get the user token @user.generatetoken() send it with the json response
+       */
+      const token = user.generateToken();
+      const { _id, email, name, cardBought, parentId, role, profileUpdated } = user;
+      const refererLink = `http://localhost:3030/api/v1/ojirehprime/agent/${ _id }`;
+      res.cookie( "token", token, { expire: new Date() + 9999 } );
+      res.json( {
+        token,
+        user: { _id, email, cardBought, parentId, role, name, refererLink, profileUpdated }
+      } );
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
     } );
 }
 
 /**
  * User account signout
  */
-exports.Signout = ( req, res ) => {
+exports.signout = ( req, res ) => {
   res.clearCookie( "token" );
   res.json( "You have successfully been logged out" );
 }

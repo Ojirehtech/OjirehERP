@@ -2,11 +2,21 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import LoginForm from './LoginForm';
-import { onLogin } from "../../../store/actions/action_login";
+import { onLogin, sendOTP } from "../../../store/actions/action_login";
+import OtpLogin from './OtpLogin';
 
 class Login extends Component {
   state = {
-    phone: ""
+    phone: "",
+    isOtpSuccess: false,
+  }
+
+  componentDidUpdate(prevProps, nextProps) {
+    if ( this.props.login !== prevProps.login ) {
+      // if ( this.props.login.otpSuccess === true ) {
+        this.setState( { isOtpSuccess: true } );        
+      // }
+    }
   }
 
   handleChange = (e, name) => {
@@ -18,18 +28,52 @@ class Login extends Component {
 
   onLogin = async (e) => {
     e.preventDefault();
-    const { phone } = this.state;
+    const { otp } = this.state;
     const { onLogin } = this.props;
     const data = {
-      phone,
+      otp,
     }
     try {
       await onLogin(data)
     } catch(err) {}
   }
+
+  onSubmitOtp = async ( e ) => {
+    e.preventDefault();
+    const { phone } = this.state;
+    const { sendOTP } = this.props;
+    console.log(sendOTP, "you just clicked")
+    try {
+      await sendOTP( phone );
+      console.log("after send otp")
+    } catch(err) {}
+  }
+
+  renderView = () => {
+    const { phone, otp } = this.state;
+    const { login,  } = this.props;
+    if ( login.otpSuccess === true ) {
+      return (
+        <LoginForm
+          phone={otp}
+          login={login}
+          handleChange={this.handleChange}
+          onLogin={this.onLogin}
+        />
+      )
+    } else {
+      return (
+        <OtpLogin
+          phone={phone}
+          login={login}
+          handleChange={this.handleChange}
+          onSubmitOtp={this.onSubmitOtp}
+        />
+      )
+    }
+  }
   render() {
     const { login } = this.props;
-    const { phone } = this.state;
 
     if (login.success === true) {
       return <Redirect to="/dashboard" />
@@ -37,12 +81,7 @@ class Login extends Component {
 
     return (
       <div style={{ marginTop: "100px",}}>
-        <LoginForm
-          phone={phone}
-          login={login}
-          handleChange={this.handleChange}
-          onLogin={this.onLogin}
-        />
+        {this.renderView()}
       </div>
     );
   }
@@ -56,7 +95,8 @@ const mapStateToProps = ( state ) => {
 
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
-    onLogin: (data) => dispatch(onLogin(data))
+    onLogin: ( data ) => dispatch( onLogin( data ) ),
+    sendOTP: (data) => dispatch(sendOTP(data))
   }
   return dispatchProps;
 }

@@ -11,7 +11,8 @@ const {
   uploadPhoto,
   photo,
   cardBought,
-  generateOTP
+  generateOTP,
+  signout,
 } = require( "../controller/user" );
 const requireLogin = require( "../config/auth" );
 
@@ -19,7 +20,7 @@ const router = express.Router();
 
 router.post( "/signup", signup );
 router.post( "/login", signIn );
-router.get( "/signout", signup );
+router.get( "/signout", signout );
 router.get( "/users", requireLogin, fetchUsers );
 router.get( "/user/:userId", requireLogin, fetchUser );
 router.put( "/user/card/:userId", requireLogin, cardBought );
