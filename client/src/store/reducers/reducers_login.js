@@ -5,6 +5,9 @@ import {
   LOGOUT_START,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
+  SEND_OTP_START,
+  SEND_OTP_SUCCESS,
+  SEND_OTP_FAILED
 } from "../actions/action_login";
 
 const initialState = {
@@ -44,10 +47,26 @@ const loginReducers = ( state = initialState, action ) => {
       return {
         ...state,
         loading: false,
-        success: true,
-        agent: action.data
       }
     case LOGOUT_FAILED:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+      }
+    case SEND_OTP_START:
+      return {
+        ...state,
+        loading: true,
+      }
+    case SEND_OTP_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        agent: action.data,
+      }
+    case SEND_OTP_FAILED:
       return {
         ...state,
         loading: false,

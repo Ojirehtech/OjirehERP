@@ -2,6 +2,7 @@ const { User } = require( "../models/user" );
 const bcrypt = require( "bcrypt" );
 const winston = require( "winston" );
 const fs = require( "fs" );
+const fetch = require( "node-fetch" );
 require( "dotenv" ).config();
 
 /**
@@ -42,30 +43,64 @@ exports.signup = ( req, res ) => {
 }
 
 /**
+ * Generate OTP code for users
+ */
+exports.generateOTP = ( req, res ) => {
+  const otpCode = Math.floor( 1000 + Math.random() * 9000 );
+  const { userId } = req.params;
+  const sender = "OjirehPrime"
+  const url = `https://kullsms.com/customer/api/?username=${process.env.SMS_USERNAME}&password=${process.env.SMS_PASS}&message=${otpCode}&sender=${sender}&mobiles=${userId}`
+  if ( !userId ) return res.status( 400 ).json( { error: "Your phone is required" } );
+  User.findOne( { phone: userId } )
+    .then( user => {
+      if ( !user ) return res.status( 400 ).json( { error: `User with the phone number ${ userId } does not exist` } );
+      user.otp = otpCode;
+      user.save();
+      fetch( url, {
+        method: "POST",
+        headers: {
+          ACCEPT: "application/json",
+          "Content-Type": "application/json"
+        }
+      } )
+        .then( response => response.json() )
+        .then( resp => {
+          if ( resp.error ) return res.status( 400 ).json( { error: resp.error } );
+          return res.json( resp );
+        } )
+        .catch( err => {
+          res.status( 400 ).json( { error: err.message } );
+        } );
+  })
+}
+
+/**
  * User account login 
  */
 exports.signIn = ( req, res ) => {
-  const { phone } = req.body;
+  const { otp } = req.body;
 
-  if ( !phone ) return res.status( 400 ).json( { error: "Enter your phone number" } );
+  if ( !otp ) return res.status( 400 ).json( { error: "Enter your phone number" } );
   // const refererId = req.cookie.refererId ? req.cookie.refererId : "8jdu493029492jjdsh3";
-  User.findOne( { email } )
+  User.findOne( { otp } )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: `User with the email ${ email } does not exist` } );
-      return bcrypt.compare( password, user.password )
-        .then( passwordMatch => {
-          if ( !passwordMatch ) return res.status( 400 ).json( { error: "Invalid emal or password" } );
+      return bcrypt.compare( otp, user.otp )
+        .then( otpMatch => {
+          if ( !otpMatch ) return res.status( 400 ).json( { error: "Invalid emal or password" } );
           /**
            * We get the user token @user.generatetoken() send it with the json response
            */
           const token = user.generateToken();
-          const { _id, email, firstName, cardBought, parentId, lastName, userType, role, profileUpdated } = user;
-          const refererLink = `http://localhost:3030/api/v1/ojirehprime/agent/${_id}`
+          var val = Math.floor( 1000 + Math.random() * 9000 );
+
+          const { _id, email, name, cardBought, parentId, role, profileUpdated } = user;
+          const refererLink = `http://localhost:3030/api/v1/ojirehprime/agent/${ _id }`;
           res.cookie( "token", token, { expire: new Date() + 9999 } );
           // We respond 
           res.json( {
             token,
-            user: { _id, email, userType, cardBought, parentId, role, firstName, lastName, refererLink, profileUpdated }
+            user: { _id, email, cardBought, parentId, role, name, refererLink, profileUpdated }
           } );
         } )
         .catch( err => {

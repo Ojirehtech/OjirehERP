@@ -21,6 +21,7 @@ const userSchema = new Schema( {
     time: { type: String },
     status: { type: Boolean }
   } ],
+  otp: { type: Number, expires: "3m"},
   network: [ { type: String }],
   cardBought: { type: Boolean, default: false },
   photo: { data: Buffer, ContentType: String },

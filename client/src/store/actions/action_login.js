@@ -6,6 +6,10 @@ export const LOGOUT_START = "LOGOUT_START";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILED = "LOGOUT_FAILED";
 
+export const SEND_OTP_START = "SEND_OTP_START";
+export const SEND_OTP_SUCCESS = "SEND_OTP_SUCCESS";
+export const SEND_OTP_FAILED = "SEND_OTP_FAILED";
+
 const BASE_URL = "http://localhost:3030/api/v1";
 
 /**
@@ -60,6 +64,53 @@ export const onLogin = ( data ) => {
         dispatch( loginFailed( `Request failed to complete. Check your network and try again.` ) );
       } );
    }
+}
+
+/**
+ * Action  types for otp messages
+ */
+export const sendOTPStart = () => {
+  return {
+    type: SEND_OTP_START
+  }
+}
+
+export const sendOTPSuccess = ( data ) => {
+  return {
+    type: SEND_OTP_SUCCESS,
+    data
+  }
+}
+
+export const sendOTPFailed = ( error ) => {
+  return {
+    type: SEND_OTP_FAILED,
+    error
+  }
+}
+
+export const sendOTP = ( userId ) => {
+  return dispatch => {
+    dispatch( sendOTPStart() );
+    fetch( `${ BASE_URL }/otp/${ userId }`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ACCEPT: "application/json"
+      }
+    } )
+      .then( response => response.json() )
+      .then( resp => {
+        if ( resp.error ) {
+          dispatch( sendOTPFailed( resp.error ) );
+          return;
+        }
+        dispatch( sendOTPSuccess() );
+      } )
+      .catch( err => {
+        dispatch( sendOTPFailed( err.message ) );
+      } );
+  }
 }
  
 /**

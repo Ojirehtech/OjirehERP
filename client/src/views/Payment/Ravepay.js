@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Rave from 'react-flutterwave-rave';
 import { Redirect } from "react-router-dom";
+import history from "../../helper/history"
 import { Row, Col } from "reactstrap";
 
 class Ravepay extends Component {
@@ -29,7 +30,7 @@ class Ravepay extends Component {
   render() {
     const { phone, email, amount, pubKey, incentives } = this.props;
     if ( incentives.success === true ) {
-      window.location.href = "/#/login";
+      history.push( "/login" );
     }
     
     return (
@@ -37,7 +38,7 @@ class Ravepay extends Component {
         <Col xs="12" xl="10">
           <Row className="justify-content-md-center">
             <Col xs="12" xl="6">
-              <div className="App">
+              <div className="App" style={{ display: !phone && !email ? "none" : "block"}}>
                 <Rave
                   pay_button_text="Pay For Card"
                   className="btn btn-info"
