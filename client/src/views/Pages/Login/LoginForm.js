@@ -2,7 +2,7 @@ import React from 'react';
 import {Alert, Button, Card, CardBody, CardGroup, Spinner, Col, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 
 
-const LoginForm = ({ login, otp, handleChange, onLogin}) =>{
+const LoginForm = ( { toggelState, login, otp, handleChange, onLogin}) =>{
   return (
     <div className="mt-5">
       <Row className="justify-content-md-center mt-5">
@@ -36,6 +36,14 @@ const LoginForm = ({ login, otp, handleChange, onLogin}) =>{
                     </Col>
                   </Row>
                 </Form>
+                <p>Click
+                  <span
+                    onClick={() => toggelState()}
+                    style={{
+                      color: "blue",
+                      cursor: "pointer",
+                    }}
+                  >here</span> to resend code</p>
               </CardBody>
             </Card>
           </CardGroup>

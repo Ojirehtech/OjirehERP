@@ -24,21 +24,17 @@ const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
-class DefaultLayout extends Component {
+class MainDashboard extends Component {
 
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
-  signOut(e) {
-    e.preventDefault()
-    this.props.history.push('/login')
-  }
-
   render() {
+    const { history } = this.props;
     return (
       <div className="app">
         <AppHeader fixed>
           <Suspense  fallback={this.loading()}>
-            <DefaultHeader onLogout={e=>this.signOut(e)}/>
+            <DefaultHeader onLogout={e=>this.signOut(e)} history={history}/>
           </Suspense>
         </AppHeader>
         <div className="app-body">
@@ -89,4 +85,4 @@ class DefaultLayout extends Component {
   }
 }
 
-export default DefaultLayout;
+export default MainDashboard;

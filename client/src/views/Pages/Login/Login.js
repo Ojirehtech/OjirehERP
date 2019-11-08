@@ -13,9 +13,9 @@ class Login extends Component {
 
   componentDidUpdate(prevProps, nextProps) {
     if ( this.props.login !== prevProps.login ) {
-      // if ( this.props.login.otpSuccess === true ) {
+      if ( this.props.login.otpSuccess === true ) {
         this.setState( { isOtpSuccess: true } );        
-      // }
+      }
     }
   }
 
@@ -23,7 +23,6 @@ class Login extends Component {
     let fields = this.state;
     fields[name] = e.target.value;
     this.setState({ fields });
-    console.log(this.state)
   }
 
   onLogin = async (e) => {
@@ -42,23 +41,26 @@ class Login extends Component {
     e.preventDefault();
     const { phone } = this.state;
     const { sendOTP } = this.props;
-    console.log(sendOTP, "you just clicked")
     try {
       await sendOTP( phone );
-      console.log("after send otp")
     } catch(err) {}
   }
 
+  toggelState = () => {
+    this.setState( { isOtpSuccess: !this.state.isOtpSuccess })
+  }
+
   renderView = () => {
-    const { phone, otp } = this.state;
+    const { isOtpSuccess, phone, otp } = this.state;
     const { login,  } = this.props;
-    if ( login.otpSuccess === true ) {
+    if ( isOtpSuccess === true ) {
       return (
         <LoginForm
           phone={otp}
           login={login}
           handleChange={this.handleChange}
           onLogin={this.onLogin}
+          toggelState={this.toggelState}
         />
       )
     } else {
@@ -76,7 +78,7 @@ class Login extends Component {
     const { login } = this.props;
 
     if (login.success === true) {
-      return <Redirect to="/dashboard" />
+      return <Redirect to="/" />
     }
 
     return (

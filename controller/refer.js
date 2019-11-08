@@ -1,4 +1,5 @@
 const { User } = require( "../models/user" );
+const { smsalert } = require("../service/sms")
 require( "dotenv" ).config();
 
 /**
@@ -6,18 +7,19 @@ require( "dotenv" ).config();
  */
 exports.refer = ( req, res ) => {
   const { userId } = req.params;
-
-  if ( !req.cookie.refererId ) {
-    User.findOne( { _id: userId } )
-      .then( user => {
-        if ( !user ) return res.status( 400 ).json( { error: `Referer with the ID ${ userId } not found` } )
-        res.cookie( "refererId", userId )
-        res.redirect( process.env.FRONTEND_APP_URL )
-      } )
-      .catch( err => {
-        res.status( 400 ).json( { error: err.message } );
-      } );
-  }
+  var date = new Date();
+  date.setMinutes( date.getMinutes() + 5 );
+  console.log(date)
+  User.findOne( { _id: userId } )
+    .then( user => {
+      if ( !user ) return res.status( 400 ).json( { error: `Referer with the ID ${ userId } not found` } )
+      res.cookie( "refererId", userId, { expires: date } );
+      res.redirect( process.env.FRONTEND_APP_URL )
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+  
 }
 
 /**
@@ -44,18 +46,26 @@ exports.updateParentId = ( req, res ) => {
  */
 exports.refererSettlement = ( req, res ) => {
   const { refererPhone } = req.params;
-
+  const { refererId } = req.cookies;
+  
   if ( !refererPhone ) return res.status( 400 ).json( { error: "Unknown referer. You must have a refer to complete this operation" } );
-  User.findOneAndUpdate( { refererPhone: refererPhone }, { $inc: { balance: +200 } }, { new: true } )
+  if ( !refererId ) return res.status( 400 ).json( { error: "You do not have a referer" } );
+  User.findByIdAndUpdate( { _id: refererId }, { $inc: { balance: +200 } }, { new: true } )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
-      const directReferer = user.refererPhone;
-      User.findOneAndUpdate( { refererPhone: directReferer }, { $inc: { balance: +50 } }, { new: true } )
+      const phone = user.phone;
+      smsalert(phone, 200)
+      const grandReferer = user.refererId;
+      User.findOneAndUpdate( { _id: directReferer }, { $inc: { balance: +50 } }, { new: true } )
         .then( resp => {
-          if ( !resp ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } )
-          const ancestralParentId = resp.refererPhone;
-          User.findOneAndUpdate( { refererPhone: ancestralParentId }, { $inc: { balance: +8 } }, { new: true } )
+          if ( !resp ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
+          const ancestralReferer = resp.refererId;
+          const phone = resp.phone;
+          smsalert( phone, 50 );
+          User.findOneAndUpdate( { _id: ancestralParentId }, { $inc: { balance: +8 } }, { new: true } )
             .then( response => {
+              const phone = response.phone;
+              smsalert( phone, 8 );
               if ( !response ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
             } )
         } )

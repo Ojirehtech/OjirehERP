@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Rave from 'react-flutterwave-rave';
-import history from "../../helper/history"
+// import history from "../../helper/history";
 import { Row, Col } from "reactstrap";
 
 class Ravepay extends Component {
@@ -29,7 +29,7 @@ class Ravepay extends Component {
   render() {
     const { phone, email, amount, pubKey, incentives } = this.props;
     if ( incentives.success === true ) {
-      history.push( "/login" );
+      window.location.href = "/login";
     }
     
     return (

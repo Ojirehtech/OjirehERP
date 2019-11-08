@@ -9,7 +9,7 @@ const userSchema = new Schema( {
   email: { type: String, unique: true },
   name: { type: String },
   parentId: { type: String },
-  phone: { type: String, required: [ true, "Your phone number is required"], unique: true },
+  phone: { type: String, required: [ true, "Your phone number is required"] },
   refererPhone: { type: String },
   address: { type: String, required: [ true, "Address is not provided"]},
   balance: { type: Number, default: 0 },

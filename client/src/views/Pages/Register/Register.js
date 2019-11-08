@@ -52,7 +52,9 @@ class Register extends Component {
       payIncentives,
       registration,
       incentives,
+      history
     } = this.props;
+    console.log(history)
     return (
       <div>
         <RegisterationForm
@@ -67,6 +69,7 @@ class Register extends Component {
           payIncentives={payIncentives}
           incentives={incentives}
           pubKey={pubKey}
+          history={history}
         />
       </div>
     );

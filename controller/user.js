@@ -50,12 +50,9 @@ exports.generateOTP = ( req, res ) => {
   const { userId } = req.params;
   console.log(userId)
   const sender = "OjirehPrime";
-  const username = "onoja";
-  const password = "igochemat7@@"
   const message = `Your verification pass code is ${otpCode}`
-  console.log(otpCode, " otpcode")
-  // const url = `https://kullsms.com/customer/api/?username=${username}&password=${password}&message=${message}&sender=${sender}&mobiles=${userId}`
-  const url = `http://www.jamasms.com/smsapi/?username=${username}&password=${password}&sender=${sender}&numbers=${userId}&message=${message}
+  
+  const url = `http://www.jamasms.com/smsapi/?username=${process.env.SMS_USERNAME}&password=${process.env.SMS_PASS}&sender=${sender}&numbers=${userId}&message=${message}
 `
   if ( !userId ) return res.status( 400 ).json( { error: "Your phone is required" } );
   User.findOneAndUpdate( { phone: userId } )
@@ -139,6 +136,22 @@ exports.fetchUser = ( req, res ) => {
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: `User does not exist` } );
       return res.json( user );
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
+
+/**
+ * Get user by parentId
+ */
+exports.userByParentId = ( req, res ) => {
+  const { userId } = req.params;
+  if ( !userId ) return res.status( 400 ).json( { error: "User ID is not defined" } );
+  User.find( { parentId: userId } )
+    .then( users => {
+      if ( !users ) return res.status( 400 ).json( { error: `No user found with parent ID ${ userId }` } );
+      res.json( users )
     } )
     .catch( err => {
       res.status( 400 ).json( { error: err.message } );

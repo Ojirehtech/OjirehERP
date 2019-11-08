@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, NavLink, Redirect } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Nav, NavItem } from 'reactstrap';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
@@ -18,20 +18,23 @@ const defaultProps = {};
 
 class DefaultHeader extends Component {
 
-  handleLogout = async () => {
+  handleLogout = () => {
+    Auth.deauthenticateUser();
+    this.props.history.push( "/login" );
+    this.onLogout();
+  }
+
+  onLogout = async () => {
     const { logout } = this.props;
     try {
       await logout();
-      await Auth.deauthenticateUser();
-      return <Redirect to="/login" />;
-    } catch ( err ) { }
+    }catch(err) {}
   }
 
   render() {
 
     // eslint-disable-next-line
-    const { children, ...attributes } = this.props;
-
+    const { children, history, ...attributes } = this.props;
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
@@ -53,15 +56,6 @@ class DefaultHeader extends Component {
           </NavItem>
         </Nav>
         <Nav className="ml-auto" navbar>
-          {/* <NavItem className="d-md-down-none">
-            <NavLink to="#" className="nav-link"><i className="icon-bell"></i><Badge pill color="danger">5</Badge></NavLink>
-          </NavItem>
-          <NavItem className="d-md-down-none">
-            <NavLink to="#" className="nav-link"><i className="icon-list"></i></NavLink>
-          </NavItem> */}
-          {/* <NavItem className="d-md-down-none">
-            <NavLink to="#" className="nav-link"><i className="icon-location-pin"></i></NavLink>
-          </NavItem> */}
           <NavItem
             onClick={this.handleLogout}
             className="d-md-down-none"
@@ -69,7 +63,6 @@ class DefaultHeader extends Component {
             <i className="icon-logout"></i> Logout
           </NavItem>
         </Nav>
-        {/* <AppAsideToggler className="d-md-down-none" /> */}
       </React.Fragment>
     );
   }

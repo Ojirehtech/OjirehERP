@@ -29,6 +29,7 @@ const RegisterationForm = ( {
   payIncentives,
   incentives,
   pubKey,
+  history,
 } ) => {
   return (
     <div className="app flex-row align-items-center">
@@ -122,10 +123,10 @@ const RegisterationForm = ( {
                   pubKey={pubKey}
                   payIncentives={payIncentives}
                   incentives={incentives}
+                  history={history}
                 />
                 <p className="mt-3">Already have an account? <Link to="/login">Login</Link></p>
               </CardBody>
-              
             </Card>
           </Col>
         </Row>
