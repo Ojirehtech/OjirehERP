@@ -28,7 +28,7 @@ class Ravepay extends Component {
 
   render() {
     const { phone, email, amount, pubKey, incentives } = this.props;
-    if ( incentives.success === true ) {
+    if ( incentives.success === true || incentives.error.includes("You do not have") ) {
       window.location.href = "/login";
     }
     

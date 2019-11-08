@@ -9,6 +9,10 @@ export const DELETE_USER_START = "DELETE_USER_START";
 export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAILED = "DELETE_USER_FAILED";
 
+export const GET_BY_PARENTID_START = "GET_BY_PARENTID_START";
+export const GET_BY_PARENTID_SUCCESS = "GET_BY_PARENTID_SUCCESS";
+export const GET_BY_PARENTID_FAILED = "GET_BY_PARENTID_FAILED";
+
 const BASE_URL = "http://localhost:3030/api/v1";
 
 export const getUserStart = () => {
@@ -138,6 +142,52 @@ export const deleteUser = ( agentId ) => {
       } )
       .catch( err => {
         dispatch( delelteUserFailed( "Request failed due to network error" ) );
+      } );
+  }
+}
+
+
+export const getByParentIdStart = () => {
+  return {
+    type: GET_BY_PARENTID_START
+  }
+}
+
+export const getByParentIdSuccess = ( data ) => {
+  return {
+    type: GET_BY_PARENTID_SUCCESS,
+    data
+  }
+}
+
+export const getByParentIdFailed = ( error ) => {
+  return {
+    type: GET_BY_PARENTID_FAILED,
+    error
+  }
+}
+
+export const getByParentId = () => {
+  const userId = isAuthenticated().user._id;
+  return dispatch => {
+    dispatch( getByParentIdStart() );
+    fetch( `${ BASE_URL }/user/network/${ userId }`, {
+      method: "GET",
+      headers: {
+        ACCEPT: "application/json",
+        "Content-Type": "application/jsoon"
+      }
+    } )
+      .then( response => response.json() )
+      .then( resp => {
+        if ( resp.error ) {
+          dispatch( getByParentIdFailed( resp.error ) );
+          return;
+        }
+        dispatch( getByParentIdSuccess( resp ) )
+      } )
+      .catch( err => {
+        dispatch( getByParentIdFailed( "Network Error" ) );
       } );
   }
 }

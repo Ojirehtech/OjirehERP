@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import { Row } from "reactstrap";
+import { getByParentId } from '../../../store/actions/action_user';
 
 
 class Network extends Component {
+  async componentDidMount() {
+    const { getByParentId } = this.props;
+    try {
+      await getByParentId();
+    }catch(err) {}
+  }
   render() {
+    console.log(this.props)
     return (
       <div className="animated fadeIn">
         <div className="card">
@@ -31,4 +40,17 @@ class Network extends Component {
   }
 }
 
-export default Network;
+const mapStateToProps = (state) => {
+  return {
+    users: state.users
+  }
+}
+
+const mapDispatchToProps = ( dispatch ) => {
+  const dispatchProps = {
+    getByParentId: () => dispatch(getByParentId())
+  }
+  return dispatchProps;
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Network);

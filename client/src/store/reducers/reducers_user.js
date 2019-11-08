@@ -8,11 +8,16 @@ import {
   DELETE_USER_START,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAILED,
+  GET_BY_PARENTID_START,
+  GET_BY_PARENTID_SUCCESS,
+  GET_BY_PARENTID_FAILED,
 } from "../actions/action_user";
 
 const initialState = {
   users: [],
   user: {},
+  loading: false,
+  success: false,
   singleLoading: false,
   singleSuccess: false,
   usersLoading: false,
@@ -79,6 +84,25 @@ const userReducers = ( state = initialState, action ) => {
         ...state,
         deleteSuccess: false,
         deleteLoading: false,
+        error: action.error
+      }
+    case GET_BY_PARENTID_START:
+      return {
+        ...state,
+        loading: true,
+      }
+    case GET_BY_PARENTID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        users: action.data,
+      }
+    case GET_BY_PARENTID_FAILED:
+      return {
+        ...state,
+        loading: false,
+        success: false,
         error: action.error
       }
     default:

@@ -27,9 +27,9 @@ exports.refer = ( req, res ) => {
  */
 exports.updateParentId = ( req, res ) => {
   const { userId, role } = req.params;
-  const { refererId } = req.cookie;
+  const { refererId } = req.cookies;
   if ( !userId ) return res.status( 400 ).json( { error: "Unknow user" } );
-  if ( role !== "agent" ) return res.status( 400 ).json( { error: "Only agents are allowed this operation" } );
+  // if ( role !== "agent" ) return res.status( 400 ).json( { error: "Only agents are allowed this operation" } );
 
   User.findByIdAndUpdate( { _id: userId }, { $set: { parentId: refererId } }, { new: true } )
     .then( resp => {
@@ -43,7 +43,7 @@ exports.updateParentId = ( req, res ) => {
 
 /**
  * Referers settlement
- */
+*/
 exports.refererSettlement = ( req, res ) => {
   const { refererPhone } = req.params;
   const { refererId } = req.cookies;
@@ -52,13 +52,13 @@ exports.refererSettlement = ( req, res ) => {
   if ( !refererId ) return res.status( 400 ).json( { error: "You do not have a referer" } );
   User.findByIdAndUpdate( { _id: refererId }, { $inc: { balance: +200 } }, { new: true } )
     .then( user => {
-      if ( !user ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
+      // if ( !user ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
       const phone = user.phone;
       smsalert(phone, 200)
       const grandReferer = user.refererId;
-      User.findOneAndUpdate( { _id: directReferer }, { $inc: { balance: +50 } }, { new: true } )
+      User.findOneAndUpdate( { _id: grandReferer }, { $inc: { balance: +50 } }, { new: true } )
         .then( resp => {
-          if ( !resp ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
+          // if ( !resp ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
           const ancestralReferer = resp.refererId;
           const phone = resp.phone;
           smsalert( phone, 50 );
@@ -66,7 +66,7 @@ exports.refererSettlement = ( req, res ) => {
             .then( response => {
               const phone = response.phone;
               smsalert( phone, 8 );
-              if ( !response ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
+              // if ( !response ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
             } )
         } )
       res.json( user );

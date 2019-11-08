@@ -67,10 +67,10 @@ class Profile extends Component{
                 <Card className="p-4">
                   <CardBody>
                     <Form>
-                      <h1>{user.firstName} {user.lastName} profile</h1>
+                      <h1>{user.name} profile</h1>
                       <Row>
                         <Col xs="6">
-                          <label>Firt name</label>
+                          <label>Name</label>
                           <InputGroup className="mb-3">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
@@ -80,142 +80,73 @@ class Profile extends Component{
                             <Input
                               type="text"
                               placeholder="First name"
-                              value={user.firstName}
+                              value={user.name}
                             />
                           </InputGroup>
                         </Col>
                         <Col xs="6" className="text-right">
-                          <label>Last name</label>
+                          <label>Email</label>
                           <InputGroup className="mb-4">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i className="icon-user"></i>
+                                <i className="icon-envelope"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
                               type="text"
                               placeholder="Last name"
-                            value={user.lastName}
+                            value={user.email}
                             />
                           </InputGroup>
                         </Col>
                       </Row>
                       <Row>
                         <Col xs="6">
-                          <label>Email</label>
+                          <label>Phone</label>
                           <InputGroup className="mb-3">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i className="icon-user"></i>
+                                <i className="icon-phone"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
                               type="text"
                               placeholder="Email"
-                              value={user.email}
+                              value={user.phone}
                             />
                           </InputGroup>
                         </Col>
                         <Col xs="6" className="text-right">
-                          <label>Username</label>
+                          <label>Referer phone</label>
                           <InputGroup className="mb-4">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i className="icon-user"></i>
+                                <i className="icon-phone"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
                               type="text"
                               
-                              value={user.username}
-                            />
-                          </InputGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs="6">
-                          <label>Referer Phone number</label>
-                          <InputGroup className="mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-phone"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              type="text"
-                              placeholder="Referer phone"
-                              value={user.referPhone}
-                            />
-                          </InputGroup>
-                        </Col>
-                        <Col xs="6" className="text-right">
-                          <label>Phone Number</label>
-                          <InputGroup className="mb-4">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-phone"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              type="text"
-                              placeholder="Your phone number"
-                              value={user.phone}
-                            />
-                          </InputGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs="6">
-                          <label>State</label>
-                          <InputGroup className="mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-home"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              type="text"
-                              placeholder="State"
-                              value={user.address && user.address.state}
-                            />
-                          </InputGroup>
-                        </Col>
-                        <Col xs="6" className="text-right">
-                          <label>City</label>
-                          <InputGroup className="mb-4">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-home"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              type="text"
-                              placeholder="City"
-                              value={user.address && user.address.city}
+                              value={user.refererPhone}
                             />
                           </InputGroup>
                         </Col>
                       </Row>
                       <Row>
                         <Col xs="12">
-                          <label>Street</label>
+                          <label>Address</label>
                           <InputGroup className="mb-3">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
                                 <i className="icon-home"></i>
                               </InputGroupText>
                             </InputGroupAddon>
-                            <input
+                            <Input
                               type="text"
-                              value={user.address && user.address.street}
-                              className="form-control"
+                              placeholder="Referer phone"
+                              value={user.address}
                             />
                           </InputGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs="6">
-
                         </Col>
                       </Row>
                     </Form>
@@ -226,7 +157,7 @@ class Profile extends Component{
             </Col>
             <Col md="4">
               {users.error && users.error.length > 0 ? <Alert color="danger">{users.error}</Alert> : null}
-              <Form enctype="multipart/form-data">
+              <Form encType="multipart/form-data">
                 <InputGroup className="mb-3">
                   <Input
                     type="file"
@@ -246,9 +177,6 @@ class Profile extends Component{
                   </Button>
                   )}
                   
-                </Col>
-                <Col md="6">
-                  <Link to="editProfile" className="btn btn-primary">Edit Profile</Link>
                 </Col>
               </Row>
               
