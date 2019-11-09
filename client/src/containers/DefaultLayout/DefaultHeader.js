@@ -20,7 +20,7 @@ class DefaultHeader extends Component {
 
   handleLogout = () => {
     Auth.deauthenticateUser();
-    this.props.history.push( "/login" );
+    window.location.href = "/login";
     this.onLogout();
   }
 

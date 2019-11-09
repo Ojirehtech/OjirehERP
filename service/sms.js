@@ -1,7 +1,7 @@
 const fetch = require( "node-fetch" );
 
-module.exports = ( phone, amount ) => {
-  console.log(phone, amount)
+module.exports = (res, phone, amount ) => {
+  console.log(res, phone, amount)
   const message = `Your OjirehPrime card has been credited with NGN${ amount }`;
   const sender = "OjirePrime";
   const url = `http://www.jamasms.com/smsapi/?username=${ process.env.SMS_USERNAME }&password=${ process.env.SMS_PASS }&sender=${ sender }&numbers=${ phone }&message=${ message }`;
@@ -12,8 +12,9 @@ module.exports = ( phone, amount ) => {
   } )
     .then( resp => {
       console.log( resp );
+      res.json(resp)
     } )
     .catch( err => {
-      console.log( err.message );
+      res.status( 400 ).json( { error: err.message } );
     } );
 }

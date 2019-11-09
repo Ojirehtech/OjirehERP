@@ -19,6 +19,7 @@ import {
 import navigation from '../../_nav';
 // routes config
 import routes from '../../routes';
+import Auth from "../../helper/Auth";
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
@@ -29,12 +30,14 @@ class MainDashboard extends Component {
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
   render() {
-    const { history } = this.props;
+    if ( !Auth.isUserAuthenticated() ) {
+      window.location.href = "login"
+    }
     return (
       <div className="app">
         <AppHeader fixed>
           <Suspense  fallback={this.loading()}>
-            <DefaultHeader onLogout={e=>this.signOut(e)} history={history}/>
+            <DefaultHeader />
           </Suspense>
         </AppHeader>
         <div className="app-body">

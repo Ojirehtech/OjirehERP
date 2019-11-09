@@ -54,7 +54,10 @@ class Register extends Component {
       incentives,
       history
     } = this.props;
-    console.log(history)
+
+    if ( incentives.success === true || incentives.error.includes( "You do not have" ) ) {
+      window.location.href = "/login";
+    }
     return (
       <div>
         <RegisterationForm

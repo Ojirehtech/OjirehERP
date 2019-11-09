@@ -11,6 +11,9 @@ import {
   GET_BY_PARENTID_START,
   GET_BY_PARENTID_SUCCESS,
   GET_BY_PARENTID_FAILED,
+  UPDATE_PARENTID_START,
+  UPDATE_PARENTID_SUCCESS,
+  UPDATE_PARENTID_FAILED,
 } from "../actions/action_user";
 
 const initialState = {
@@ -99,6 +102,26 @@ const userReducers = ( state = initialState, action ) => {
         users: action.data,
       }
     case GET_BY_PARENTID_FAILED:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: action.error
+      }
+    case UPDATE_PARENTID_START:
+      return {
+        ...state,
+        loading: true,
+        success: false,
+      }
+    case UPDATE_PARENTID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        user: action.data,
+      }
+    case UPDATE_PARENTID_FAILED:
       return {
         ...state,
         loading: false,

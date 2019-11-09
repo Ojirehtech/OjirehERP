@@ -13,6 +13,10 @@ export const GET_BY_PARENTID_START = "GET_BY_PARENTID_START";
 export const GET_BY_PARENTID_SUCCESS = "GET_BY_PARENTID_SUCCESS";
 export const GET_BY_PARENTID_FAILED = "GET_BY_PARENTID_FAILED";
 
+export const UPDATE_PARENTID_START = "UPDATE_PARENTID_START";
+export const UPDATE_PARENTID_SUCCESS = "UPDATE_PARENTID_SUCCESS";
+export const UPDATE_PARENTID_FAILED = "UPDATE_PARENTID_FAILED";
+
 const BASE_URL = "http://localhost:3030/api/v1";
 
 export const getUserStart = () => {
@@ -188,6 +192,53 @@ export const getByParentId = () => {
       } )
       .catch( err => {
         dispatch( getByParentIdFailed( "Network Error" ) );
+      } );
+  }
+}
+
+export const updateParentIdStart = () => {
+  return {
+    type: UPDATE_PARENTID_START
+  }
+}
+
+export const updateParentIdSuccess = ( data ) => {
+  return {
+    type: UPDATE_PARENTID_SUCCESS,
+    data
+  }
+}
+
+export const updateParentIdFailed = ( error ) => {
+  return {
+    type: UPDATE_PARENTID_FAILED,
+    error
+  }
+}
+
+export const updateParentId = () => {
+  const refererPhone = isAuthenticated().user.refererPhone;
+  const userId = isAuthenticated().user._id;
+  const token = isAuthenticated().token;
+  console.log(token, "thei is the token")
+  return dispatch => {
+    dispatch( updateParentIdStart() );
+    fetch( `${ BASE_URL }/refer/${ userId }/${ refererPhone }`, {
+      method: "PUT",
+      "Content-Type": "application/json",
+      ACCEPT: "application/json",
+      "x-auth-token": isAuthenticated().token
+    } )
+      .then( response => response.json() )
+      .then( resp => {
+        if ( resp.error ) {
+          dispatch( updateParentIdFailed( resp.error ) );
+          return;
+        }
+        dispatch( updateParentIdSuccess( resp ) );
+      } )
+      .catch( err => {
+        dispatch( updateParentIdFailed( err.message ) );
       } );
   }
 }

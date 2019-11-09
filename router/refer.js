@@ -4,10 +4,11 @@ const {
   refererSettlement,
   updateParentId
 } = require( "../controller/refer" );
+const requireLogin = require( "../config/auth" );
 const router = express.Router();
 
 router.get( "/ojirehprime/agent/:userId", refer );
-router.put( "/refer/:userId/:role/:parentId", updateParentId );
+router.put( "/refer/:userId/:refererPhone", requireLogin, updateParentId );
 router.put( "/refer/:refererPhone", refererSettlement );
 
 module.exports = router;

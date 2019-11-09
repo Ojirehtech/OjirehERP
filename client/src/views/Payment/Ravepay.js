@@ -27,10 +27,8 @@ class Ravepay extends Component {
   }
 
   render() {
-    const { phone, email, amount, pubKey, incentives } = this.props;
-    if ( incentives.success === true || incentives.error.includes("You do not have") ) {
-      window.location.href = "/login";
-    }
+    const { phone, email, amount, pubKey,  } = this.props;
+    
     
     return (
       <Row className="justify-content-md-center mt-5">

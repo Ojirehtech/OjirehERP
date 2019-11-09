@@ -6,7 +6,7 @@ const { Schema } = mongoose;
  * We create the user schema
  */
 const userSchema = new Schema( {
-  email: { type: String, unique: true },
+  email: { type: String, unique: [ true, "Email address already in use by another user"] },
   name: { type: String },
   parentId: { type: String },
   phone: { type: String, required: [ true, "Your phone number is required"] },

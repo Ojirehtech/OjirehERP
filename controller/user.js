@@ -91,12 +91,12 @@ exports.signIn = ( req, res ) => {
        * We get the user token @user.generatetoken() send it with the json response
        */
       const token = user.generateToken();
-      const { _id, email, name, cardBought, parentId, role, profileUpdated } = user;
+      const { _id, email, name, cardBought, parentId, refererPhone, role, profileUpdated } = user;
       const refererLink = `http://localhost:3030/api/v1/ojirehprime/agent/${ _id }`;
       res.cookie( "token", token, { expire: new Date() + 9999 } );
       res.json( {
         token,
-        user: { _id, email, cardBought, parentId, role, name, refererLink, profileUpdated }
+        user: { _id, email, cardBought, refererPhone, parentId, role, name, refererLink, profileUpdated }
       } );
     } )
     .catch( err => {

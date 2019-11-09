@@ -5,9 +5,10 @@ import {
   Col,
   Row,
 } from 'reactstrap';
-
+import { connect } from "react-redux";
 import { isAuthenticated } from "../../helper/authenticate";
 import SocialShare from '../Share/SocialShare';
+import { updateParentId } from '../../store/actions/action_user';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -18,11 +19,18 @@ class Dashboard extends Component {
     };
   }
 
+  async componentDidMount() {
+    const { updateParentId } = this.props;
+    try {
+      await updateParentId()
+    }catch(err) {}
+  }
 
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
   render() {
     const refererLink = isAuthenticated().user ? isAuthenticated().user.refererLink : null;
+    console.log(isAuthenticated().user.refererPhone)
     return (
       <div className="animated fadeIn">
         <Row>
@@ -39,7 +47,7 @@ class Dashboard extends Component {
             <Card className="text-white bg-info">
               <CardBody className="pb-0">
                 <div className="text-value">9.823</div>
-                <div className="mb-4">Indirect Network</div>
+                <div className="mb-4">Direct Network</div>
               </CardBody>
               
             </Card>
@@ -90,4 +98,16 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = ( state ) => {
+  return {
+    users: state.users
+  }
+}
+
+const mapDispatchToProps = ( dispatch ) => {
+  const dispatchProps = {
+    updateParentId: () => dispatch(updateParentId())
+  }
+  return dispatchProps;
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
