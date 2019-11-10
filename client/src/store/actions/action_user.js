@@ -220,14 +220,14 @@ export const updateParentId = () => {
   const refererPhone = isAuthenticated().user.refererPhone;
   const userId = isAuthenticated().user._id;
   const token = isAuthenticated().token;
-  console.log(token, "thei is the token")
+  console.log(refererPhone, token, "thei is the token")
   return dispatch => {
     dispatch( updateParentIdStart() );
     fetch( `${ BASE_URL }/refer/${ userId }/${ refererPhone }`, {
       method: "PUT",
       "Content-Type": "application/json",
       ACCEPT: "application/json",
-      "x-auth-token": isAuthenticated().token
+      "x-auth-token": token
     } )
       .then( response => response.json() )
       .then( resp => {

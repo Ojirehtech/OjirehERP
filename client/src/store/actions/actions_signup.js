@@ -32,6 +32,7 @@ export const registrationFailed = ( error ) => {
  * @param {data} data of the person registering
  */
 export const register = ( data ) => {
+  console.log(data, "this is data containing referer phone number")
   return dispatch => {
     dispatch( registrationStart() );
     fetch( `${ BASE_URL }`, {

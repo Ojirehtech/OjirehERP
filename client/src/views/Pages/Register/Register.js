@@ -30,6 +30,7 @@ class Register extends Component {
       address,
       refererPhone
     }
+    
     if ( !name || !email || !phone || !refererPhone || !address || refererPhone.length < 11) {
       return;
     } else {

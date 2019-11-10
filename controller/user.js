@@ -16,15 +16,15 @@ exports.signup = ( req, res ) => {
     refererPhone,
     address
   } = req.body;
-  
+  console.log(phone, "user phone", refererPhone, "refererPhone")
   if ( !phone ) return res.status( 400 ).json( { error: "Phone number is missing" } );
   if ( !name ) return res.status( 400 ).json( { error: "Your first name is required" } );
   if ( !address ) return res.status( 400 ).json( { error: "Your last name is required" } );
   if (!refererPhone) return res.status(400).json({ error: "Your referer phone number is required"});
 
-  User.findOne( { phone } )
+  User.findOne( { phone: phone } )
     .then( user => {
-      if ( user ) return res.status( 400 ).json( { error: `The phone number ${ phone } has been used by someone else` } );
+      if ( user ) return res.status( 400 ).json( { error: `The phone number ${ phone } has been used by another user` } );
       let newUser = new User( {
         email,
         name,

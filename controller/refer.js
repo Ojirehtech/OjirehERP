@@ -1,5 +1,5 @@
 const { User } = require( "../models/user" );
-const { smsalert } = require("../service/sms")
+const smsalert = require("../service/sms")
 require( "dotenv" ).config();
 
 /**
@@ -28,7 +28,7 @@ exports.refer = ( req, res ) => {
 exports.updateParentId = ( req, res ) => {
   const { userId, refererPhone } = req.params;
   
-  if ( !userId || refererPhone ) return res.status( 400 ).json( { error: "Unknow user" } );
+  if ( !userId || !refererPhone ) return res.status( 400 ).json( { error: "Unknow user" } );
 
   User.findByIdAndUpdate({ _id: userId })
     .then( resp => {
@@ -36,12 +36,15 @@ exports.updateParentId = ( req, res ) => {
       if ( !resp.parentId ) {
         User.findOne( { phone: refererPhone } )
           .then( user => {
+            if ( !user ) return;
+            console.log( user._id );
             resp.parentId = user._id;
             resp.save();
             return res.json( resp );
           } );
+      } else {
+        return;
       }
-    
     } )
     .catch( err => {
       res.json( { error: err.message } );
@@ -53,21 +56,22 @@ exports.updateParentId = ( req, res ) => {
 */
 exports.refererSettlement = ( req, res ) => {
   const { refererPhone } = req.params;
-  const { refererId } = req.cookies;
+  // const { refererId } = req.cookies;
   console.log("the entry point")
   if ( !refererPhone ) return res.status( 400 ).json( { error: "Unknown referer. You must have a refer to complete this operation" } );
-  if ( !refererId ) return res.status( 400 ).json( { error: "You do not have a referer" } );
-  User.findByIdAndUpdate( { _id: refererId }, { $inc: { balance: +200 } }, { new: true } )
+  // if ( !refererId ) return res.status( 400 ).json( { error: "You do not have a referer" } );
+  User.findOneAndUpdate( { phone: refererPhone }, { $inc: { balance: +200 } }, { new: true } )
     .then( user => {
-      // if ( !user ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
+      if ( !user ) return;
       const phone = user.phone;
+      console.log(phone, " first phone to recieve alert of 200")
       smsalert( res, phone, 200 );
-      const grandReferer = user.refererId;
-      console.log("this. the first user to get reward")
+      const grandReferer = user.parentId;
+      console.log(user, "this. the first user to get reward")
       User.findOneAndUpdate( { _id: grandReferer }, { $inc: { balance: +50 } }, { new: true } )
         .then( resp => {
-          // if ( !resp ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
-          const ancestralReferer = resp.refererId;
+          if ( !resp ) return;
+          const ancestralReferer = resp.parentId;
           const phone = resp.phone;
           smsalert( res, phone, 50 );
           console.log(resp, " this is resp")
@@ -76,7 +80,7 @@ exports.refererSettlement = ( req, res ) => {
               const phone = response.phone;
               smsalert( res, phone, 8 );
               console.log(response, "")
-              // if ( !response ) return res.status( 400 ).json( { error: "No parent ID found for this agent" } );
+              if ( !response ) return;
             } )
         } )
       console.log(user, " user with the reward")

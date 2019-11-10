@@ -8,7 +8,7 @@ const requireLogin = require( "../config/auth" );
 const router = express.Router();
 
 router.get( "/ojirehprime/agent/:userId", refer );
-router.put( "/refer/:userId/:refererPhone", requireLogin, updateParentId );
+router.put( "/refer/:userId/:refererPhone", updateParentId );
 router.put( "/refer/:refererPhone", refererSettlement );
 
 module.exports = router;
