@@ -16,6 +16,8 @@ const Network = React.lazy(() => import('./views/MyNetwork/Network/Network'));
 const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy( () => import( './views/Users/User' ) );
+const Transfer = React.lazy( () => import( "./views/Transfer/Transfer" ) )
+
 
 // const Home = React.lazy( () => import( "./views/home/Home" ) );
 
@@ -36,6 +38,7 @@ const routes = [
   { path: '/notifications/alerts', name: 'Alerts', component: Alerts },
   { path: '/notifications/badges', name: 'Badges', component: Badges },
   { path: '/notifications/modals', name: 'Modals', component: Modals },
+  { path: "/transfer", name: "Transfer Fund", component: Transfer},
   { path: '/widgets', name: 'Widgets', component: Widgets },
   { path: '/charts', name: 'Charts', component: Charts },
   { path: '/users', exact: true,  name: 'Users', component: Users },
