@@ -1,4 +1,5 @@
 const { User } = require( "../models/user" );
+const { debitSms, creditSms } = require( "../service/sms" );
 
 /**
  * Handles withdrawal requests from agent
@@ -73,5 +74,47 @@ exports.requestApproval = ( req, res ) => {
     } )
     .catch( err => {
       res.json( { error: err.message } );
+    } );
+}
+
+/**
+ * handles fund transfer
+ */
+exports.transferFund = ( req, res ) => {
+  const { amount, phone, userId } = req.body;
+  // console.log(req.params, ' this is req.params')
+  // const { userId } = req.params;
+  console.log(amount, phone, userId)
+
+  if ( !amount ) return res.status( 400 ).json( { error: "Amount to transfer is not specified" } );
+  if ( !phone ) return res.status( 400 ).json( { error: "Enter the phone number of the reciever" } );
+  if ( !userId ) return res.status( 400 ).json( { error: "invalid request parameters" } );
+  User.findById( { _id: userId } )
+    .then( user => {
+      if ( !user ) return res.status( 400 ).json( { error: "You do not have Ojirehprime card" } );
+      if ( amount > user.balance ) return res.status( 400 ).json( { error: "Request failed. Insufficient balance" } );
+      User.findOne( { phone: phone } )
+        .then( reciever => {
+          if ( !reciever ) return res.status( 400 ).json( {
+            error: `The user with the phone number ${ phone } does not have Ojirehprime card`
+          } );
+          User.findByIdAndUpdate( { _id: userId }, { $inc: { balance: -amount } }, { new: true } )
+            .then( response => {
+              const alertNum = response.phone;
+              const bal = response.balance;
+              debitSms( res, alertNum, amount, bal );
+              User.findOneAndUpdate( { phone: phone }, { $inc: { balance: +amount } }, { new: true } )
+                .then( credit => {
+                  const creditNum = credit.phone;
+                  const balance = credit.balance;
+                  creditSms( res, creditNum, amount, balance );
+                } )
+            } ); 
+          res.json(reciever)
+        } )
+      
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
     } );
 }
