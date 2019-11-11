@@ -8,7 +8,7 @@ import {
 import { connect } from "react-redux";
 import { isAuthenticated } from "../../helper/authenticate";
 import SocialShare from '../Share/SocialShare';
-import { updateParentId } from '../../store/actions/action_user';
+import { updateParentId, getByParentId } from '../../store/actions/action_user';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -106,7 +106,8 @@ const mapStateToProps = ( state ) => {
 
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
-    updateParentId: () => dispatch(updateParentId())
+    updateParentId: () => dispatch( updateParentId() ),
+    getByParentId: () => dispatch(getByParentId()),
   }
   return dispatchProps;
 }

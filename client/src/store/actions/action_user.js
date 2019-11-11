@@ -179,7 +179,8 @@ export const getByParentId = () => {
       method: "GET",
       headers: {
         ACCEPT: "application/json",
-        "Content-Type": "application/jsoon"
+        "Content-Type": "application/jsoon",
+        "x-auth-token": isAuthenticated().token
       }
     } )
       .then( response => response.json() )
@@ -220,14 +221,15 @@ export const updateParentId = () => {
   const refererPhone = isAuthenticated().user.refererPhone;
   const userId = isAuthenticated().user._id;
   const token = isAuthenticated().token;
-  console.log(refererPhone, token, "thei is the token")
   return dispatch => {
     dispatch( updateParentIdStart() );
-    fetch( `${ BASE_URL }/refer/${ userId }/${ refererPhone }`, {
+    fetch( `${ BASE_URL }/user/parentId/${ userId }/${ refererPhone }`, {
       method: "PUT",
-      "Content-Type": "application/json",
-      ACCEPT: "application/json",
-      "x-auth-token": token
+      headers: {
+        "Content-Type": "application/json",
+        ACCEPT: "application/json",
+        "x-auth-token": token
+      }
     } )
       .then( response => response.json() )
       .then( resp => {

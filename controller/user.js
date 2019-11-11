@@ -47,33 +47,41 @@ exports.signup = ( req, res ) => {
  */
 exports.generateOTP = ( req, res ) => {
   const otpCode = Math.floor( 1000 + Math.random() * 9000 );
-  const { userId } = req.params;
-  console.log(userId)
+  const { phone } = req.params;
+  console.log(phone)
   const sender = "OjirehPrime";
   const message = `Your verification pass code is ${otpCode}`
   
-  const url = `http://www.jamasms.com/smsapi/?username=${process.env.SMS_USERNAME}&password=${process.env.SMS_PASS}&sender=${sender}&numbers=${userId}&message=${message}
+  const url = `http://www.jamasms.com/smsapi/?username=${process.env.SMS_USERNAME}&password=${process.env.SMS_PASS}&sender=${sender}&numbers=${phone}&message=${message}
 `
-  if ( !userId ) return res.status( 400 ).json( { error: "Your phone is required" } );
-  User.findOneAndUpdate( { phone: userId } )
+  if ( !phone ) return res.status( 400 ).json( { error: "Your phone is required" } );
+  User.find( { phone } )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: `User with the phone number ${ userId } does not exist` } );
-      user.otp = otpCode;
-      user.save();
-      console.log(user)
-      fetch( url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/html"
-        }
-      } )
+      const userId = user[0]._id;
+      console.log(userId, " user id here")
+      console.log(user, )
+      User.findByIdAndUpdate( { _id: userId }, { $set: { otp: otpCode } }, { new: true } )
         .then( resp => {
-          return res.json( resp );
-        } )
-        .catch( err => {
-          res.status( 400 ).json( { error: err.message } );
+          console.log( resp )
+          fetch( url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "text/html"
+            }
+          } )
+            .then( resp => {
+              res.json( resp );
+            } )
+            .catch( err => {
+              res.status( 400 ).json( { error: err.message } );
+            } );
         } );
-  })
+      
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
 }
 
 /**
@@ -91,12 +99,12 @@ exports.signIn = ( req, res ) => {
        * We get the user token @user.generatetoken() send it with the json response
        */
       const token = user.generateToken();
-      const { _id, email, name, cardBought, parentId, refererPhone, role, profileUpdated } = user;
+      const { _id, email, name, cardBought, phone, parentId, refererPhone, role, profileUpdated } = user;
       const refererLink = `http://localhost:3030/api/v1/ojirehprime/agent/${ _id }`;
       res.cookie( "token", token, { expire: new Date() + 9999 } );
       res.json( {
         token,
-        user: { _id, email, cardBought, refererPhone, parentId, role, name, refererLink, profileUpdated }
+        user: { _id, email, cardBought, phone, refererPhone, parentId, role, name, refererLink, profileUpdated }
       } );
     } )
     .catch( err => {
@@ -143,6 +151,30 @@ exports.fetchUser = ( req, res ) => {
 }
 
 /**
+ * Set the parent id of the user
+ */
+exports.setParentId = ( req, res ) => {
+  const { userId, refererPhone } = req.params;
+  if ( !userId ) return res.status( 400 ).json( { error: "User not found" } );
+  if ( !refererPhone ) return res.status( 400 ).json( { error: "Invalid parameters" } );
+  User.findOne( { phone: refererPhone } )
+    .then( referer => {
+      if ( !referer ) return res.status( 400 ).json( { error: "Referer not found" } );
+      const refererId = referer._id;
+      console.log( refererId, " the referer Id" );
+      User.findByIdAndUpdate( { _id: userId }, { $set: { parentId: refererId } }, { new: true } )
+        .then( user => {
+          if ( !user ) return res.status( 400 ).json( { error: "Could not update user account" } )
+          console.log( user, " the updated user" )
+          res.json( user );
+        } )
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
+
+/**
  * Get user by parentId
  */
 exports.userByParentId = ( req, res ) => {
@@ -158,45 +190,6 @@ exports.userByParentId = ( req, res ) => {
     } );
 }
 
-/**
- * Updates user information
- */
-exports.updateUserInfo = ( req, res ) => {
-  const { userId } = req.params;
-  if ( !userId ) return res.status( 400 ).json( { error: "Unknown user ID. Please login to update your profile" } );
-  const {
-    firstName,
-    lastName,
-    street,
-    city,
-    state,
-    phone,
-    refererPhone
-  } = req.body;
-  // const { refererId } = req.cookie;
-  if ( !userId ) return res.status( 400 ).json( { error: "User ID is required for this operation" } );
-  User.findByIdAndUpdate( { _id: userId } )
-    .then( user => {
-      if ( !user ) return res.status( 400 ).json( { error: `User with ID ${userId} not found` } );
-      if ( firstName ) user.firstName = firstName;
-      if ( lastName ) user.lastName = lastName;
-      if ( street ) user.address.street = street;
-      if ( city ) user.address.city = city;
-      if ( state ) user.address.state = state;
-      if ( phone ) user.phone = phone;
-      if ( refererPhone ) user.referPhone = refererPhone;
-      // if ( refererId ) user.parentId = refererId;
-      user.save();
-      User.findByIdAndUpdate( { _id: userId }, { $set: { profileUpdated: true } }, { new: true } )
-        .then( resp => {
-          console.log( resp )
-          res.json( resp );
-        } );
-    } )
-    .catch( err => {
-      res.status( 400 ).json( { error: err.message } );
-    } );
-}
 
 /**
  * Gets the profile photo of an agent

@@ -108,12 +108,6 @@ const RegisterationForm = ( {
                       onChange={( e ) => handleChange( e, "refererPhone" )}
                     />
                   </InputGroup>
-                  
-                  
-                  {/* {registration.loading === true ? <Spinner color="primary" /> : (
-                    <Button color="success" block>Register</Button>
-                  )} */}
-                  
                 </Form>
                 <Ravepay
                   email={email}
