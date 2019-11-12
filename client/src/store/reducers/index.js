@@ -4,6 +4,7 @@ import login from "./reducers_login";
 import edit from "./reducers_edit";
 import users from "./reducers_user";
 import incentives from "./reducers_pay_incentives";
+import transaction from "./reducers_transaction";
 
 const rootReducer = combineReducers( {
   register,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers( {
   edit,
   users,
   incentives,
+  transaction,
 } );
 
 export default rootReducer;

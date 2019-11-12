@@ -81,7 +81,7 @@ exports.requestApproval = ( req, res ) => {
  * handles fund transfer
  */
 exports.transferFund = ( req, res ) => {
-  const { amount, phone, userId } = req.body;
+  const { amount, phone, userId, accountHolder } = req.body;
   // console.log(req.params, ' this is req.params')
   // const { userId } = req.params;
   console.log(amount, phone, userId)

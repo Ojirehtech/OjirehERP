@@ -35,7 +35,7 @@ export const fundTransferFailed = ( error ) => {
 export const fundTransfer = ( data ) => {
   return dispatch => {
     dispatch( fundTransferStart() );
-    fetch( `${ BASE_URL }`, {
+    fetch( `${ BASE_URL }/request/transfer`, {
       method: "PUT",
       headers: {
         ACCEPT: "application/json",

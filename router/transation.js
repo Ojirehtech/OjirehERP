@@ -7,5 +7,6 @@ const router = Router();
 
 router.put( "/request/:userId/:role", withdrawalRequest )
 router.put( "/request/approval/:userId/:agentId/:requestId/:role", requestApproval );
-router.put( "/request/transfer", transferFund );
+router.put( "/request/transfer", requireLogin, transferFund );
+
 module.exports = router;
