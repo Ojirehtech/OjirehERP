@@ -13,6 +13,7 @@ export const APPROVE_REQUEST_FAILED = "APPROVE_REQUEST_FAILED";
 export const GET_TRANSFERS_START = "GET_TRANSFERS_START";
 export const GET_TRANSFERS_SUCCESS = "GET_TRANSFERS_SUCCESS";
 export const GET_TRANSFERS_FAILED = "GET_TRANSFERS_FAILED";
+
 export const FINALIZE_TRANSFER_START = "FINALIZE_TRANSFER_START";
 export const FINALIZE_TRANSFER_SUCCESS = "FINALIZE_TRANSFER_SUCCESS";
 export const FINALIZE_TRANSFER_FAILED = "FINALIZE_TRANSFER_FAILED";
@@ -67,7 +68,7 @@ export const fundTransfer = ( data ) => {
 
 /**
  * Handles withdrawal requests
- */
+*/
 export const withdrawalRequestStart = () => {
   return {
     type: WITHDRAWAL_REQUEST_START
@@ -88,10 +89,10 @@ export const withdrawalRequestFailed = ( error ) => {
   }
 }
 
-export const withdrawalRequest = ( data ) => {
+export const withdrawalRequest = ( userId, role, data ) => {
   return dispatch => {
     dispatch( withdrawalRequestStart() );
-    fetch( `${ BASE_URL }/request`, {
+    fetch( `${ BASE_URL }/request/${userId}/${role}`, {
       method: "PUT",
       headers: {
         ACCEPT: "application/json",
@@ -248,6 +249,9 @@ export const finalizeTransfer = ( transferId ) => {
         }
         dispatch( finalizeTransferSuccess( resp ) );
       } )
+      .then( () => {
+        dispatch( getTransfer() );
+      })
       .catch( err => {
         dispatch( finalizeTransferFailed( "Could not complete request. Try again" ) );
       } );

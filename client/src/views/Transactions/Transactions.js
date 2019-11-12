@@ -33,7 +33,7 @@ class Transactions extends Component {
       <div>
         <Table className="mt-5">
           <thead>
-            <tr style={{ color: '#20a8d8'}}>
+            <tr style={{ color: '#20a8d8' }}>
               <th>S/N</th>
               <th>Sender</th>
               <th>Amount</th>
@@ -45,21 +45,20 @@ class Transactions extends Component {
             </tr>
           </thead>
           <tbody>
-            { transaction.loading === true ? <Spinner color="primary" /> :
+            {transaction.loading === true ? <Spinner color="primary" /> :
               newArr.length > 0 ? newArr.map( ( transact, index ) => (
-              <Content
-                key={transact._id}
-                index={index}
-                transact={transact}
-                transaction={transaction}
-                onCompleteTransaction={this.onCompleteTransaction}
-              />
-            )): "List is empty"}
-              
+                <Content
+                  key={transact._id}
+                  index={index}
+                  transact={transact}
+                  transaction={transaction}
+                  onCompleteTransaction={this.onCompleteTransaction}
+                />
+              ) ) : "List is empty"}
           </tbody>
         </Table>
       </div>
-    )
+    );
   }
 }
 

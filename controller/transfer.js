@@ -45,10 +45,9 @@ exports.getTransfers = ( req, res ) => {
  * Finalize pending transfer transactions
  */
 exports.finalize = ( req, res ) => {
-  const { transactionId } = req.params;
-
-  if ( !transactionId ) return res.status( 400 ).json( { error: "Unknow transaction ID" } );
-  Transfer.findByIdAndUpdate( { _id: transactionId }, { $set: { status: true } }, { new: true } )
+  const { transferId } = req.params;
+  if ( !transferId ) return res.status( 400 ).json( { error: "Unknow transaction ID" } );
+  Transfer.findByIdAndUpdate( { _id: transferId }, { $set: { status: true } }, { new: true } )
     .then( trans => {
       if ( !trans ) return res.status( 400 ).json( { error: "Could not finalize this transaction. Please try again" } );
       res.json( trans );

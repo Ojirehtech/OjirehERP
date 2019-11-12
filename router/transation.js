@@ -5,7 +5,7 @@ const requireLogin = require( "../config/auth" );
 
 const router = Router();
 
-router.put( "/request/:userId/:role", withdrawalRequest )
+router.put( "/request/:userId/:role", withdrawalRequest );
 router.put( "/request/approval/:userId/:agentId/:requestId/:role", requestApproval );
 router.put( "/request/transfer", requireLogin, transferFund );
 

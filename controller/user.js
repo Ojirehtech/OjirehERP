@@ -16,7 +16,6 @@ exports.signup = ( req, res ) => {
     refererPhone,
     address
   } = req.body;
-  console.log(phone, "user phone", refererPhone, "refererPhone")
   if ( !phone ) return res.status( 400 ).json( { error: "Phone number is missing" } );
   if ( !name ) return res.status( 400 ).json( { error: "Your first name is required" } );
   if ( !address ) return res.status( 400 ).json( { error: "Your last name is required" } );
@@ -48,7 +47,6 @@ exports.signup = ( req, res ) => {
 exports.generateOTP = ( req, res ) => {
   const otpCode = Math.floor( 1000 + Math.random() * 9000 );
   const { phone } = req.params;
-  console.log(phone)
   const sender = "OjirehPrime";
   const message = `Your verification pass code is ${otpCode}`
   
@@ -59,8 +57,6 @@ exports.generateOTP = ( req, res ) => {
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: `User with the phone number ${ userId } does not exist` } );
       const userId = user[0]._id;
-      console.log(userId, " user id here")
-      console.log(user, )
       User.findByIdAndUpdate( { _id: userId }, { $set: { otp: otpCode } }, { new: true } )
         .then( resp => {
           console.log( resp )
