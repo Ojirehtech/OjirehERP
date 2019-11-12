@@ -16,7 +16,7 @@ exports.creditSms = (res, phone, amount, balance ) => {
       // console.log( resp );
     } )
     .catch( err => {
-      res.status( 400 ).json( { error: err.message } );
+      // res.status( 400 ).json( { error: err.message } );
     } );
 }
 
@@ -36,6 +36,6 @@ exports.debitSms = ( res, phone, amount, balance ) => {
       // console.log( resp );
     } )
     .catch( err => {
-      res.status( 400 ).json( { error: err.message } );
+      // res.status( 400 ).json( { error: err.message } );
     } );
 }

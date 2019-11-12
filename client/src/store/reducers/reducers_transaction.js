@@ -8,6 +8,12 @@ import {
   APPROVE_REQUEST_START,
   APPROVE_REQUEST_SUCCESS,
   APPROVE_REQUEST_FAILED,
+  GET_TRANSFERS_START,
+  GET_TRANSFERS_SUCCESS,
+  GET_TRANSFERS_FAILED,
+  FINALIZE_TRANSFER_START,
+  FINALIZE_TRANSFER_SUCCESS,
+  FINALIZE_TRANSFER_FAILED,
 } from "../actions/actions_transaction";
 
 const initialState = {
@@ -70,6 +76,45 @@ const transactionReducer = ( state = initialState, action ) => {
         transaction: action.data,
       }
     case APPROVE_REQUEST_FAILED:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: action.error
+      }
+    case GET_TRANSFERS_START:
+      return {
+        ...state,
+        loading: true
+      }
+    case GET_TRANSFERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        transaction: action.data
+      }
+    case GET_TRANSFERS_FAILED:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: action.error
+      }
+    case FINALIZE_TRANSFER_START:
+      return {
+        ...state,
+        loading: true,
+        
+      }
+    case FINALIZE_TRANSFER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        transaction: action.data,
+      }
+    case FINALIZE_TRANSFER_FAILED:
       return {
         ...state,
         loading: false,

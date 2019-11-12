@@ -1,5 +1,6 @@
 const { User } = require( "../models/user" );
 const { debitSms, creditSms } = require( "../service/sms" );
+const { makeTransfer } = require( "./transfer" );
 
 /**
  * Handles withdrawal requests from agent
@@ -81,10 +82,10 @@ exports.requestApproval = ( req, res ) => {
  * handles fund transfer
  */
 exports.transferFund = ( req, res ) => {
-  const { amount, phone, userId, accountHolder } = req.body;
+  const { amount, phone, userId, sender } = req.body;
   // console.log(req.params, ' this is req.params')
   // const { userId } = req.params;
-  console.log(amount, phone, userId)
+  console.log(amount, phone, sender, userId)
 
   if ( !amount ) return res.status( 400 ).json( { error: "Amount to transfer is not specified" } );
   if ( !phone ) return res.status( 400 ).json( { error: "Enter the phone number of the reciever" } );
@@ -98,6 +99,8 @@ exports.transferFund = ( req, res ) => {
           if ( !reciever ) return res.status( 400 ).json( {
             error: `The user with the phone number ${ phone } does not have Ojirehprime card`
           } );
+          console.log(reciever.name, " this is the reciever of the fund")
+          const recieverName = reciever.name;
           User.findByIdAndUpdate( { _id: userId }, { $inc: { balance: -amount } }, { new: true } )
             .then( response => {
               const alertNum = response.phone;
@@ -109,12 +112,12 @@ exports.transferFund = ( req, res ) => {
                   const balance = credit.balance;
                   creditSms( res, creditNum, amount, balance );
                 } )
-            } ); 
-          res.json(reciever)
-        } )
-      
+            } );
+          return makeTransfer( req, res, userId, recieverName, amount, phone );
+        } );
     } )
     .catch( err => {
+      console.log(err.message, "error from transaction ")
       res.status( 400 ).json( { error: err.message } );
     } );
 }

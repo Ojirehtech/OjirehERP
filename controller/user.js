@@ -161,11 +161,9 @@ exports.setParentId = ( req, res ) => {
     .then( referer => {
       if ( !referer ) return res.status( 400 ).json( { error: "Referer not found" } );
       const refererId = referer._id;
-      console.log( refererId, " the referer Id" );
       User.findByIdAndUpdate( { _id: userId }, { $set: { parentId: refererId } }, { new: true } )
         .then( user => {
           if ( !user ) return res.status( 400 ).json( { error: "Could not update user account" } )
-          console.log( user, " the updated user" )
           res.json( user );
         } )
     } )

@@ -160,8 +160,8 @@ export default {
       icon: "icon-credit-card"
     },
     {
-      name: "Transaction Report",
-      url: "/report",
+      name: "Transaction",
+      url: "/transaction/finalize",
       icon: "icon-briefcase"
     },
     {

@@ -1,10 +1,14 @@
 const { Transfer } = require( "../models/transfer" );
 
 /**
- * Creating a transfer transaction
+ * Creating a transfer transaction.
+ * This api must not be called by any route
  */
 exports.makeTransfer = ( req, res, sender, reciever, amount, recieverPhone ) => {
-  if ( !reciever || !amount || recieverPhone ) return res.status( 400 ).json( { error: "Invalid parameters" } );
+  console.log( reciever, recieverPhone, sender, amount, " from transfer controller" );  
+  if ( !reciever ) return res.status( 400 ).json( { error: "Reciever name is not provided" } );
+  if ( !amount ) return res.status( 400 ).json( { error: "Amount is missing" } );
+  if ( !recieverPhone ) return res.status( 400 ).json( { error: "Reciever phone number is required" } );
   let transfer = new Transfer( {
     sender,
     reciever,
@@ -14,9 +18,10 @@ exports.makeTransfer = ( req, res, sender, reciever, amount, recieverPhone ) => 
 
   transfer.save()
     .then( response => {
-      res.json( response )
+      res.json( response );
     } )
     .catch( err => {
+      console.log(err.message, " error from transfer controller")
       res.status( 400 ).json( { error: err.messageg } );
     } );
 }
@@ -26,6 +31,7 @@ exports.makeTransfer = ( req, res, sender, reciever, amount, recieverPhone ) => 
  */
 exports.getTransfers = ( req, res ) => {
   Transfer.find( {} )
+    .populate("sender", "name _id email phone")
     .then( transfers => {
       if ( !transfers ) return res.status( 400 ).json( { error: "Transfer record is empty" } );
       res.json( transfers );
@@ -38,7 +44,7 @@ exports.getTransfers = ( req, res ) => {
 /**
  * Finalize pending transfer transactions
  */
-exports.Finalize = ( req, res ) => {
+exports.finalize = ( req, res ) => {
   const { transactionId } = req.params;
 
   if ( !transactionId ) return res.status( 400 ).json( { error: "Unknow transaction ID" } );

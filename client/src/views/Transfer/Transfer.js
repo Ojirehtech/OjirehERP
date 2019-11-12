@@ -21,10 +21,10 @@ class Transfer extends Component {
     e.preventDefault();
     const { fundTransfer } = this.props;
     const { phone, amount } = this.state;
-    const accountHolder = isAuthenticated().user.name;
+    const sender = isAuthenticated().user.name;
     const userId = isAuthenticated().user._id;
     const data = {
-      phone, amount, accountHolder, userId
+      phone, amount, sender, userId
     }
     try {
       await fundTransfer(data)
