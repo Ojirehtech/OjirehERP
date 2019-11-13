@@ -17,21 +17,35 @@ class Carousels extends Component {
     } catch(err) {}
   }
   
-  onRequestClick = async () => {
+  onRequestClick = async ( e ) => {
+    e.preventDefault();
     const { withdrawalRequest } = this.props;
+    const { amount } = this.state;
+    const data = {
+      amount
+    }
     try {
-      await withdrawalRequest();
+      await withdrawalRequest(data);
     }catch(err) {}
   }
 
   onChange = ( e, name ) => {
-    
+    let fields = this.state;
+    fields[ name ] = e.target.value;
+    this.setState( { fields } );
   }
   render() {
-    const { users } = this.props;
+    const { users, transaction } = this.props;
+    const { amount } = this.state;
     return (
       <div>
-        <Content users={users} />
+        <Content
+          users={users}
+          amount={amount}
+          onRequestClick={this.onRequestClick}
+          onChange={this.onChange}
+          transaction={transaction}
+        />
       </div>
     );
   }

@@ -89,16 +89,19 @@ export const withdrawalRequestFailed = ( error ) => {
   }
 }
 
-export const withdrawalRequest = ( userId, role, data ) => {
+export const withdrawalRequest = ( data ) => {
+  const role = isAuthenticated().user.role;
+  const userId = isAuthenticated().user._id;
   return dispatch => {
     dispatch( withdrawalRequestStart() );
     fetch( `${ BASE_URL }/request/${userId}/${role}`, {
-      method: "PUT",
+      method: "POST",
       headers: {
         ACCEPT: "application/json",
         "Content-Type": "application/json",
         "x-auth-token": isAuthenticated().token
-      }
+      },
+      body: JSON.stringify(data)
     } )
       .then( response => response.json() )
       .then( resp => {

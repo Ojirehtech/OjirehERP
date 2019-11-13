@@ -72,7 +72,7 @@ class Content extends Component {
   
   render() {
     const { showStatement } = this.state;
-    const { users } = this.props;
+    const { users, onRequestClick, onChange, transaction, amount } = this.props;
     const user = users.user ? users.user : null;
     console.log(user, " user detaule")
     return (
@@ -87,48 +87,41 @@ class Content extends Component {
             </Card>
           </Col>
         </Row>
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-md-center mb-5">
           <Col xs="12" xl="4" >
-            {/* <CardGroup>
+            <CardGroup>
               <Card>
                 <CardBody>
-                  <Form onSubmit={onLogin}>
-                    <h1>Code verification</h1>
-                    {login.error && login.error.length > 0 ? <Alert color="danger">{login.error}</Alert> : null}
-                    <p className="text-muted">Enter the code sent to your phone here</p>
+                  <Form onSubmit={onRequestClick}>
+                    <h3>Withdraw fund</h3>
+                    {transaction.error && transaction.error.length > 0 ? <Alert color="danger">{transaction.error}</Alert> : null}
+                    <p className="text-muted">Enter amount to withdraw here</p>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="icon-user"></i>
+                          <b className="">&#8358;</b>
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
                         type="text"
-                        placeholder="Your phone number"
-                        value={otp}
-                        onChange={( e ) => handleChange( e, "otp" )}
+                        placeholder="Amount"
+                        value={amount}
+                        onChange={( e ) => onChange( e, "amount" )}
                       />
                     </InputGroup>
 
                     <Row>
                       <Col xs="12">
-                        {login.loading === true ? <Spinner color="primary" /> : (
+                        {transaction.loading === true ? <Spinner color="primary" /> : (
                           <Button color="primary" className="px-4">Send</Button>
                         )}
                       </Col>
                     </Row>
                   </Form>
-                  <p>Click
-                  <span
-                      onClick={() => toggelState()}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                      }}
-                    >here</span> to resend code</p>
+                 
                 </CardBody>
               </Card>
-            </CardGroup> */}
+            </CardGroup>
           </Col>
         </Row>
         <Row className="justify-content-md-center">

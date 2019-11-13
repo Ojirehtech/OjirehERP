@@ -9,10 +9,11 @@ const { Request } = require( "../models/request" );
 exports.withdrawalRequest = ( req, res ) => {
   const { userId, role } = req.params;
   const { amount } = req.body;  
-  const { _id } = req.user;
+  // const { _id } = req.user;
 
+  console.log(userId, amount)
   if ( !userId ) return res.status( 400 ).json( { error: "Unknown user. Please ensure you are an agent" } );
-  if ( userId !== _id ) return res.status( 400 ).json( { error: "Unauthorized user access" } );
+  // if ( userId !== _id ) return res.status( 400 ).json( { error: "Unauthorized user access" } );
  
   /**
    * We find the agent with the given userId @param {userId}
@@ -55,6 +56,7 @@ exports.requestApproval = ( req, res ) => {
         .then( request => {
           if ( !request ) return res.status( 400 ).json( { error: "Request approval failed. Try again" } );
           console.log( request, " request" );
+          debitSms(res,)
         } );
       
       return res.json(user)
