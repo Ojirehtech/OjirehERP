@@ -24,7 +24,7 @@ const Content = ( {
       <Card className="mt-4">
         <CardBody className="p-4">
           <Form onSubmit={onSubmit}>
-            <h1>Register</h1>
+            <h3>Transfer fund</h3>
             {transaction.error && transaction.error.length > 0 ? <p
               style={{ color: "ff0000"}}
             >{transaction.error}</p> : null}

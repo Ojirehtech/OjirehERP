@@ -30,21 +30,8 @@ class Content extends Component {
   }
 
   displayStatement = () => {
-    const { users } = this.props;
-    const transactions = users.user && users.user.request && users.user.request.length > 0 ? 
-      users.user.request.map( (transaction, index) => {
-        return (
-          <tr>
-            <th scope="row" key={transaction._id}>{index + 1}</th>
-            <td>{transaction.name}</td>
-            <td>{transaction.balance}</td>
-            <td>{transaction.amount}</td>
-            <td>{transaction.date}</td>
-            <td>{transaction.time}</td>
-            <td>{transaction.type}</td>
-          </tr>
-        )
-      } ) : <p>No transaction yet</p>
+    const { users, transaction } = this.props;
+    const request = transaction.requests && transaction.requests;
     
     console.log(users.user, " current logged in user")
     const { showStatement } = this.state;
@@ -52,7 +39,7 @@ class Content extends Component {
       return (
         <Table className="mt-5">
           <thead>
-            <tr>
+            <tr style={{ color: '#20a8d8' }}>
               <th>S/N</th>
               <th>Name</th>
               <th>Total balance</th>
@@ -60,10 +47,24 @@ class Content extends Component {
               <th>Date</th>
               <th>Time</th>
               <th>Transaction type</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {transactions}
+            {transaction.requestLoading === true ? <Spinner color="primary" /> : (
+              request.length > 0 ? request.map( ( req, i ) => (
+                <tr key={req._id}>
+                  <th scope="row" key={transaction._id}>{i + 1}</th>
+                  <td>{req.userId && req.userId.name}</td>
+                  <td>{req.balance}</td>
+                  <td>{req.amount}</td>
+                  <td>{req.createdAt && req.createdAt.slice(0, 10)}</td>
+                  <td>{req.createdAt.slice(11, 16)}</td>
+                  <td>Withdraw</td>
+                  <td>{req.status === false ? "False" : "Complete"}</td>
+                </tr>
+              )) : "Request list is empty"
+            )}
           </tbody>
         </Table>
       )
@@ -129,8 +130,8 @@ class Content extends Component {
             <Button color="primary" onClick={this.toggleState}>{showStatement ? "Hide account statement" : "View account statement"}</Button>
           </Col>
         </Row>
-        <Row className="justify-content-md-center">
-          <Col xs="12" xl="8" >
+        <Row className="justify-content-md-center mb-5">
+          <Col xs="12" xl="12" >
             {this.displayStatement()}
           </Col>
         </Row>

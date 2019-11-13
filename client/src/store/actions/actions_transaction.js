@@ -308,6 +308,7 @@ export const getRequest = () => {
           dispatch( getRequestFailed( resp.error ) );
           return;
         }
+        dispatch( getRequestSuccess( resp ) );
       } )
       .catch( err => {
         dispatch( getRequestFailed( "Failed to fetch. Network Error" ) );

@@ -21,8 +21,11 @@ import {
 
 const initialState = {
   transaction: {},
+  requests: [],
   loading: false,
   success: false,
+  request: false,
+  requestLoading: false,
   error: ""
 }
 
@@ -127,20 +130,20 @@ const transactionReducer = ( state = initialState, action ) => {
     case GET_REQUEST_START:
       return {
         ...state,
-        loading: true
+        requestLoading: true
       }
     case GET_REQUEST_SUCCESS:
       return {
         ...state,
-        loading: false,
-        success: false,
-        transaction: action.data
+        requestLoading: false,
+        request: true,
+        requests: action.data
       }
     case GET_REQUEST_FAILED:
       return {
         ...state,
-        loading: false,
-        success: false,
+        requestLoading: false,
+        request: false,
         error: action.error
       }
     default:

@@ -43,6 +43,7 @@ exports.getRequests = ( req, res ) => {
   const { userId, role } = req.params;
 
   Request.find( {} )
+    .populate("userId", "name")
     .then( request => {
       if ( !request ) return res.status( 400 ).json( { error: "Request list is empty" } );
       res.json( request );
