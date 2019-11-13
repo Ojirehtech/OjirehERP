@@ -14,6 +14,9 @@ import {
   FINALIZE_TRANSFER_START,
   FINALIZE_TRANSFER_SUCCESS,
   FINALIZE_TRANSFER_FAILED,
+  GET_REQUEST_START,
+  GET_REQUEST_SUCCESS,
+  GET_REQUEST_FAILED,
 } from "../actions/actions_transaction";
 
 const initialState = {
@@ -115,6 +118,25 @@ const transactionReducer = ( state = initialState, action ) => {
         transaction: action.data,
       }
     case FINALIZE_TRANSFER_FAILED:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: action.error
+      }
+    case GET_REQUEST_START:
+      return {
+        ...state,
+        loading: true
+      }
+    case GET_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        transaction: action.data
+      }
+    case GET_REQUEST_FAILED:
       return {
         ...state,
         loading: false,

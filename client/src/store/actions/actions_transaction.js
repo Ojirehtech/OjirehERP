@@ -10,6 +10,10 @@ export const APPROVE_REQUEST_START = "APPROVE_REQUEST_START";
 export const APPROVE_REQUEST_SUCCESS = "APPROVE_REQUEST_SUCCESS";
 export const APPROVE_REQUEST_FAILED = "APPROVE_REQUEST_FAILED";
 
+export const GET_REQUEST_START = "GET_REQUEST_START";
+export const GET_REQUEST_SUCCESS = "GET_REQUEST_SUCCESS";
+export const GET_REQUEST_FAILED = "GET_REQUEST_FAILED";
+
 export const GET_TRANSFERS_START = "GET_TRANSFERS_START";
 export const GET_TRANSFERS_SUCCESS = "GET_TRANSFERS_SUCCESS";
 export const GET_TRANSFERS_FAILED = "GET_TRANSFERS_FAILED";
@@ -257,6 +261,56 @@ export const finalizeTransfer = ( transferId ) => {
       })
       .catch( err => {
         dispatch( finalizeTransferFailed( "Could not complete request. Try again" ) );
+      } );
+  }
+}
+
+/**
+ * Get all requests
+ */
+export const getRequestStart = () => {
+  return {
+    type: GET_REQUEST_START
+  }
+}
+
+export const getRequestSuccess = ( data ) => {
+  return {
+    type: GET_REQUEST_SUCCESS,
+    data
+  }
+}
+
+export const getRequestFailed = ( error ) => {
+  return {
+    type: GET_REQUEST_FAILED,
+    error
+  }
+}
+
+export const getRequest = () => {
+  const role = isAuthenticated().user.role;
+  const userId = isAuthenticated().user._id;
+  console.log("from the get request")
+  return dispatch => {
+    dispatch( getRequestStart() );
+    fetch( `${ BASE_URL }/request/${ userId }/${ role }`, {
+      method: "GET",
+      headers: {
+        ACCEPT: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": isAuthenticated().token
+      }
+    } )
+      .then( response => response.json() )
+      .then( resp => {
+        if ( resp.error ) {
+          dispatch( getRequestFailed( resp.error ) );
+          return;
+        }
+      } )
+      .catch( err => {
+        dispatch( getRequestFailed( "Failed to fetch. Network Error" ) );
       } );
   }
 }

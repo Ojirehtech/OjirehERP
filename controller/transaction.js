@@ -13,7 +13,6 @@ exports.withdrawalRequest = ( req, res ) => {
 
   console.log(userId, amount)
   if ( !userId ) return res.status( 400 ).json( { error: "Unknown user. Please ensure you are an agent" } );
-  // if ( userId !== _id ) return res.status( 400 ).json( { error: "Unauthorized user access" } );
  
   /**
    * We find the agent with the given userId @param {userId}
@@ -22,7 +21,7 @@ exports.withdrawalRequest = ( req, res ) => {
     .then( agent => {
       if ( !agent ) return res.status( 400 ).json( { error: `Agent with the ID ${ userId } not found.` } )
       if ( agent.balance < amount ) return res.status( 400 ).json( { error: `${ amount } is greater than your available balance of ${ agent.balance }. Please consider withdrawing a lower amount or an equivalent of your balance.` } );
-      if ( amount < 1000 ) return res.status( 400 ).json( { error: `The amount ${ amount } you request is too low. Consider withdrawing 1000 naira and above` } );
+      if ( amount < 10 ) return res.status( 400 ).json( { error: `The amount NGN${ amount } you request is too low` } );
       const balance = agent.balance;
       let newRequest = new Request( {
         userId,
@@ -34,6 +33,22 @@ exports.withdrawalRequest = ( req, res ) => {
     } )
     .catch( err => {
       res.json( { error: err.message } );
+    } );
+}
+
+/**
+ * Gets all list of requests
+*/
+exports.getRequests = ( req, res ) => {
+  const { userId, role } = req.params;
+
+  Request.find( {} )
+    .then( request => {
+      if ( !request ) return res.status( 400 ).json( { error: "Request list is empty" } );
+      res.json( request );
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
     } );
 }
 
