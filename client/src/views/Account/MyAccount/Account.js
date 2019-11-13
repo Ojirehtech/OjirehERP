@@ -39,14 +39,16 @@ class Carousels extends Component {
     const { users, transaction } = this.props;
     const { amount } = this.state;
     return (
-      <div>
+      <div className="card">
+        <div className="card-body">
         <Content
           users={users}
           amount={amount}
           onRequestClick={this.onRequestClick}
           onChange={this.onChange}
           transaction={transaction}
-        />
+          />
+        </div>
       </div>
     );
   }

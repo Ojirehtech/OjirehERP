@@ -20,15 +20,15 @@ const Content = ( {
   onSubmit,
 } ) => {
   return (
-    <div className="mt-5"> 
+    <div className="mt-5">
       <Card className="mt-4">
         <CardBody className="p-4">
           <Form onSubmit={onSubmit}>
             <h3>Transfer fund</h3>
             {transaction.error && transaction.error.length > 0 ? <p
-              style={{ color: "ff0000"}}
+              style={{ color: "ff0000" }}
             >{transaction.error}</p> : null}
-            <p className="text-muted">Create your account</p>
+            <p className="text-muted">Transfer from your account</p>
 
             <InputGroup className="mb-3">
               <InputGroupAddon addonType="prepend">
@@ -63,7 +63,7 @@ const Content = ( {
         </CardBody>
       </Card>
     </div>
-  )
+  );
 }
 
 

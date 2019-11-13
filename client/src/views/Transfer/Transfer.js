@@ -35,27 +35,29 @@ class Transfer extends Component {
     const { phone, amount } = this.state;
     const { transaction } = this.props;
     return (
-      <div>
-        <Row>
-          <Col xs="12" xl="6">
-            <Row className="justify-content-md-center">
-              <Content
-                phone={phone}
-                amount={amount}
-                onHandleChange={this.onHandleChange}
-                onSubmit={this.onSubmit}
-                transaction={transaction}
+      <div className="card">
+        <div className="card-body">
+          <Row>
+            <Col xs="12" xl="6">
+              <Row className="justify-content-md-center">
+                <Content
+                  phone={phone}
+                  amount={amount}
+                  onHandleChange={this.onHandleChange}
+                  onSubmit={this.onSubmit}
+                  transaction={transaction}
+                />
+              </Row>
+            </Col>
+            <Col xs="12" xl="6">
+              <img
+                src={cue}
+                alt=""
+                style={{ width: "100%", height: 450}}
               />
-            </Row>
-          </Col>
-          <Col xs="12" xl="6">
-            <img
-              src={cue}
-              alt=""
-              style={{ width: "100%", height: 450}}
-            />
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        </div>
       </div>
     )
   }

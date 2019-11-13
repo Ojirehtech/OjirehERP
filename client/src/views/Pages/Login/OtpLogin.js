@@ -27,7 +27,6 @@ const OtpLogin = ( { login, phone, handleChange, onSubmitOtp } ) => {
                       onChange={( e ) => handleChange( e, "phone" )}
                     />
                   </InputGroup>
-
                   <Row>
                     <Col xs="12">
                       {login.otpLoading === true ? <Spinner color="primary" /> : (

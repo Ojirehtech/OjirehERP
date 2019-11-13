@@ -11,7 +11,7 @@ const LoginForm = ( { toggelState, login, otp, handleChange, onLogin}) =>{
             <Card>
               <CardBody>
                 <Form onSubmit={onLogin}>
-                  <h1>Code verification</h1>
+                  <h3>Code verification</h3>
                   {login.error && login.error.length > 0 ? <Alert color="danger">{login.error}</Alert> : null}
                   <p className="text-muted">Enter the code sent to your phone here</p>
                   <InputGroup className="mb-3">
@@ -22,7 +22,7 @@ const LoginForm = ( { toggelState, login, otp, handleChange, onLogin}) =>{
                     </InputGroupAddon>
                     <Input
                       type="text"
-                      placeholder="Your phone number"
+                      placeholder="Enter code"
                       value={otp}
                       onChange={(e) => handleChange(e, "otp")}
                     />
@@ -36,8 +36,7 @@ const LoginForm = ( { toggelState, login, otp, handleChange, onLogin}) =>{
                     </Col>
                   </Row>
                 </Form>
-                <p>Click
-                  <span
+                <p>Click <span
                     onClick={() => toggelState()}
                     style={{
                       color: "blue",

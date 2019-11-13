@@ -41,147 +41,149 @@ class Profile extends Component{
     const { users } = this.props;
     const user = users.user && users.user;
     return (
-      <div className="app flex-row">
-        <Container>
-          <Row>
-            <Col md="3">
-              <Card>
-                <CardBody>
-                  <img
-                    src={`${ BASE_URL }/profile/photo/${ user._id }`}
-                    style={{
-                      width: "100%",
-                      height: "200px",
-                      padding: 0
-                    }}
-                    onError={i => i.target.src = `${ avatar }`}
-                    alt="profile" />
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          <Row className="mb-5">
-            <Col md="8">
-              <CardGroup>
-                <Card className="p-4">
+      <div className="card app flex-row">
+        <div className="card-body">
+          <Container>
+            <Row>
+              <Col md="3">
+                <Card>
                   <CardBody>
-                    <Form>
-                      <h1>{user.name} profile</h1>
-                      <Row>
-                        <Col xs="6">
-                          <label>Name</label>
-                          <InputGroup className="mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-user"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              type="text"
-                              placeholder="First name"
-                              value={user.name}
-                            />
-                          </InputGroup>
-                        </Col>
-                        <Col xs="6" className="text-right">
-                          <label>Email</label>
-                          <InputGroup className="mb-4">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-envelope"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              type="text"
-                              placeholder="Last name"
-                            value={user.email}
-                            />
-                          </InputGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs="6">
-                          <label>Phone</label>
-                          <InputGroup className="mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-phone"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              type="text"
-                              placeholder="Email"
-                              value={user.phone}
-                            />
-                          </InputGroup>
-                        </Col>
-                        <Col xs="6" className="text-right">
-                          <label>Referer phone</label>
-                          <InputGroup className="mb-4">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-phone"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              type="text"
-                              
-                              value={user.refererPhone}
-                            />
-                          </InputGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs="12">
-                          <label>Address</label>
-                          <InputGroup className="mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-home"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              type="text"
-                              placeholder="Referer phone"
-                              value={user.address}
-                            />
-                          </InputGroup>
-                        </Col>
-                      </Row>
-                    </Form>
+                    <img
+                      src={`${ BASE_URL }/profile/photo/${ user._id }`}
+                      style={{
+                        width: "100%",
+                        height: "200px",
+                        padding: 0
+                      }}
+                      onError={i => i.target.src = `${ avatar }`}
+                      alt="profile" />
                   </CardBody>
                 </Card>
+              </Col>
+            </Row>
+            <Row className="mb-5">
+              <Col md="8">
+                <CardGroup>
+                  <Card className="p-4">
+                    <CardBody>
+                      <Form>
+                        <h1>{user.name} profile</h1>
+                        <Row>
+                          <Col xs="6">
+                            <label>Name</label>
+                            <InputGroup className="mb-3">
+                              <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                  <i className="icon-user"></i>
+                                </InputGroupText>
+                              </InputGroupAddon>
+                              <Input
+                                type="text"
+                                placeholder="First name"
+                                value={user.name}
+                              />
+                            </InputGroup>
+                          </Col>
+                          <Col xs="6" className="text-right">
+                            <label>Email</label>
+                            <InputGroup className="mb-4">
+                              <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                  <i className="icon-envelope"></i>
+                                </InputGroupText>
+                              </InputGroupAddon>
+                              <Input
+                                type="text"
+                                placeholder="Last name"
+                              value={user.email}
+                              />
+                            </InputGroup>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col xs="6">
+                            <label>Phone</label>
+                            <InputGroup className="mb-3">
+                              <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                  <i className="icon-phone"></i>
+                                </InputGroupText>
+                              </InputGroupAddon>
+                              <Input
+                                type="text"
+                                placeholder="Email"
+                                value={user.phone}
+                              />
+                            </InputGroup>
+                          </Col>
+                          <Col xs="6" className="text-right">
+                            <label>Referer phone</label>
+                            <InputGroup className="mb-4">
+                              <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                  <i className="icon-phone"></i>
+                                </InputGroupText>
+                              </InputGroupAddon>
+                              <Input
+                                type="text"
+                                
+                                value={user.refererPhone}
+                              />
+                            </InputGroup>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col xs="12">
+                            <label>Address</label>
+                            <InputGroup className="mb-3">
+                              <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                  <i className="icon-home"></i>
+                                </InputGroupText>
+                              </InputGroupAddon>
+                              <Input
+                                type="text"
+                                placeholder="Referer phone"
+                                value={user.address}
+                              />
+                            </InputGroup>
+                          </Col>
+                        </Row>
+                      </Form>
+                    </CardBody>
+                  </Card>
 
-              </CardGroup>
-            </Col>
-            <Col md="4">
-              {users.error && users.error.length > 0 ? <Alert color="danger">{users.error}</Alert> : null}
-              <Form encType="multipart/form-data">
-                <InputGroup className="mb-3">
-                  <Input
-                    type="file"
-                    name={this.state.photo}
-                    onChange={(e) => this.onChange(e)}
-                  />
-                </InputGroup>
-              </Form>
-              <Row>
-                <Col md="6">
-                  {user.loading === true ? <Spinner color="primary" /> : (
-                  <Button 
-                    color='primary' 
-                    onClick={( e ) => this.handleSubmit( e )}
-                    >
-                    Upload photo
-                  </Button>
-                  )}
-                  
-                </Col>
-              </Row>
-              
-            </Col>
-          </Row>
-        </Container>
+                </CardGroup>
+              </Col>
+              <Col md="4">
+                {users.error && users.error.length > 0 ? <Alert color="danger">{users.error}</Alert> : null}
+                <Form encType="multipart/form-data">
+                  <InputGroup className="mb-3">
+                    <Input
+                      type="file"
+                      name={this.state.photo}
+                      onChange={(e) => this.onChange(e)}
+                    />
+                  </InputGroup>
+                </Form>
+                <Row>
+                  <Col md="6">
+                    {user.loading === true ? <Spinner color="primary" /> : (
+                    <Button 
+                      color='primary' 
+                      onClick={( e ) => this.handleSubmit( e )}
+                      >
+                      Upload photo
+                    </Button>
+                    )}
+                    
+                  </Col>
+                </Row>
+                
+              </Col>
+            </Row>
+          </Container>
+        </div>
       </div>
     );
   }

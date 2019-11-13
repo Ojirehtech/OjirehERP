@@ -28,7 +28,7 @@ export default {
     {
       name: "Transaction",
       url: "/transaction/finalize",
-      icon: "icon-people"
+      icon: "icon-briefcase"
     },
     {
       name: "My Network",

@@ -1,5 +1,5 @@
 const { User } = require( "../models/user" );
-const smsalert = require("../service/sms")
+const {creditSms} = require("../service/sms")
 require( "dotenv" ).config();
 
 /**
@@ -35,7 +35,7 @@ exports.refererSettlement = ( req, res ) => {
       if ( !user ) return;
       const phone = user.phone;
       const totalBal = user.balance;
-      smsalert( res, phone, 200, totalBal );
+      creditSms( res, phone, 200, totalBal );
       const grandReferer = user.parentId;
       if ( !grandReferer ) return;
       console.log( user, "this. the first user to get reward" )
@@ -46,12 +46,12 @@ exports.refererSettlement = ( req, res ) => {
           if ( !ancestralParentId ) return;
           const phone = resp.phone;
           const total = resp.balance;
-          smsalert( res, phone, 50, total );
+          creditSms( res, phone, 50, total );
           User.findByIdAndUpdate( { _id: ancestralParentId }, { $inc: { balance: +8 } }, { new: true } )
             .then( response => {
               const phone = response.phone;
               const balance = response.balance;
-              smsalert( res, phone, 8, balance );
+              creditSms( res, phone, 8, balance );
               if ( !response ) return;
             } )
         } )
