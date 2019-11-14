@@ -1,5 +1,5 @@
-import { isAuthenticated } from "./helper/authenticate";
-const role = isAuthenticated().user.role === "admin" ? true : false;
+// import { isAuthenticated } from "./helper/authenticate";
+// const role = isAuthenticated().user.role === "admin" ? true : false;
 export default {
   items: [
     {

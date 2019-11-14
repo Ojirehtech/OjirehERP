@@ -41,7 +41,7 @@ class Register extends Component {
   }
 
   render() {
-    const pubKey = "FLWPUBK_TEST-5873159f7e4700f2fd468cc2527ea6cd-X";
+    const pubKey = process.env.REACT_APP_PUBLIC_KEY // "FLWPUBK_TEST-5873159f7e4700f2fd468cc2527ea6cd-X";
     const {
       email,
       phone,

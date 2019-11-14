@@ -11,7 +11,6 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Alert,
   Spinner,
   CardGroup
 } from 'reactstrap';
