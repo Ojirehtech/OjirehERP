@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Table, Spinner } from "reactstrap";
+import { Table, Spinner, CardHeader } from "reactstrap";
 import { getTransfer, finalizeTransfer } from "../../store/actions/actions_transaction";
 import Content from "./Content";
 
@@ -31,6 +31,9 @@ class Transactions extends Component {
     }
     return (
       <div className="card">
+        <CardHeader>
+          <h3>Pending Transfer Requests</h3>
+        </CardHeader>
         <div className="card-body">
           <Table className="mt-5">
             <thead>

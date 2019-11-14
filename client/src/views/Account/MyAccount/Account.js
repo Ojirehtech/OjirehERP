@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { getUser } from '../../../store/actions/action_user';
 import Content from './Content';
-import { withdrawalRequest, getRequest } from '../../../store/actions/actions_transaction';
+import { withdrawalRequest, getRequest, fetchRequest } from '../../../store/actions/actions_transaction';
 
 
 class Carousels extends Component {
@@ -11,10 +11,10 @@ class Carousels extends Component {
   }
 
   async componentDidMount() {
-    const { getUser, getRequest } = this.props;
+    const { getUser, fetchRequest } = this.props;
     try {
       await getUser();
-      await getRequest();
+      await fetchRequest();
     } catch(err) {}
   }
   
@@ -64,7 +64,7 @@ const mapStateToProps = ( state ) => {
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
     getUser: () => dispatch( getUser() ),
-    getRequest: () => dispatch(getRequest()),
+    fetchRequest: () => dispatch(fetchRequest()),
     withdrawalRequest: (data) => dispatch(withdrawalRequest(data))
   }
 

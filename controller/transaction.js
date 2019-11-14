@@ -52,6 +52,25 @@ exports.getRequests = ( req, res ) => {
     } );
 }
 
+
+/**
+ * Gets request for a user with the user ID
+*/
+exports.getRequest = ( req, res ) => {
+  const { userId, } = req.params;
+
+  Request.find( { userId: userId} )
+    .populate( "userId", "name" )
+    .then( request => {
+      if ( !request ) return res.status( 400 ).json( { error: "Request list is empty" } );
+      res.json( request );
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
+
+
 /**
  * handles withdrawal requests approvals by the admin
  */

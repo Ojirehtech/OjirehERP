@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Table, Spinner } from "reactstrap";
+import { Table, Spinner, CardHeader } from "reactstrap";
 import { approveRequest, getRequest } from "../../store/actions/actions_transaction";
 import WithdrawContent from "./WithdrawContent";
 
@@ -37,10 +37,13 @@ class Withdraw extends Component {
     }
     return (
       <div className="card">
-        {transaction.error && transaction.error.length > 0 ?
-          <p
+        <CardHeader>
+          {transaction.error && transaction.error.length > 0 ?
+            <p
             style={{ color: "#ff0000", paddinLeft: 10 }}
-          >{transaction.error}</p> : null}
+            >{transaction.error}</p> : null}
+          <h3>Pending Withdrawal Requests</h3>
+        </CardHeader>
         <div className="card-body">
           <Table className="mt-5">
             <thead>

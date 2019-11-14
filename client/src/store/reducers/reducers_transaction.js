@@ -17,6 +17,9 @@ import {
   GET_REQUEST_START,
   GET_REQUEST_SUCCESS,
   GET_REQUEST_FAILED,
+  FETCH_REQUEST_START,
+  FETCH_REQUEST_SUCCESS,
+  FETCH_REQUEST_FAILED,
 } from "../actions/actions_transaction";
 
 const initialState = {
@@ -140,6 +143,25 @@ const transactionReducer = ( state = initialState, action ) => {
         requests: action.data
       }
     case GET_REQUEST_FAILED:
+      return {
+        ...state,
+        requestLoading: false,
+        request: false,
+        error: action.error
+      }
+    case FETCH_REQUEST_START:
+      return {
+        ...state,
+        requestLoading: true,
+      }
+    case FETCH_REQUEST_SUCCESS:
+      return {
+        ...state,
+        requestLoading: false,
+        request: true,
+        requests: action.data,
+      }
+    case FETCH_REQUEST_FAILED:
       return {
         ...state,
         requestLoading: false,

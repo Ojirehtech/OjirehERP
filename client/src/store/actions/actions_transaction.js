@@ -16,6 +16,10 @@ export const GET_REQUEST_START = "GET_REQUEST_START";
 export const GET_REQUEST_SUCCESS = "GET_REQUEST_SUCCESS";
 export const GET_REQUEST_FAILED = "GET_REQUEST_FAILED";
 
+export const FETCH_REQUEST_START = "FETCH_REQUEST_START";
+export const FETCH_REQUEST_SUCCESS = "FETCH_REQUEST_SUCCESS";
+export const FETCH_REQUEST_FAILED = "FETCH_REQUEST_FAILED";
+
 export const GET_TRANSFERS_START = "GET_TRANSFERS_START";
 export const GET_TRANSFERS_SUCCESS = "GET_TRANSFERS_SUCCESS";
 export const GET_TRANSFERS_FAILED = "GET_TRANSFERS_FAILED";
@@ -319,6 +323,56 @@ export const getRequest = () => {
       } )
       .catch( err => {
         dispatch( getRequestFailed( "Failed to fetch. Network Error" ) );
+      } );
+  }
+}
+
+
+/**
+ * Get single request
+ */
+export const fetchRequestStart = () => {
+  return {
+    type: FETCH_REQUEST_START
+  }
+}
+
+export const fetchRequestSuccess = ( data ) => {
+  return {
+    type: FETCH_REQUEST_SUCCESS,
+    data
+  }
+}
+
+export const fetchRequestFailed = ( error ) => {
+  return {
+    type: FETCH_REQUEST_FAILED,
+    error
+  }
+}
+
+export const fetchRequest = () => {
+  const userId = isAuthenticated().user._id;
+  return dispatch => {
+    dispatch( fetchRequestStart() );
+    fetch( `${ BASE_URL }/request/${ userId }`, {
+      method: "GET",
+      headers: {
+        ACCEPT: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": isAuthenticated().token
+      }
+    } )
+      .then( response => response.json() )
+      .then( resp => {
+        if ( resp.error ) {
+          dispatch( fetchRequestFailed( resp.error ) );
+          return;
+        }
+        dispatch( fetchRequestSuccess( resp ) );
+      } )
+      .catch( err => {
+        dispatch( fetchRequestFailed( "Failed to fetch. Network Error" ) );
       } );
   }
 }
