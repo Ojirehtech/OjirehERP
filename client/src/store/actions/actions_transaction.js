@@ -3,9 +3,11 @@ import { isAuthenticated } from "../../helper/authenticate";
 export const FUND_TRANSFER_START = "FUND_TRANSFER_START";
 export const FUND_TRANSFER_SUCCESS = "FUND_TRANSFER_SUCCESS";
 export const FUND_TRANSFER_FAILED = "FUND_TRANSFER_FAILED";
+
 export const WITHDRAWAL_REQUEST_START = "WITHDRAWAL_REQUEST_START";
 export const WITHDRAWAL_REQUEST_SUCCESS = "WITHDRAWAL_REQUEST_SUCCESS";
 export const WITHDRAWAL_REQUEST_FAILED = "WITHDRAWAL_REQUEST_FAILED";
+
 export const APPROVE_REQUEST_START = "APPROVE_REQUEST_START";
 export const APPROVE_REQUEST_SUCCESS = "APPROVE_REQUEST_SUCCESS";
 export const APPROVE_REQUEST_FAILED = "APPROVE_REQUEST_FAILED";
@@ -144,10 +146,12 @@ export const approveRequestFailed = ( error ) => {
   }
 }
 
-export const approveRequest = ( data ) => {
+export const approveRequest = ( agentId, requestId ) => {
+  const userId = isAuthenticated().user._id;
+  // "/request/approval/:userId/:agentId/:requestId/:role"
   return dispatch => {
     dispatch( approveRequestStart() );
-    fetch( `${ BASE_URL }/`, {
+    fetch( `${ BASE_URL }/request/approval/${userId}/${agentId}/${requestId}`, {
       method: "PUT",
       headers: {
         ACCEPT: "application/json",

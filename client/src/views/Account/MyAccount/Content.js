@@ -75,7 +75,7 @@ class Content extends Component {
     const { showStatement } = this.state;
     const { users, onRequestClick, onChange, transaction, amount } = this.props;
     const user = users.user ? users.user : null;
-    console.log(user, " user detaule")
+   console.log(transaction, " transaction request")
     return (
       <div className="animated fadeIn">
         <Row>
@@ -88,6 +88,11 @@ class Content extends Component {
             </Card>
           </Col>
         </Row>
+        <Row className="justify-content-md-center">
+          <Col xs="12" xl="5">
+            {transaction.success === true ? <p style={{ color: "#00ff00"}}>Your request has been recieved and will be processed within 3 hours</p> : null}
+          </Col>
+        </Row>
         <Row className="justify-content-md-center mb-5">
           <Col xs="12" xl="4" >
             <CardGroup>
@@ -95,7 +100,7 @@ class Content extends Component {
                 <CardBody>
                   <Form onSubmit={onRequestClick}>
                     <h3>Withdraw fund</h3>
-                    {transaction.error && transaction.error.length > 0 ? <Alert color="danger">{transaction.error}</Alert> : null}
+                    {transaction.error && transaction.error.length > 0 ? <p style={{ color: "#ff0000"}}>{transaction.error}</p> : null}
                     <p className="text-muted">Enter amount to withdraw here</p>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
@@ -110,7 +115,6 @@ class Content extends Component {
                         onChange={( e ) => onChange( e, "amount" )}
                       />
                     </InputGroup>
-
                     <Row>
                       <Col xs="12">
                         {transaction.loading === true ? <Spinner color="primary" /> : (
@@ -119,7 +123,6 @@ class Content extends Component {
                       </Col>
                     </Row>
                   </Form>
-                 
                 </CardBody>
               </Card>
             </CardGroup>

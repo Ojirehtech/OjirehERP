@@ -26,9 +26,22 @@ export default {
       icon: "icon-credit-card"
     },
     {
+      // title: true,
       name: "Transaction",
-      url: "/transaction/finalize",
-      icon: "icon-briefcase"
+      // url: "/transaction/finalize",
+      icon: "icon-briefcase",
+      children: [
+        {
+          name: 'Cash Transfer',
+          url: '/transaction/transfer',
+          icon: 'icon-briefcase',
+        },
+        {
+          name: 'Cash Withdraw',
+          url: '/transaction/withdraw',
+          icon: 'icon-briefcase',
+        },      
+      ],
     },
     {
       name: "My Network",

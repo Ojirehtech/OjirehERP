@@ -62,10 +62,10 @@ exports.requestApproval = ( req, res ) => {
   if ( amount < 1000 ) return res.status( 400 ).json( { error: "You can not approve request with amount less then 1000" } );
   if ( !userId ) return res.status( 400 ).json( { error: "Unknown user. Please ensure you are an agent" } );
   if ( !requestId ) return res.status( 400 ).json( { error: "Unknown request. Make sure you have the right access to approve requests" } );
-  if ( role !== "admin" ) return res.status( 400 ).json( { error: "Only an admin can approve fund withdrawal requests" } );
+  // if ( role !== "admin" ) return res.status( 400 ).json( { error: "Only an admin can approve fund withdrawal requests" } );
   if ( !agentId ) return res.status( 400 ).json( { error: "User ID must be provided to approve this request" } );
-
-  User.findByIdAndUpdate( { _id: agentId }, {$inc: { balance: -amount}}, { new: true} )
+  const amt = Number( amount );
+  User.findByIdAndUpdate( { _id: agentId }, {$inc: { balance: -amt}}, { new: true} )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: "Failed to debit user" } );
       Request.findByIdAndUpdate( { _id: requestId }, { $set: { status: true } }, { new: true } )

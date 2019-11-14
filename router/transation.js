@@ -12,7 +12,7 @@ const router = Router();
 
 router.get( "/request/:userId/:role", requireLogin, getRequests );
 router.post( "/request/:userId/:role", withdrawalRequest );
-router.put( "/request/approval/:userId/:agentId/:requestId/:role", requestApproval );
+router.put( "/request/approval/:userId/:agentId/:requestId", requestApproval );
 router.put( "/request/transfer", requireLogin, transferFund );
 
 module.exports = router;

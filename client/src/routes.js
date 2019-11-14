@@ -1,4 +1,5 @@
 import React from 'react';
+import Withdraw from './views/Transactions/Withdraw';
 
 const Account = React.lazy(() => import('./views/Account/MyAccount/Account'));
 
@@ -19,14 +20,9 @@ const User = React.lazy( () => import( './views/Users/User' ) );
 const Transfer = React.lazy( () => import( "./views/Transfer/Transfer" ) );
 const Transactions = React.lazy( () => import( "./views/Transactions/Transactions" ) );
 
-
-// const Home = React.lazy( () => import( "./views/home/Home" ) );
-
-// https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  // { path: '/theme', exact: true, name: 'Theme', component: Colors },
   { path: '/network', name: 'Network', component: Network },
   { path: '/account', exact: true, name: 'Account', component: Account },
   { path: '/profile', exact: true, name: 'Buttons', component: Profile },
@@ -39,7 +35,8 @@ const routes = [
   { path: '/notifications/alerts', name: 'Alerts', component: Alerts },
   { path: '/notifications/badges', name: 'Badges', component: Badges },
   { path: '/notifications/modals', name: 'Modals', component: Modals },
-  { path: "/transaction/finalize", name: "Transaction", component: Transactions},
+  { path: "/transaction/transfer", name: "Transaction", component: Transactions },
+  { path: "/transaction/withdraw", name: "Transaction", component: Withdraw },
   { path: "/transfer", name: "Transfer Fund", component: Transfer},
   { path: '/widgets', name: 'Widgets', component: Widgets },
   { path: '/charts', name: 'Charts', component: Charts },
