@@ -29,13 +29,12 @@ const userSchema = new Schema( {
   profileUpdated: { type: Boolean, default: false },
 },{
   timestamps: true,
-  toJSON: {
-    virtuals: true,
-    // transform: ( obj, ret ) => {
-    //   delete ret.password;
-    // }
-  }
 });
+
+/**
+ * Expires the otp after 5 minutes
+ */
+userSchema.index( { otp: 1 }, { expireAfterSeconds: 300 } );
 
 /**
  * We generate a token for the user

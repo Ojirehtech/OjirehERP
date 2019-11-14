@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Nav, NavItem } from 'reactstrap';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
@@ -33,7 +33,7 @@ class DefaultHeader extends Component {
 
   render() {
 
-    const { children, history, ...attributes } = this.props;
+    // const { children, history } = this.props;
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
