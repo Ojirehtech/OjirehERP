@@ -21,10 +21,11 @@ class Dashboard extends Component {
   }
 
   async componentDidMount() {
-    const { updateParentId, getUser } = this.props;
+    const { updateParentId, getUser, getByParentId } = this.props;
     try {
       await updateParentId();
-      await getUser()
+      await getUser();
+      await getByParentId();
     }catch(err) {}
   }
 
@@ -34,6 +35,7 @@ class Dashboard extends Component {
     const { users } = this.props;
     const user = users.user && users.user;
     console.log(user, " the user new")
+    const networkCount = users.users && users.users.length;
     const refererLink = isAuthenticated().user ? isAuthenticated().user.refererLink : null;
     return (
       <div className="card animated fadeIn">
@@ -61,7 +63,7 @@ class Dashboard extends Component {
                 <CardBody className="pb-0">
                    <div><h3><strong>Earning</strong>: <strong>&#8358;{user.balance ? user.balance : 0}.00</strong></h3></div>
                   <div className="mb-4">
-                    <p>Last 30 days</p>
+                    <p>Since Last 30 days</p>
                   </div>
                 </CardBody>
                 
@@ -70,8 +72,8 @@ class Dashboard extends Component {
             <Col xs="12" sm="6" lg="3">
               <Card className="text-white bg-danger">
                 <CardBody className="pb-0">
-                  <div><h3><strong>Total Network</strong>: <strong>&#8358;{user.balance ? user.balance : 0}.00</strong></h3></div>
-                  <div className="mb-4">Indirect Network</div>
+                  <div><h3><strong>{networkCount}</strong></h3></div>
+                  <div className="mb-4">Total Network</div>
                 </CardBody>
                 
               </Card>

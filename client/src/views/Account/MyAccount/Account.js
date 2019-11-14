@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { getUser } from '../../../store/actions/action_user';
 import Content from './Content';
-import { withdrawalRequest, getRequest, fetchRequest } from '../../../store/actions/actions_transaction';
+import { withdrawalRequest, fetchRequest } from '../../../store/actions/actions_transaction';
 
 
 class Carousels extends Component {
