@@ -3,6 +3,7 @@ const bodyParser = require( "body-parser" );
 const winston = require( "winston" );
 const db = require( "./config/db" );
 const morgan = require( "morgan" );
+const path = require( "path" );
 const cookieParser = require( "cookie-parser" );
 const app = express();
 
@@ -13,6 +14,7 @@ const port = process.env.PORT || 3030;
  */
 db();
 app.use( express.static( __dirname ) );
+app.use( express.static( path.join( __dirname, 'client/build' ) ) );
 app.use( morgan( "dev" ) );
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded( { extended: false } ) );
@@ -40,8 +42,8 @@ require( "./config/error-logger" )();
  */
 require( "./middleware/routes" )( app );
 
-app.get( "/", ( req, res ) => {
-  res.json( { message: "Hello from EXPRESS API" } );
+app.get( '*', ( req, res ) => {
+  res.sendFile( path.join( __dirname + '/client/build/index.html' ) );
 } );
 
 app.listen( port, ( err ) => {
