@@ -11,7 +11,6 @@ exports.withdrawalRequest = ( req, res ) => {
   const { amount } = req.body;  
   // const { _id } = req.user;
 
-  console.log(userId, amount)
   if ( !userId ) return res.status( 400 ).json( { error: "Unknown user. Please ensure you are an agent" } );
  
   /**
@@ -59,12 +58,14 @@ exports.getRequests = ( req, res ) => {
 exports.requestApproval = ( req, res ) => {
   const { userId, agentId, requestId, role } = req.params;
   const { amount } = req.body;
-  if ( amount < 1000 ) return res.status( 400 ).json( { error: "You can not approve request with amount less then 1000" } );
+  console.log(amount,  " the value of amount")
+  if ( amount < 10 ) return res.status( 400 ).json( { error: "You can not approve request with amount less then 1000" } );
   if ( !userId ) return res.status( 400 ).json( { error: "Unknown user. Please ensure you are an agent" } );
   if ( !requestId ) return res.status( 400 ).json( { error: "Unknown request. Make sure you have the right access to approve requests" } );
   // if ( role !== "admin" ) return res.status( 400 ).json( { error: "Only an admin can approve fund withdrawal requests" } );
   if ( !agentId ) return res.status( 400 ).json( { error: "User ID must be provided to approve this request" } );
   const amt = Number( amount );
+  console.log(typeof amt, "type of amt", typeof amount, " type of amount")
   User.findByIdAndUpdate( { _id: agentId }, {$inc: { balance: -amt}}, { new: true} )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: "Failed to debit user" } );

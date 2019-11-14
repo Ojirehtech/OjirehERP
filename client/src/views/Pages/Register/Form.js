@@ -117,6 +117,7 @@ const RegisterationForm = ( {
                   pubKey={pubKey}
                   payIncentives={payIncentives}
                   incentives={incentives}
+                  onRegister={onRegister}
                   history={history}
                 />
                 <p className="mt-3">Already have an account? <Link to="/login">Login</Link></p>

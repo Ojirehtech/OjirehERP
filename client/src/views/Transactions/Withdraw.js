@@ -13,12 +13,14 @@ class Withdraw extends Component {
     } catch ( err ) { }
   }
 
-  onRequestApprove = async ( e, agentId, requestId ) => {
+  onRequestApprove = async ( e, amount, agentId, requestId ) => {
     e.preventDefault();
     const { approveRequest } = this.props;
-    console.log(agentId, requestId)
+    const data = {
+      amount
+    }
     try {
-      await approveRequest( agentId, requestId )
+      await approveRequest(data, agentId, requestId )
     } catch ( err ) { }
   }
 
@@ -33,9 +35,12 @@ class Withdraw extends Component {
         newArr.push( trans );
       }
     }
-    console.log(pendingTransactions, " transacation")
     return (
       <div className="card">
+        {transaction.error && transaction.error.length > 0 ?
+          <p
+            style={{ color: "#ff0000", paddinLeft: 10 }}
+          >{transaction.error}</p> : null}
         <div className="card-body">
           <Table className="mt-5">
             <thead>
@@ -76,7 +81,7 @@ const mapStateToProps = ( state ) => {
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
     getRequest: () => dispatch( getRequest() ),
-    approveRequest: ( agentId, requestId ) => dispatch( approveRequest( agentId, requestId)),
+    approveRequest: (data, agentId, requestId ) => dispatch( approveRequest(data, agentId, requestId)),
   }
   return dispatchProps;
 }

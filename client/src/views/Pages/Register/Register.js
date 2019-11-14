@@ -17,7 +17,7 @@ class Register extends Component {
   handleChange = (e, name) => {
     let fields = this.state;
     fields[ name ] = e.target.value;
-    this.setState( { fields }, this.onRegister);
+    this.setState( { fields });
   }
 
   onRegister = async () => {
@@ -53,12 +53,14 @@ class Register extends Component {
       payIncentives,
       registration,
       incentives,
+      register,
       history
     } = this.props;
 
     if ( incentives.success === true || incentives.error.includes( "You do not have" ) ) {
       window.location.href = "/login";
     }
+
     return (
       <div>
         <RegisterationForm
@@ -74,6 +76,7 @@ class Register extends Component {
           incentives={incentives}
           pubKey={pubKey}
           history={history}
+          register={register}
         />
       </div>
     );

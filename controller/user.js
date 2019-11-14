@@ -49,14 +49,13 @@ exports.generateOTP = ( req, res ) => {
   const { phone } = req.params;
   const sender = "OjirehPrime";
   const message = `Your verification pass code is ${otpCode}`
-  
   const url = `http://www.jamasms.com/smsapi/?username=${process.env.SMS_USERNAME}&password=${process.env.SMS_PASS}&sender=${sender}&numbers=${phone}&message=${message}
 `
   if ( !phone ) return res.status( 400 ).json( { error: "Your phone is required" } );
   User.find( { phone } )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: `User with the phone number ${ userId } does not exist` } );
-      const userId = user[0]._id;
+      const userId = user[ 0 ]._id;
       User.findByIdAndUpdate( { _id: userId }, { $set: { otp: otpCode } }, { new: true } )
         .then( resp => {
           console.log( resp )

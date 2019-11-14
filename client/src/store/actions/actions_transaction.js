@@ -146,9 +146,8 @@ export const approveRequestFailed = ( error ) => {
   }
 }
 
-export const approveRequest = ( agentId, requestId ) => {
+export const approveRequest = (data, agentId, requestId ) => {
   const userId = isAuthenticated().user._id;
-  // "/request/approval/:userId/:agentId/:requestId/:role"
   return dispatch => {
     dispatch( approveRequestStart() );
     fetch( `${ BASE_URL }/request/approval/${userId}/${agentId}/${requestId}`, {
@@ -157,7 +156,8 @@ export const approveRequest = ( agentId, requestId ) => {
         ACCEPT: "application/json",
         "Content-Type": "application/json",
         "x-auth-token": isAuthenticated().token
-      }
+      },
+      body: JSON.stringify(data)
     } )
       .then( response => response.json() )
       .then( resp => {
@@ -167,6 +167,9 @@ export const approveRequest = ( agentId, requestId ) => {
         }
         dispatch( approveRequestSuccess( resp ) );
       } )
+      .then( () => {
+        dispatch( getRequest() );
+      })
       .catch( err => {
         dispatch( approveRequestFailed( err.message ) );
       } );

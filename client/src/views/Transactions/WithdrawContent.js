@@ -8,14 +8,14 @@ const WithdrawContent = ( { onRequestApprove, transaction, transact, index } ) =
       <td>{transact.userId && transact.userId.name}</td>
       <td>&#8358;{transact.amount}</td>
       <td>{transact.createdAt && transact.createdAt.slice( 0, 10 )}</td>
-      <td>{transact.status === false ? "Pending" : "Complete"}</td>
+      <td>{transact.status === false ? "Pending" : "Approved"}</td>
       <td
-        onClick={(e) => onRequestApprove(e,transact.userId._id, transact._id )}
+        onClick={(e) => onRequestApprove(e, transact.amount, transact.userId._id, transact._id )}
         style={{
           color: "#ff0000",
           cursor: "pointer"
         }}
-      >{transaction.requestLoading === true ? <Spinner className="primary" /> : "Complete"}</td>
+      >{transaction.requestLoading === true ? <Spinner className="primary" /> : "Approve"}</td>
     </tr>
   )
 }

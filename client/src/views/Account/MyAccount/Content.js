@@ -42,7 +42,7 @@ class Content extends Component {
             <tr style={{ color: '#20a8d8' }}>
               <th>S/N</th>
               <th>Name</th>
-              <th>Total balance</th>
+              <th>Bal before</th>
               <th>Amount withdraw</th>
               <th>Date</th>
               <th>Time</th>
@@ -80,10 +80,10 @@ class Content extends Component {
       <div className="animated fadeIn">
         <Row>
           <Col xs="12" xl="4">
-            <Card className="text-white bg-danger">
+            <Card className="text-white bg-info">
               <CardBody className="pb-0">
                 <h3 className="mb-3">Available Balance</h3>
-                <h4 className="mb-3">&#8358;{user && user.balance}</h4>
+                <h2 className="mb-3"><strong>&#8358;{user && user.balance}.00</strong></h2>
               </CardBody>
             </Card>
           </Col>

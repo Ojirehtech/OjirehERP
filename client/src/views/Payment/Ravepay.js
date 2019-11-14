@@ -14,9 +14,10 @@ class Ravepay extends Component {
   }
 
   callback = async ( response ) => {
-    const { payIncentives, refererPhone } = this.props;
+    const { payIncentives, refererPhone, onRegister } = this.props;
     if ( response.success === true ) {
       try {
+        await onRegister();
         await payIncentives( refererPhone );
       } catch ( err ) { }
     }
@@ -28,7 +29,6 @@ class Ravepay extends Component {
 
   render() {
     const { phone, email, amount, pubKey,  } = this.props;
-    
     
     return (
       <Row className="justify-content-md-center mt-5">
