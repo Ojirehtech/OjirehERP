@@ -58,7 +58,7 @@ class Register extends Component {
     } = this.props;
 
     if ( incentives.success === true || incentives.error.includes( "You do not have" ) ) {
-      window.location.href = "/login";
+      window.location.href = "/dashboard";
     }
 
     return (

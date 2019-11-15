@@ -1,3 +1,4 @@
+import Auth from "../../helper/Auth"
 export const REGISTRATION_START = "REGISTRATION_START";
 export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
 export const REGISTRATION_FAILED = "REGISTRATION_FAILED";
@@ -49,6 +50,7 @@ export const register = ( data ) => {
           dispatch( registrationFailed( resp.error ) );
           return;
         }
+        Auth.authenticateUser( JSON.stringify( resp ) );
         dispatch( registrationSuccess( resp ) );
       } )
       .catch( err => {

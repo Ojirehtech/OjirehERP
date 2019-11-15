@@ -34,7 +34,12 @@ exports.signup = ( req, res ) => {
 
       newUser.save();
       const token = newUser.generateToken();
-      res.header( "x-auth-token", token ).json( newUser );
+      const { _id, email, name, phone, parentId, refererPhone, role, profileUpdated } = newUser;
+      const refererLink = `http://localhost:3030/api/v1/ojirehprime/agent/${ _id }`;
+      res.cookie( "token", token, { expire: new Date() + 9999 } );
+      res.header( "x-auth-token", token ).json( {
+        token,
+        user: { _id, email, phone, refererPhone, parentId, role, name, refererLink, profileUpdated }});
     } )
     .catch( err => {
       res.status( 400 ).json( { error: err.message } );
