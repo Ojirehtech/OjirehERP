@@ -10,7 +10,7 @@ export const SEND_OTP_START = "SEND_OTP_START";
 export const SEND_OTP_SUCCESS = "SEND_OTP_SUCCESS";
 export const SEND_OTP_FAILED = "SEND_OTP_FAILED";
 
-const BASE_URL = "http://localhost:3030/api/v1";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 /**
  * Action types for agent login

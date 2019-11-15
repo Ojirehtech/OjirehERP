@@ -16,6 +16,8 @@ exports.signup = ( req, res ) => {
     refererPhone,
     address
   } = req.body;
+  console.log( req.body, " theis is req body" );
+  if ( !email ) return res.status( 400 ).json( { error: "Enter your email address" } );
   if ( !phone ) return res.status( 400 ).json( { error: "Phone number is missing" } );
   if ( !name ) return res.status( 400 ).json( { error: "Your first name is required" } );
   if ( !address ) return res.status( 400 ).json( { error: "Your last name is required" } );
@@ -24,15 +26,10 @@ exports.signup = ( req, res ) => {
   User.findOne( { phone: phone } )
     .then( user => {
       if ( user ) return res.status( 400 ).json( { error: `The phone number ${ phone } has been used by another user` } );
-      let newUser = new User( {
-        email,
-        name,
-        phone,
-        refererPhone,
-        address
-      } )
+      let newUser = new User( req.body )
 
       newUser.save();
+      console.log(newUser, "new user")
       const token = newUser.generateToken();
       const { _id, email, name, phone, parentId, refererPhone, role, profileUpdated } = newUser;
       const refererLink = `http://localhost:3030/api/v1/ojirehprime/agent/${ _id }`;
@@ -42,6 +39,7 @@ exports.signup = ( req, res ) => {
         user: { _id, email, phone, refererPhone, parentId, role, name, refererLink, profileUpdated }});
     } )
     .catch( err => {
+      console.log(err.message)
       res.status( 400 ).json( { error: err.message } );
     } );
 }

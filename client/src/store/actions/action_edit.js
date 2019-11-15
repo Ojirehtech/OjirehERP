@@ -7,7 +7,7 @@ export const UPLOAD_PHOTO_START = "UPLOAD_PHOTO_START";
 export const UPLOAD_PHOTO_SUCCESS = "UPLOAD_PHOTO_SUCCESS";
 export const UPLOAD_PHOTO_FAILED = "UPLOAD_PHOTO_FAILED";
 
-const BASE_URL = "http://localhost:3030/api/v1";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 /**
  * Edit action type for agent profile update

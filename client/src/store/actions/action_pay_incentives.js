@@ -8,7 +8,7 @@ export const CARD_BOUGHT_START = "CARD_BOUGHT_STARTT";
 export const CARD_BOUGHT_SUCCESS = "CARD_BOUGHT_SUCCESS";
 export const CARD_BOUGHT_FAILED = "CARD_BOUGHT_FAILED";
 
-const BASE_URL = "http://localhost:3030/api/v1";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const payIncentiveStart = () => {
   return {

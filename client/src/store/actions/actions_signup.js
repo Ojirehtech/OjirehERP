@@ -3,7 +3,7 @@ export const REGISTRATION_START = "REGISTRATION_START";
 export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
 export const REGISTRATION_FAILED = "REGISTRATION_FAILED";
 
-const BASE_URL = "http://localhost:3030/api/v1/signup";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 /**
  * Action types for agent registration
@@ -36,7 +36,7 @@ export const register = ( data ) => {
   console.log(data, "this is data containing referer phone number")
   return dispatch => {
     dispatch( registrationStart() );
-    fetch( `${ BASE_URL }`, {
+    fetch( `${ BASE_URL }/signup`, {
       method: "POST",
       headers: {
         ACCEPT: "application/json",

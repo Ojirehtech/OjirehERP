@@ -36,7 +36,11 @@ const OtpLogin = ( { login, phone, handleChange, onSubmitOtp } ) => {
                   </Row>
                   
                   <p className="mt-3">Don't have an account? <Link to="/register">Register</Link></p>
-                  
+                  <Row>
+                    <Col xs="12">
+                      <p>If you are not receiving your OTP, please try removing your number from your network's DND list by texting “ALLOW” to 2442.</p>
+                    </Col>
+                  </Row>
                 </Form>
               </CardBody>
             </Card>

@@ -42,7 +42,7 @@ const LoginForm = ( { toggelState, login, otp, handleChange, onLogin}) =>{
                       color: "blue",
                       cursor: "pointer",
                     }}
-                  >here</span> to resend code</p>
+                >here</span> to resend code</p>
               </CardBody>
             </Card>
           </CardGroup>

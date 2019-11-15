@@ -17,7 +17,7 @@ export const UPDATE_PARENTID_START = "UPDATE_PARENTID_START";
 export const UPDATE_PARENTID_SUCCESS = "UPDATE_PARENTID_SUCCESS";
 export const UPDATE_PARENTID_FAILED = "UPDATE_PARENTID_FAILED";
 
-const BASE_URL = "http://localhost:3030/api/v1";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const getUserStart = () => {
   return {

@@ -28,7 +28,7 @@ export const FINALIZE_TRANSFER_START = "FINALIZE_TRANSFER_START";
 export const FINALIZE_TRANSFER_SUCCESS = "FINALIZE_TRANSFER_SUCCESS";
 export const FINALIZE_TRANSFER_FAILED = "FINALIZE_TRANSFER_FAILED";
 
-const BASE_URL = "http://localhost:3030/api/v1";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const fundTransferStart = () => {
   return {
