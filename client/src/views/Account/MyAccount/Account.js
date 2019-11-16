@@ -12,6 +12,7 @@ class Carousels extends Component {
 
   async componentDidMount() {
     const { getUser, fetchRequest } = this.props;
+    document.title = "My account"
     try {
       await getUser();
       await fetchRequest();

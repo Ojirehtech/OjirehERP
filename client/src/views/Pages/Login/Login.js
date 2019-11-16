@@ -11,6 +11,10 @@ class Login extends Component {
     isOtpSuccess: false,
   }
 
+  componentDidMount() {
+    document.title = "Login page";
+  }
+
   componentDidUpdate(prevProps, nextProps) {
     if ( this.props.login !== prevProps.login ) {
       if ( this.props.login.otpSuccess === true ) {

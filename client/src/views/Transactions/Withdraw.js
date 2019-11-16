@@ -7,6 +7,7 @@ import WithdrawContent from "./WithdrawContent";
 
 class Withdraw extends Component {
   async componentDidMount() {
+    document.title = "Withdraw fund"
     const { getRequest } = this.props;
     try {
       await getRequest();

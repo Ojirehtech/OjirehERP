@@ -14,6 +14,9 @@ class Register extends Component {
     isRegistered: false,
   }
 
+  componentDidMount() {
+    document.title = "Registeration page"
+  }
   handleChange = (e, name) => {
     let fields = this.state;
     fields[ name ] = e.target.value;

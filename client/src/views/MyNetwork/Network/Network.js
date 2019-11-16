@@ -8,6 +8,7 @@ import icon from "../../../assets/img/brand/user-icon.png";
 
 class Network extends Component {
   async componentDidMount() {
+    document.title = "My network";
     const { getByParentId } = this.props;
     try {
       await getByParentId();

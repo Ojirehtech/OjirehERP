@@ -22,6 +22,7 @@ class Dashboard extends Component {
 
   async componentDidMount() {
     const { updateParentId, getUser, getByParentId } = this.props;
+    document.title = "Dashboard"
     try {
       await updateParentId();
       await getUser();

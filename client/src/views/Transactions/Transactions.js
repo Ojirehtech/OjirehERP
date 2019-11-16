@@ -7,6 +7,7 @@ import Content from "./Content";
 
 class Transactions extends Component {
   async componentDidMount() {
+    document.title = "Transfer";
     const { getTransfer } = this.props;
     try {
       await getTransfer();

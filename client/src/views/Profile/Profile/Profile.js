@@ -13,6 +13,7 @@ class Profile extends Component{
   }
 
   async componentDidMount() {
+    document.title = "Profile page"
     const { getUser } = this.props;
 
     try {

@@ -11,6 +11,11 @@ class Transfer extends Component {
     phone: "",
     amount: "",
   }
+
+  componentDidMount() {
+    document.title = "Transfer page";
+  }
+  
   onHandleChange = (e, name) => {
     let fields = this.state;
     fields[ name ] = e.target.value;
