@@ -42,72 +42,81 @@ const RegisterationForm = ( {
                   <h1>Register</h1>
                   {registration.error && registration.error.length > 0 ? <Alert color="danger">{registration.error}</Alert> : null}
                   <p className="text-muted">Create your account</p>
-                  
-                  <InputGroup className="mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="icon-user"></i>
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      type="text"
-                      placeholder="Your name"
-                      value={name}
-                      onChange={( e ) => handleChange( e, "name" )}
-                    />
-                  </InputGroup>
-                  <InputGroup className="mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="icon-envelope-closed"></i>
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      type="email"
-                      placeholder="Email"
-                      value={email}
-                      onChange={(e) => handleChange(e, "email")}
-                    />
-                  </InputGroup>
-                  <InputGroup className="mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="icon-home"></i>
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      type="text"
-                      placeholder="Address"
-                      value={address}
-                      onChange={( e ) => handleChange( e, "address" )}
-                    />
-                  </InputGroup>
-                  <InputGroup className="mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="icon-phone"></i>
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      type="text"
-                      placeholder="Your phone number"
-                      value={phone}
-                      onChange={( e ) => handleChange( e, "phone" )}
-                    />
-                  </InputGroup>
-                  <InputGroup className="mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="icon-phone"></i>
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      type="text"
-                      placeholder="Referer phone number"
-                      value={refererPhone}
-                      onChange={( e ) => handleChange( e, "refererPhone" )}
-                    />
-                  </InputGroup>
+                  <Col xs="12" xl="12">
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="icon-user"></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        type="text"
+                        placeholder="Your name"
+                        value={name}
+                        onChange={( e ) => handleChange( e, "name" )}
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col xs="12" xl="12">
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="icon-envelope-closed"></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => handleChange(e, "email")}
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col xs="12" xl="12">
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="icon-home"></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        type="text"
+                        placeholder="Address"
+                        value={address}
+                        onChange={( e ) => handleChange( e, "address" )}
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col xs="12" xl="12">
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="icon-phone"></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        type="text"
+                        placeholder="Your phone number"
+                        value={phone}
+                        onChange={( e ) => handleChange( e, "phone" )}
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col xs="12" xl="12">
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="icon-phone"></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        type="text"
+                        placeholder="Referer phone number"
+                        value={refererPhone}
+                        onChange={( e ) => handleChange( e, "refererPhone" )}
+                      />
+                    </InputGroup>
+                  </Col>
                 </Form>
                 <Ravepay
                   email={email}
