@@ -115,10 +115,7 @@ class Login extends Component {
       <div>
         <Particles
           params={particleOpt}
-          style={{
-            background: "green",
-            height: "50px !important",
-          }}
+          className="particles"
         />
         <div className="particle-page">
           {this.renderView()}

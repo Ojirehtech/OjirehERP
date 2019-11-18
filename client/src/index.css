@@ -7,12 +7,16 @@
   color: #fff;
 }
 
+.particles {
+  background: #4dbd74;
+}
+
 .particle-page {
   margin-top: -600px;
 }
 
 @media only screen and (max-width: 490px) {
-  .particle-page {
-    margin-top: -400px;
+  .particle {
+    display: none;
   }
 }
