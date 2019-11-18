@@ -1,5 +1,13 @@
+import React from "react";
 import { isAuthenticated } from "./helper/authenticate";
+import Auth from "./helper/Auth";
 const role = isAuthenticated().user && isAuthenticated().user.role === "admin" ? true : false;
+
+const handleLogout = () => {
+  Auth.deauthenticateUser();
+}
+const logout = <span onClick={handleLogout}>Logout</span>
+
 const navAdmin = [
   {
     name: 'Dashboard',
@@ -105,9 +113,11 @@ const navUser = [
     name: "My profile",
     url: "/profile",
     icon: "icon-user"
-  },
-
-  
+  }, 
+  {
+    name: logout,
+    icon: "icon-logout"
+  }, 
 ];
 
 export default {
