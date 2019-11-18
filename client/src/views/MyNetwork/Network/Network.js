@@ -24,8 +24,8 @@ class Network extends Component {
             <Row className="justify-content-md-center">
               <Col xs="4" xl="2">
                 <div>
-                  <img src={icon} style={{ width: "50px" }} alt="" />
-                  <p>{isAuthenticated().user.name}</p>
+                  <img src={icon} style={{ width: "50px", marginLeft: 13 }} alt="" />
+                   <p style={{ color: "#4dbd74"}}>{isAuthenticated().user.name}</p>
                 </div>
               </Col>
             </Row>

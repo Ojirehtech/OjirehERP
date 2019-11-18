@@ -6,3 +6,13 @@
   width: 200px !important;
   color: #fff;
 }
+
+.particle-page {
+  margin-top: -600px;
+}
+
+@media only screen and (max-width: 490px) {
+  .particle-page {
+    margin-top: -400px;
+  }
+}

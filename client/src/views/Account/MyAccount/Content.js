@@ -79,7 +79,7 @@ class Content extends Component {
       <div className="animated fadeIn">
         <Row>
           <Col xs="12" xl="4">
-            <Card className="text-white bg-info">
+            <Card className="text-white bg-success">
               <CardBody className="pb-0">
                 <h3 className="mb-3">Available Balance</h3>
                 <h2 className="mb-3"><strong>&#8358;{user && user.balance}.00</strong></h2>
@@ -98,7 +98,7 @@ class Content extends Component {
               <Card>
                 <CardBody>
                   <Form onSubmit={onRequestClick}>
-                    <h3>Withdraw fund</h3>
+                    <h3 style={{ color: "#4dbd74"}}>Withdraw fund</h3>
                     {transaction.error && transaction.error.length > 0 ? <p style={{ color: "#ff0000"}}>{transaction.error}</p> : null}
                     <p className="text-muted">Enter amount to withdraw here</p>
                     <InputGroup className="mb-3">
@@ -117,7 +117,7 @@ class Content extends Component {
                     <Row>
                       <Col xs="12">
                         {transaction.loading === true ? <Spinner color="primary" /> : (
-                          <Button color="primary" className="px-4">Send</Button>
+                          <Button color="success" className="px-4">Send</Button>
                         )}
                       </Col>
                     </Row>
@@ -129,7 +129,7 @@ class Content extends Component {
         </Row>
         <Row className="justify-content-md-center">
           <Col xs="12" xl="4" >
-            <Button color="primary" onClick={this.toggleState}>{showStatement ? "Hide account statement" : "View account statement"}</Button>
+            <Button color="success" onClick={this.toggleState}>{showStatement ? "Hide account statement" : "View account statement"}</Button>
           </Col>
         </Row>
         <Row className="justify-content-md-center mb-5">

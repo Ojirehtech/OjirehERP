@@ -22,11 +22,11 @@ const Content = ( {
   return (
     <div className="mt-5">
       <Card className="mt-4">
-        <CardBody className="p-4">
+        <CardBody className="">
           <Form onSubmit={onSubmit}>
-            <h3>Transfer fund</h3>
+            <h3 style={{ color: "#4dbd74"}}>Transfer fund</h3>
             {transaction.error && transaction.error.length > 0 ? <p
-              style={{ color: "ff0000" }}
+              style={{ color: "#ff0000" }}
             >{transaction.error}</p> : null}
             <p className="text-muted">Transfer from your account</p>
 

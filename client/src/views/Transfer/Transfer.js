@@ -15,7 +15,7 @@ class Transfer extends Component {
   componentDidMount() {
     document.title = "Transfer page";
   }
-  
+
   onHandleChange = (e, name) => {
     let fields = this.state;
     fields[ name ] = e.target.value;
@@ -44,14 +44,16 @@ class Transfer extends Component {
         <div className="card-body">
           <Row>
             <Col xs="12" xl="6">
-              <Row className="justify-content-md-center">
-                <Content
-                  phone={phone}
-                  amount={amount}
-                  onHandleChange={this.onHandleChange}
-                  onSubmit={this.onSubmit}
-                  transaction={transaction}
-                />
+              <Row className="justify-content-md-center mt-5">
+                <Col xs="12" xl="12">
+                  <Content
+                    phone={phone}
+                    amount={amount}
+                    onHandleChange={this.onHandleChange}
+                    onSubmit={this.onSubmit}
+                    transaction={transaction}
+                  />
+                </Col>
               </Row>
             </Col>
             <Col xs="12" xl="6">

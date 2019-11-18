@@ -68,7 +68,7 @@ class Profile extends Component{
                   <Card className="p-4">
                     <CardBody>
                       <Form>
-                        <h1>{user.name} profile</h1>
+                        <h3 style={{ color: "#4dbd74"}}>{user.name} profile</h3>
                         <Row>
                           <Col xs="6">
                             <label>Name</label>
@@ -171,7 +171,7 @@ class Profile extends Component{
                   <Col md="6">
                     {user.loading === true ? <Spinner color="primary" /> : (
                     <Button 
-                      color='primary' 
+                        color='success' 
                       onClick={( e ) => this.handleSubmit( e )}
                       >
                       Upload photo
