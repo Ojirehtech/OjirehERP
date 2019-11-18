@@ -6,7 +6,7 @@ import { getUser } from '../../../store/actions/action_user';
 import avatar from "../../../assets/img/brand/avatar.jpg";
 import { uploadProfilePhoto } from '../../../store/actions/action_edit';
 
-const BASE_URL = "http://localhost:3030/api/v1";
+const BASE_URL = process.env.REACT_APP_API_URL;
 class Profile extends Component{
   state = {
     photo: ""
