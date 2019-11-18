@@ -3,20 +3,20 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import LoginForm from './LoginForm';
 import { onLogin, sendOTP } from "../../../store/actions/action_login";
-// import Particles from "react-particles-js";
+import Particles from "react-particles-js";
 import OtpLogin from './OtpLogin';
 
-// const particleOpt = {
-//   particles: {
-//     number: {
-//       value: 100,
-//       density: {
-//         enable: true,
-//         value_area: 500
-//       }
-//     }
-//   }
-// }
+const particleOpt = {
+  particles: {
+    number: {
+      value: 100,
+      density: {
+        enable: true,
+        value_area: 500
+      }
+    }
+  }
+}
 class Login extends Component {
   state = {
     phone: "",
@@ -113,7 +113,11 @@ class Login extends Component {
 
     return (
       <div>
-        <div>
+        <Particles
+          params={particleOpt}
+          style={{ background: "#4dbd74"}}
+        />
+        <div className="particle-page">
           {this.renderView()}
         </div>
       </div>

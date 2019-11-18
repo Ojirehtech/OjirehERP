@@ -16,7 +16,8 @@
 }
 
 @media only screen and (max-width: 490px) {
-  .particle {
-    display: none;
+  .particle-page {
+    margin-top: -150px;
+    padding: 15px;
   }
 }
