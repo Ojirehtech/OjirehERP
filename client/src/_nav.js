@@ -1,5 +1,5 @@
 import { isAuthenticated } from "./helper/authenticate";
-const role = isAuthenticated().user.role === "admin" ? true : false;
+const role = isAuthenticated().user && isAuthenticated().user.role === "admin" ? true : false;
 const navAdmin = [
   {
     name: 'Dashboard',
@@ -15,9 +15,8 @@ const navAdmin = [
     name: 'My Account',
     url: "/account",
     icon: "icon-credit-card",
-    class: ''             // optional class names space delimited list for title item ex: "text-center"
+    class: ''
   },
-
   {
     // title: true,
     name: 'Transfer Funds',
@@ -27,7 +26,6 @@ const navAdmin = [
   {
     // title: true,
     name: "Transaction",
-    // url: "/transaction/finalize",
     icon: "icon-briefcase",
     children: [
       {

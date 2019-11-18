@@ -42,7 +42,7 @@ class Login extends Component {
     this.setState({ fields });
   }
 
-  onLogin = async (e) => {
+  onLogin = async ( e ) => {
     e.preventDefault();
     const { otp } = this.state;
     const { onLogin } = this.props;
@@ -53,11 +53,11 @@ class Login extends Component {
       if ( !otp ) {
         this.setState( {
           errMsg: "Please enter the otp code"
-        })
+        } )
         return;
       }
       await onLogin( data );
-    } catch(err) {}
+    } catch ( err ) { }
   }
 
   onSubmitOtp = async ( e ) => {
@@ -65,15 +65,16 @@ class Login extends Component {
     const { phone } = this.state;
     const { sendOTP } = this.props;
     try {
-      if ( !phone ) {
+      if ( !phone || phone.length < 11 ) {
         this.setState( {
-          errMsg: ""
-        })
+          errMsg: "Enter a valid phone number"
+        } );
+        return;
       }
       await sendOTP( phone );
-    } catch(err) {}
+    } catch ( err ) { }
   }
-
+  
   toggelState = () => {
     this.setState( { isOtpSuccess: !this.state.isOtpSuccess })
   }

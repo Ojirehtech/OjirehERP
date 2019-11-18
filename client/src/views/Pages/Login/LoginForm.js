@@ -2,7 +2,7 @@ import React from 'react';
 import {Alert, Button, Card, CardBody, CardGroup, Spinner, Col, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 
 
-const LoginForm = ( { toggelState, login, otp, handleChange, onLogin}) =>{
+const LoginForm = ( { errMsg, toggelState, login, otp, handleChange, onLogin}) =>{
   return (
     <div className="mt-5">
       <Row className="justify-content-md-center mt-5">
@@ -12,7 +12,8 @@ const LoginForm = ( { toggelState, login, otp, handleChange, onLogin}) =>{
               <CardBody>
                 <Form onSubmit={onLogin}>
                   <h3>Code verification</h3>
-                  {login.error && login.error.length > 0 ? <Alert color="danger">{login.error}</Alert> : null}
+                  {errMsg.length > 0 ? <p style={{ color: "#ff0000" }}>{errMsg}</p> : null}
+                  {login.error && login.error.length > 0 ? <p style={{ color: "#ff0000" }}>{login.error}</p> : null}
                   <p className="text-muted">Enter the code sent to your phone here</p>
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
