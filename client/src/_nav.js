@@ -63,7 +63,11 @@ const navAdmin = [
     name: "User Management",
     url: "/users",
     icon: "icon-user"
-  }
+  },
+  {
+    name: logout,
+    icon: "icon-logout"
+  }, 
 ];
 
 const navUser = [

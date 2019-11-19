@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
-import { Badge, Card, CardBody, CardHeader, Col, Row, Spinner, Table } from 'reactstrap';
+import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import moment from "moment";
 
 import { getUsers } from '../../store/actions/action_user';

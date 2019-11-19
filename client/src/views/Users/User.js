@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Alert } from 'reactstrap';
+import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row} from 'reactstrap';
 import Spinner from 'reactstrap/lib/Spinner';
 import { getUser } from '../../store/actions/action_user';
 import avatar from "../../assets/img/brand/avatar.jpg";
 import { assignRole } from '../../store/actions/action.role';
-import { isAuthenticated } from '../../helper/authenticate';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -70,7 +69,7 @@ class User extends Component {
                       <Form>
                         <h3 style={{ color: "#4dbd74" }}>{user.name} profile</h3>
                         <Row>
-                          <Col xs="6">
+                          <Col xs="12" xl="6">
                             <label>Name</label>
                             <InputGroup className="mb-3">
                               <InputGroupAddon addonType="prepend">
@@ -85,7 +84,7 @@ class User extends Component {
                               />
                             </InputGroup>
                           </Col>
-                          <Col xs="6" className="text-right">
+                          <Col xs="12" xl="6" className="text-right">
                             <label>Email</label>
                             <InputGroup className="mb-4">
                               <InputGroupAddon addonType="prepend">
@@ -102,7 +101,7 @@ class User extends Component {
                           </Col>
                         </Row>
                         <Row>
-                          <Col xs="6">
+                          <Col xs="12" xl="6">
                             <label>Phone</label>
                             <InputGroup className="mb-3">
                               <InputGroupAddon addonType="prepend">
@@ -117,7 +116,7 @@ class User extends Component {
                               />
                             </InputGroup>
                           </Col>
-                          <Col xs="6" className="text-right">
+                          <Col xs="12" xl="6" className="text-right">
                             <label>Referer phone</label>
                             <InputGroup className="mb-4">
                               <InputGroupAddon addonType="prepend">
@@ -157,11 +156,14 @@ class User extends Component {
                                   <i className="icon-home"></i>
                                 </InputGroupText>
                               </InputGroupAddon>
-                              <Input
-                                type="text"
-                                placeholder="Role"
-                                value={user.role}
-                              />
+                              {role.loading === true ? <Spinner color="primary" /> : (
+                                <Input
+                                  type="text"
+                                  placeholder="Role"
+                                  value={user.role}
+                                />
+                              )}
+                              
                             </InputGroup>
                           </Col>
                         </Row>
@@ -174,35 +176,29 @@ class User extends Component {
               <Col md="4">
                 <Row>
                   <Col md="6">
-                    <h6>Assign roles to user</h6>
+                    <h6 style={{ color: "#4dbd74"}}>Assign roles to user</h6>
                     <Row className="mt-3">
                       <Col xs="12" xl="12">
-                        {role.loading === true ? <Spinner color="primary" /> : (
-                          <Button
-                            onClick={( e ) => this.handleSubmit( e, "admin", user._id )}
-                            color="primary"
-                          >Support role</Button>
-                        )}
+                        <Button
+                          onClick={( e ) => this.handleSubmit( e, "admin", user._id )}
+                          color="primary"
+                        >Support role</Button>
                       </Col>
                     </Row>
                     <Row className="mt-3">
                       <Col xs="12" xl="12">
-                        {role.loading === true ? <Spinner color="primary" /> : (
-                          <Button
-                            onClick={( e ) => this.handleSubmit( e, "support", user._id )}
-                            color="primary"
-                          >Support role</Button>
-                        )}
+                        <Button
+                          onClick={( e ) => this.handleSubmit( e, "support", user._id )}
+                          color="success"
+                        >Support role</Button>
                       </Col>
                     </Row>
                     <Row className="mt-3">
                       <Col xs="12" xl="12">
-                        {role.loading === true ? <Spinner color="primary" /> : (
-                          <Button
-                            onClick={( e ) => this.handleSubmit( e, "agent", user._id )}
-                            color="danger"
-                          >Agent role</Button>
-                        )}
+                        <Button
+                          onClick={( e ) => this.handleSubmit( e, "agent", user._id )}
+                          color="danger"
+                        >Agent role</Button>
                       </Col>
                     </Row>
                   </Col>
