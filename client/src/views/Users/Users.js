@@ -2,29 +2,23 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import moment from "moment";
 
-import usersData from './UsersData'
 import { getUsers } from '../../store/actions/action_user';
 
 function UserRow(props) {
   const user = props.user
-  const userLink = `/users/${user.id}`
-
-  const getBadge = (status) => {
-    return status === 'Active' ? 'success' :
-      status === 'Inactive' ? 'secondary' :
-        status === 'Pending' ? 'warning' :
-          status === 'Banned' ? 'danger' :
-            'primary'
-  }
-
+  const userLink = `/users/${user._id}`
+  const ind = props.ind;
   return (
-    <tr key={user.id.toString()}>
-      <th scope="row"><Link to={userLink}>{user.id}</Link></th>
+    <tr key={user._id}>
+      <th scope="row"><Link to={userLink}>{ind + 1}</Link></th>
       <td><Link to={userLink}>{user.name}</Link></td>
-      <td>{user.registered}</td>
+      <td>{user.email}</td>
+      <td>{user.phone}</td>
+      <td>{moment( user.createdAt).format("DD/MM/YYYY")}</td>
       <td>{user.role}</td>
-      <td><Link to={userLink}><Badge color={getBadge(user.status)}>{user.status}</Badge></Link></td>
+      <td><Link to={userLink}><Badge color="primary">View</Badge></Link></td>
     </tr>
   )
 }
@@ -33,15 +27,15 @@ class Users extends Component {
   async componentDidMount() {
     const { getUsers } = this.props;
     try {
-      await getUsers()
+      await getUsers();
     } catch(err) {}
   }
 
   render() {
     const { users } = this.props;
-    const userList = usersData.filter( ( user ) => user.id < 10 );
     const userData = users.users && users.users;
-    console.log(users, " my user data")
+
+    console.log( userData, " my user data")
     return (
       <div className="animated fadeIn">
         <Row>
@@ -54,16 +48,18 @@ class Users extends Component {
                 <Table responsive hover>
                   <thead>
                     <tr>
-                      <th scope="col">id</th>
+                      <th scope="col">S/N</th>
                       <th scope="col">name</th>
-                      <th scope="col">registered</th>
-                      <th scope="col">role</th>
-                      <th scope="col">status</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Phone</th>
+                      <th scope="col">Role</th>
+                      <th scope="col">Joined</th>
+                      <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {userList.map((user, index) =>
-                      <UserRow key={index} user={user}/>
+                    {userData.map((user, index) =>
+                      <UserRow users={users} key={index} ind={index} user={user}/>
                     )}
                   </tbody>
                 </Table>

@@ -20,6 +20,7 @@ class Profile extends Component{
       await getUser();
     } catch(err) {}
   }
+  
   onChange = ( e ) => {
     let photo = e.target.files[0];
     this.setState( { photo: photo } );

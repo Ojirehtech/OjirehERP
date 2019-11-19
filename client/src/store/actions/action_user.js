@@ -93,9 +93,11 @@ export const getUsers = () => {
     dispatch( getUsersStart() );
     fetch( `${ BASE_URL }/users`, {
       method: "GET",
-      ACCEPT: "application/json",
-      "Content-Type": "application/json",
-      "x-auth-token": isAuthenticated().token
+      headers: {
+        ACCEPT: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": isAuthenticated().token
+      }
     } )
       .then( response => response.json() )
       .then( resp => {
