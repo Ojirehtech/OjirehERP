@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from "react-redux";
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
 import usersData from './UsersData'
+import { getUsers } from '../../store/actions/action_user';
 
 function UserRow(props) {
   const user = props.user
@@ -28,11 +30,18 @@ function UserRow(props) {
 }
 
 class Users extends Component {
+  async componentDidMount() {
+    const { getUsers } = this.props;
+    try {
+      await getUsers()
+    } catch(err) {}
+  }
 
   render() {
-
-    const userList = usersData.filter((user) => user.id < 10)
-
+    const { users } = this.props;
+    const userList = usersData.filter( ( user ) => user.id < 10 );
+    const userData = users.users && users.users;
+    console.log(users, " my user data")
     return (
       <div className="animated fadeIn">
         <Row>
@@ -67,4 +76,18 @@ class Users extends Component {
   }
 }
 
-export default Users;
+const mapStateToProps = (state) => {
+  return {
+    users: state.users
+  }
+}
+
+const mapDispatchToProps = ( dispatch ) => {
+  const dispatchProps = {
+    getUsers: () => dispatch(getUsers())
+  }
+
+  return dispatchProps;
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

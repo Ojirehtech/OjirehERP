@@ -21,10 +21,8 @@ class Profile extends Component{
     } catch(err) {}
   }
   onChange = ( e ) => {
-    let photo = e.target.files[0]; 
-    
+    let photo = e.target.files[0];
     this.setState( { photo: photo } );
-    console.log(this.state.photo, " from onhandleChange")
   }
 
   handleSubmit = async (e) => {
