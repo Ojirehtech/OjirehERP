@@ -3,6 +3,19 @@ import { connect } from "react-redux";
 import RegisterationForm from './Form';
 import { register } from '../../../store/actions/actions_signup';
 import { payIncentives } from "../../../store/actions/action_pay_incentives";
+import Particles from "react-particles-js";
+
+const particleOpt = {
+  particles: {
+    number: {
+      value: 150,
+      density: {
+        enable: true,
+        value_area: 1500
+      }
+    }
+  }
+}
 
 class Register extends Component {
   state = {
@@ -65,22 +78,28 @@ class Register extends Component {
     }
 
     return (
-      <div>
-        <RegisterationForm
-          email={email}
-          phone={phone}
-          address={address}
-          name={name}
-          refererPhone={refererPhone}
-          registration={registration}
-          handleChange={this.handleChange}
-          onRegister={this.onRegister}
-          payIncentives={payIncentives}
-          incentives={incentives}
-          pubKey={pubKey}
-          history={history}
-          register={register}
+      <div className="registration">
+        <Particles
+          params={particleOpt}
+          className="particles"
         />
+        <div className="reg-particles">
+          <RegisterationForm
+            email={email}
+            phone={phone}
+            address={address}
+            name={name}
+            refererPhone={refererPhone}
+            registration={registration}
+            handleChange={this.handleChange}
+            onRegister={this.onRegister}
+            payIncentives={payIncentives}
+            incentives={incentives}
+            pubKey={pubKey}
+            history={history}
+            register={register}
+          />
+        </div>
       </div>
     );
   }

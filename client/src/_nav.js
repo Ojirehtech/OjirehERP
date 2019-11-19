@@ -59,7 +59,11 @@ const navAdmin = [
     icon: "icon-user"
   },
 
- 
+  {
+    name: "User Management",
+    url: "/users",
+    icon: "icon-user"
+  }
 ];
 
 const navUser = [

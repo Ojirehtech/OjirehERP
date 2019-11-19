@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Button, Card, CardBody, CardGroup, Spinner, Col, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import logo from "../../../assets/img/brand/ojirehprime_logo.png";
 
 
 const OtpLogin = ( { login, phone, handleChange, onSubmitOtp } ) => {
@@ -11,9 +12,12 @@ const OtpLogin = ( { login, phone, handleChange, onSubmitOtp } ) => {
           <CardGroup>
             <Card>
               <CardBody>
+                <Row className="justify-content-md-center m-4">
+                  <img src={logo} alt="logo" />
+                </Row>
                 <Form onSubmit={onSubmitOtp}>
-                  <h3>Verify your phone number</h3>
-                  {/* {login.error && login.error.length > 0 ? <Alert color="danger">{login.error}</Alert> : null} */}
+                  <h3 style={{ color: "#4dbd74"}}>Verify your phone number</h3>
+                  {login.error && login.error.length > 0 ? <p color="danger">{login.error}</p> : null}
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
@@ -30,7 +34,7 @@ const OtpLogin = ( { login, phone, handleChange, onSubmitOtp } ) => {
                   <Row>
                     <Col xs="12">
                       {login.otpLoading === true ? <Spinner color="primary" /> : (
-                        <Button color="primary" className="px-4">Verify your phone number</Button>
+                        <Button color="success" className="px-4">Verify your phone number</Button>
                       )}
                     </Col>
                   </Row>

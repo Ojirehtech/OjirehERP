@@ -9,7 +9,7 @@ import OtpLogin from './OtpLogin';
 const particleOpt = {
   particles: {
     number: {
-      value: 100,
+      value: 150,
       density: {
         enable: true,
         value_area: 500
@@ -17,6 +17,7 @@ const particleOpt = {
     }
   }
 }
+
 class Login extends Component {
   state = {
     phone: "",

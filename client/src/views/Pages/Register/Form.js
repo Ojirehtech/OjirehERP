@@ -16,6 +16,7 @@ import {
   Row
 } from 'reactstrap';
 import Ravepay from "../../Payment/Ravepay";
+import logo from "../../../assets/img/brand/ojirehprime_logo.png";
 
 const RegisterationForm = ( {
   registration,
@@ -38,8 +39,11 @@ const RegisterationForm = ( {
           <Col md="9" lg="7" xl="6">
             <Card className="mx-4">
               <CardBody className="p-4">
+                <Row className="justify-content-md-center m-4">
+                  <img src={logo} alt="logo" />
+                </Row>
                 <Form onSubmit={onRegister}>
-                  <h1>Register</h1>
+                  <h3 style={{ color: "darkgreen"}}>Register</h3>
                   {registration.error && registration.error.length > 0 ? <Alert color="danger">{registration.error}</Alert> : null}
                   <p className="text-muted">Create your account</p>
                   <Col xs="12" xl="12">
