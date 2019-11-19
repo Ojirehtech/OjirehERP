@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Badge, Card, CardBody, CardHeader, Col, Row, Spinner, Table } from 'reactstrap';
 import moment from "moment";
 
 import { getUsers } from '../../store/actions/action_user';
@@ -16,11 +16,11 @@ function UserRow(props) {
       <td><Link to={userLink}>{user.name}</Link></td>
       <td>{user.email}</td>
       <td>{user.phone}</td>
-      <td>{moment( user.createdAt).format("DD/MM/YYYY")}</td>
+      <td>{moment( user.createdAt ).format( "DD/MM/YYYY" )}</td>
       <td>{user.role}</td>
       <td><Link to={userLink}><Badge color="primary">View</Badge></Link></td>
     </tr>
-  )
+  );
 }
 
 class Users extends Component {
@@ -35,7 +35,6 @@ class Users extends Component {
     const { users } = this.props;
     const userData = users.users && users.users;
 
-    console.log( userData, " my user data")
     return (
       <div className="animated fadeIn">
         <Row>
@@ -58,8 +57,8 @@ class Users extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {userData.map((user, index) =>
-                      <UserRow users={users} key={index} ind={index} user={user}/>
+                    {userData.map( ( user, index ) =>
+                      <UserRow users={users} key={index} ind={index} user={user} />
                     )}
                   </tbody>
                 </Table>
@@ -68,7 +67,7 @@ class Users extends Component {
           </Col>
         </Row>
       </div>
-    )
+    );
   }
 }
 
