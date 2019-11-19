@@ -182,7 +182,7 @@ class User extends Component {
                         <Button
                           onClick={( e ) => this.handleSubmit( e, "admin", user._id )}
                           color="primary"
-                        >Support role</Button>
+                        >Admin role</Button>
                       </Col>
                     </Row>
                     <Row className="mt-3">
