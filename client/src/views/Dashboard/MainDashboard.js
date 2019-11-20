@@ -35,9 +35,23 @@ class Dashboard extends Component {
   render() {
     const { users } = this.props;
     const user = users.user && users.user;
-    console.log(user, " the user new")
     const networkCount = users.users && users.users.length;
     const refererLink = isAuthenticated().user ? isAuthenticated().user.refererLink : null;
+    const earnings = user.earnings && user.earnings;
+    let sumEarning;
+    if ( earnings && earnings.length ) {
+      let allEarnings = [];
+      for ( let i = 0; i < earnings.length; i++ ) {
+        const date = new Date();
+        date.setDate( date.getDate() - 30 );
+        const dateString = date.toISOString().split( 'T' )[ 0 ];
+        if ( earnings[ i ].date.toISOString().split( "T" )[ 0 ] >= dateString ) {
+          allEarnings.push( earnings[ i ].amount );
+        }
+      }
+      sumEarning = allEarnings.reduce( ( a, b ) => a + b, 0 );
+    }
+    
     return (
       <div className="card animated fadeIn">
         <div className="card-body">
@@ -62,7 +76,7 @@ class Dashboard extends Component {
             <Col xs="12" sm="6" lg="3">
               <Card className="text-white bg-info">
                 <CardBody className="pb-0">
-                   <div><h3><strong>Earning</strong>: <strong>&#8358;{user.balance ? user.balance : 0}.00</strong></h3></div>
+                   <div><h3><strong>Earning</strong>: <strong>&#8358;{sumEarning ? sumEarning : 0}.00</strong></h3></div>
                   <div className="mb-4">
                     <p>Since Last 30 days</p>
                   </div>

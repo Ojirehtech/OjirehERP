@@ -21,6 +21,10 @@ const userSchema = new Schema( {
     time: { type: String },
     status: { type: Boolean }
   } ],
+  earnings: [ {
+    amount: Number,
+    date: Date
+  }],
   otp: { type: String, expires: "3m"},
   network: [ { type: String }],
   cardBought: { type: Boolean, default: false },

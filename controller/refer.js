@@ -30,7 +30,8 @@ exports.refererSettlement = ( req, res ) => {
   // const { refererId } = req.cookies;
   if ( !refererPhone ) return res.status( 400 ).json( { error: "Unknown referer. You must have a refer to complete this operation" } );
   // if ( !refererId ) return res.status( 400 ).json( { error: "You do not have a referer" } );
-  User.findOneAndUpdate( { phone: refererPhone }, { $inc: { balance: +200 } }, { new: true } )
+  const newEarning = { amount: 50, date: new Date().now }
+  User.findOneAndUpdate( { phone: refererPhone }, { $inc: { balance: +200 }, $push: { earnings: newEarning} }, { new: true } )
     .then( user => {
       if ( !user ) return;
       const phone = user.phone;
@@ -39,7 +40,8 @@ exports.refererSettlement = ( req, res ) => {
       const grandReferer = user.parentId;
       if ( !grandReferer ) return;
       console.log( user, "this. the first user to get reward" )
-      User.findByIdAndUpdate( { _id: grandReferer }, { $inc: { balance: +50 } }, { new: true } )
+      const myeEarning = { amount: 50, date: new Date().now }
+      User.findByIdAndUpdate( { _id: grandReferer }, { $inc: { balance: +50 }, $push: { earnings: myeEarning} }, { new: true } )
         .then( resp => {
           if ( !resp ) return;
           const ancestralParentId = resp.parentId;
@@ -47,7 +49,8 @@ exports.refererSettlement = ( req, res ) => {
           const phone = resp.phone;
           const total = resp.balance;
           creditSms( res, phone, 50, total );
-          User.findByIdAndUpdate( { _id: ancestralParentId }, { $inc: { balance: +8 } }, { new: true } )
+          const earning = { amount: 8, date: new Date().now }
+          User.findByIdAndUpdate( { _id: ancestralParentId }, { $inc: { balance: +8 }, $push: { earnings: earning} }, { new: true } )
             .then( response => {
               const phone = response.phone;
               const balance = response.balance;

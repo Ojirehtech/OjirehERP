@@ -16,7 +16,6 @@ exports.signup = ( req, res ) => {
     refererPhone,
     address
   } = req.body;
-  console.log( req.body, " theis is req body" );
   if ( !email ) return res.status( 400 ).json( { error: "Enter your email address" } );
   if ( !phone ) return res.status( 400 ).json( { error: "Phone number is missing" } );
   if ( !name ) return res.status( 400 ).json( { error: "Your first name is required" } );
@@ -29,7 +28,6 @@ exports.signup = ( req, res ) => {
       let newUser = new User( req.body )
 
       newUser.save();
-      console.log(newUser, "new user")
       const token = newUser.generateToken();
       const { _id, email, name, phone, parentId, refererPhone, role, profileUpdated } = newUser;
       const refererLink = `${process.env.API_URL}/ojirehprime/agent/${ _id }`;
