@@ -86,8 +86,7 @@ exports.generateOTP = ( req, res ) => {
 exports.signIn = ( req, res ) => {
   const { otp } = req.body;
 
-  if ( !otp ) return res.status( 400 ).json( { error: "Enter your phone number" } );
-  // const refererId = req.cookie.refererId ? req.cookie.refererId : "8jdu493029492jjdsh3";
+  if ( !otp ) return res.status( 400 ).json( { error: "Enter the OTP code" } );
   User.findOne( { otp } )
     .then( user => {
       if ( user.otp !== otp ) return res.status( 400 ).json( { error: `Verification failed. Invalid code` } );
@@ -108,6 +107,23 @@ exports.signIn = ( req, res ) => {
     } );
 }
 
+/**
+ * Verifies OTP code
+ */
+exports.otpVerification = ( req, res ) => {
+  const { otp } = req.params;
+
+  if ( !otp ) return res.status( 400 ).json( { error: "Enter the OTP number" } );
+  User.findOne( { otp } )
+    .then( user => {
+      if ( user.otp !== otp ) return res.status( 400 ).json( { error: `Verification failed. Invalid code` } );
+      
+      res.json( { message: "Success" } );
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
 /**
  * User account signout
  */

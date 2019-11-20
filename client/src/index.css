@@ -1,23 +1,18 @@
 
 .App button {
-  background: #4dbd74 !important;
+  background: linear-gradient(to right, #0a7e07 0%, #0a7e07 100%) !important;
   border-radius: 5px !important;
   padding: 10px !important;
   width: 200px !important;
   color: #fff;
 }
-
-/* .registration {
-  background-color: #000;
-  background-attachment: fixed;
-  background-size: cover;
-  height: 100%;
-  width: 100%;
-  opacity: 0.7;
-} */
-
+.bg-light {
+  background: linear-gradient(to right, #0a7e07 0%, #0a7e07 100%) !important;
+  color: #fff !important;
+  padding: 15px !important;
+}
 .particles {
-  background: #4dbd74;
+  background: linear-gradient(to right, #0a7e07 0%, #0a7e07 100%);
 }
 .reg-particles {
   margin-top: -650px;

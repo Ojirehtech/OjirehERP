@@ -5,6 +5,7 @@ import LoginForm from './LoginForm';
 import { onLogin, sendOTP } from "../../../store/actions/action_login";
 import Particles from "react-particles-js";
 import OtpLogin from './OtpLogin';
+import Header from '../Header/Header';
 
 const particleOpt = {
   particles: {
@@ -12,7 +13,7 @@ const particleOpt = {
       value: 150,
       density: {
         enable: true,
-        value_area: 500
+        value_area: 1500
       }
     }
   }
@@ -115,9 +116,10 @@ class Login extends Component {
 
     return (
       <div>
+        <Header />
         <Particles
           params={particleOpt}
-          style={{ background: "#4dbd74"}}
+          style={{ background: "linear-gradient(to right, #0a7e07 0%, #0a7e07 100%)"}}
         />
         <div className="particle-page">
           {this.renderView()}

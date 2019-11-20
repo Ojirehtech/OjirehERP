@@ -4,6 +4,7 @@ import RegisterationForm from './Form';
 import { register } from '../../../store/actions/actions_signup';
 import { payIncentives } from "../../../store/actions/action_pay_incentives";
 import Particles from "react-particles-js";
+import Header from '../Header/Header';
 
 const particleOpt = {
   particles: {
@@ -79,6 +80,7 @@ class Register extends Component {
 
     return (
       <div className="registration">
+        <Header />
         <Particles
           params={particleOpt}
           className="particles"

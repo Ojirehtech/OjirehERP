@@ -58,7 +58,11 @@ const navAdmin = [
     url: "/profile",
     icon: "icon-user"
   },
-
+  {
+    name: "Loan",
+    url: "/loan",
+    icon: "icon-money"
+  },
   {
     name: "User Management",
     url: "/users",
@@ -94,24 +98,6 @@ const navUser = [
     url: "/transfer",
     icon: "icon-credit-card"
   },
-  // {
-  //   // title: true,
-  //   name: "Transaction",
-  //   // url: "/transaction/finalize",
-  //   icon: "icon-briefcase",
-  //   children: [
-  //     {
-  //       name: 'Cash Transfer',
-  //       url: '/transaction/transfer',
-  //       icon: 'icon-briefcase',
-  //     },
-  //     {
-  //       name: 'Cash Withdraw',
-  //       url: '/transaction/withdraw',
-  //       icon: 'icon-briefcase',
-  //     },
-  //   ],
-  // },
   {
     name: "My Network",
     url: "/network",
@@ -122,6 +108,11 @@ const navUser = [
     url: "/profile",
     icon: "icon-user"
   }, 
+  {
+    name: "Loan",
+    url: "/loan",
+    icon: "icon-dollar-circle"
+  },
   {
     name: logout,
     icon: "icon-logout"

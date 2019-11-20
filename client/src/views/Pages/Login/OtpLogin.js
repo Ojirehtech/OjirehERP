@@ -15,8 +15,9 @@ const OtpLogin = ( { login, phone, handleChange, onSubmitOtp } ) => {
                 <Row className="justify-content-md-center m-4">
                   <img src={logo} alt="logo" />
                 </Row>
+                <p className="text-center">Welcome to Ojirehprime</p>
                 <Form onSubmit={onSubmitOtp}>
-                  <h3 style={{ color: "#4dbd74"}}>Verify your phone number</h3>
+                  <p className="text-muted">Kindly verify your phone number</p>
                   {login.error && login.error.length > 0 ? <p color="danger">{login.error}</p> : null}
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
@@ -34,7 +35,13 @@ const OtpLogin = ( { login, phone, handleChange, onSubmitOtp } ) => {
                   <Row>
                     <Col xs="12">
                       {login.otpLoading === true ? <Spinner color="primary" /> : (
-                        <Button color="success" className="px-4">Verify your phone number</Button>
+                        <Button
+                          className="px-4"
+                          style={{
+                            background: "linear-gradient(to right, #0a7e07 0%, #0a7e07 100%)",
+                            color: "#fff"
+                          }}
+                        >Verify your phone number</Button>
                       )}
                     </Col>
                   </Row>

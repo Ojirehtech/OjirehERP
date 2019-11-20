@@ -13,11 +13,11 @@ const LoginForm = ( { errMsg, toggelState, login, otp, handleChange, onLogin}) =
                 <Row className="justify-content-md-center m-4">
                   <img src={logo} alt="logo" />
                 </Row>
+                <p className="text-center">We sent a verification code to your phone number</p>
                 <Form onSubmit={onLogin}>
-                  <h3>Code verification</h3>
                   {errMsg.length > 0 ? <p style={{ color: "#ff0000" }}>{errMsg}</p> : null}
                   {login.error && login.error.length > 0 ? <p style={{ color: "#ff0000" }}>{login.error}</p> : null}
-                  <p className="text-muted">Enter the code sent to your phone here</p>
+                  <p className="text-muted">Kindly enter the code here</p>
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
@@ -35,7 +35,13 @@ const LoginForm = ( { errMsg, toggelState, login, otp, handleChange, onLogin}) =
                   <Row>
                     <Col xs="12">
                       {login.loading === true ? <Spinner color="primary" /> : (
-                        <Button color="primary" className="px-4">Send</Button>
+                        <Button
+                          className="px-4"
+                          style={{
+                            background: "linear-gradient(to right, #0a7e07 0%, #0a7e07 100%)",
+                            color: "#fff"
+                          }}
+                        >Send</Button>
                       )}
                     </Col>
                   </Row>

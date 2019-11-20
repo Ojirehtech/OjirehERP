@@ -42,10 +42,10 @@ const RegisterationForm = ( {
                 <Row className="justify-content-md-center m-4">
                   <img src={logo} alt="logo" />
                 </Row>
+                <p className="text-center">Welcome to Ojirehprime</p>
                 <Form onSubmit={onRegister}>
-                  <h3 style={{ color: "darkgreen"}}>Register</h3>
+                  <p className="text-muted">Kindly create an account</p>
                   {registration.error && registration.error.length > 0 ? <Alert color="danger">{registration.error}</Alert> : null}
-                  <p className="text-muted">Create your account</p>
                   <Col xs="12" xl="12">
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
