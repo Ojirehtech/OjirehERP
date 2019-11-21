@@ -56,6 +56,7 @@ export const getUser = () => {
     } )
       .then( response => response.json() )
       .then( resp => {
+        console.log(resp, " user from response")
         if ( resp.error ) {
           dispatch( getUserFailed( resp.error ) );
           return;

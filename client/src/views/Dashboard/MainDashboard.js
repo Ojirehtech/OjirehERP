@@ -35,7 +35,7 @@ class Dashboard extends Component {
   render() {
     const { users } = this.props;
     const user = users.user && users.user;
-    const networkCount = users.users && users.users.length;
+    const networkCount = users.user && users.user.networks;
     const refererLink = isAuthenticated().user ? isAuthenticated().user.refererLink : null;
     const earnings = user.earnings && user.earnings;
     let sumEarning;
@@ -87,7 +87,7 @@ class Dashboard extends Component {
             <Col xs="12" sm="6" lg="3">
               <Card className="text-white bg-danger">
                 <CardBody className="pb-0">
-                  <div><h3><strong>{networkCount}</strong></h3></div>
+                  <div><h3><strong>{networkCount ? networkCount : 0}</strong></h3></div>
                   <div className="mb-4">Total Network</div>
                 </CardBody>
                 

@@ -5,10 +5,18 @@ import { verifyOtp } from "../../store/actions/action_loan";
 import { sendOTP } from "../../store/actions/action_login";
 import Loan from "./Loan";
 import OtpForm from "./OtpForm";
+import { getUser } from "../../store/actions/action_user";
 
 class Container extends Component{
   state = {
     step: 0
+  }
+
+  async componentDidMount() {
+    const { getUser } = this.props;
+    try {
+      await getUser();
+    } catch(err) {}
   }
 
   onStepChange = () => {
@@ -21,10 +29,13 @@ class Container extends Component{
   }
   
   render() {
-    const { loan } = this.props;
+    const { loan, users } = this.props;
+    console.log( users, " hellow users" );
+
     if ( loan.loan && loan.loan.message === "Success" ) {
       return <Redirect to="/menu" />
     }
+
     return (
       <div>
         {this.onStepChange()}
@@ -37,14 +48,16 @@ const mapStateToProps = ( state ) => {
   return {
     loan: state.loan,
     login: state.login,
-    agent: state.agent
+    agent: state.agent,
+    users: state.users
   }
 }
 
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
     sendOTP: ( data ) => dispatch( sendOTP( data ) ),
-    verifyOtp: ( data ) => dispatch( verifyOtp( data ) )
+    verifyOtp: ( data ) => dispatch( verifyOtp( data ) ),
+    getUser: () => dispatch(getUser())
   }
 
   return dispatchProps;
