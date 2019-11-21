@@ -80,7 +80,7 @@ export const verifyOtp = ( data ) => {
   return dispatch => {
     dispatch( verifyOtpStart() );
     fetch( `${ BASE_URL }/user/verifyotp/${ data }`, {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         ACCEPT: "application/json",

@@ -7,7 +7,7 @@ const Profile = React.lazy(() => import('./views/Profile/Profile/Profile'));
 const Charts = React.lazy(() => import('./views/Charts'));
 const Dashboard = React.lazy(() => import('./views/Dashboard/MainDashboard'));
 const CoreUIIcons = React.lazy( () => import( './views/Icons/CoreUIIcons' ) );
-const Loan = React.lazy( () => import( "./views/Loan/Loan" ) );
+const Loan = React.lazy( () => import( "./views/Loan/Container" ) );
 // const Flags = React.lazy(() => import('./views/Icons/Flags'));
 // const FontAwesome = React.lazy(() => import('./views/Icons/FontAwesome'));
 // const SimpleLineIcons = React.lazy(() => import('./views/Icons/SimpleLineIcons'));

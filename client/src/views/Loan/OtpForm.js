@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Card,
   CardBody,
@@ -13,12 +14,10 @@ import {
   Form,
 } from "reactstrap";
 import { isAuthenticated } from "../../helper/authenticate";
-import { sendOTP } from "../../store/actions/action_login";
 
-class Loan extends Component {
+class OtpForm extends Component {
   state = {
     otp: "",
-    phone: "",
     otpSuccess: false,
   }
 
@@ -29,23 +28,22 @@ class Loan extends Component {
     console.log( this.state );
   }
 
-  handleVerification = async (e, name) => {
+  handleVerification = async ( e, name ) => {
     e.preventDefault();
-    const { phone, otp } = this.state;
-    const { sendOTP, verifyOtp } = this.props;
-    
+    const {  otp } = this.state;
+    const { verifyOtp } = this.props;
+
     try {
       if ( name === "phone" ) {
-        await sendOTP( phone );
-      } else {
         await verifyOtp( otp );
+      } else {
       }
-    } catch(err) {}
+    } catch ( err ) { }
   }
 
   render() {
-    const { login } = this.props;
-    const { phone } = this.state;
+    const { loan } = this.props;
+    const { otp } = this.state;
     const user = isAuthenticated().user && isAuthenticated().user;
     return (
       <div>
@@ -54,8 +52,8 @@ class Loan extends Component {
             <Row className="justify-content-md-center mt-5">
               <Col xs="12" xl="5">
                 <h3>Welcome {user.name}</h3>
-                <p className="text-muted">Please enter your number to see your loan offer</p>
-                <Form onSubmit={(e) => this.handleVerification(e, "phone")}>
+                <p className="text-muted">Kindly enter the OTP code sent to your phone</p>
+                <Form onSubmit={( e ) => this.handleVerification( e, "phone" )}>
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
@@ -65,13 +63,13 @@ class Loan extends Component {
                     <Input
                       type="tel"
                       placeholder="0xxx xxx xxxx"
-                      value={phone}
-                      onChange={( e ) => this.onChange( e, "phone" )}
+                      value={otp}
+                      onChange={( e ) => this.onChange( e, "otp" )}
                     />
                   </InputGroup>
                   <Row>
                     <Col xs="12">
-                      {login.loading === true ? <Spinner color="primary" /> : (
+                      {loan.loading === true ? <Spinner color="primary" /> : (
                         <Button color="success" className="px-4">Send</Button>
                       )}
                     </Col>
@@ -87,4 +85,4 @@ class Loan extends Component {
 }
 
 
-export default Loan;
+export default OtpForm;

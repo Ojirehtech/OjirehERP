@@ -108,7 +108,7 @@ export const sendOTP = ( userId ) => {
           dispatch( sendOTPFailed( resp.error ) );
           return;
         }
-        dispatch( sendOTPSuccess() );
+        dispatch( sendOTPSuccess(resp) );
       } )
       .catch( err => {
         dispatch( sendOTPFailed( err.message ) );
