@@ -8,6 +8,7 @@ const Charts = React.lazy(() => import('./views/Charts'));
 const Dashboard = React.lazy(() => import('./views/Dashboard/MainDashboard'));
 const CoreUIIcons = React.lazy( () => import( './views/Icons/CoreUIIcons' ) );
 const Loan = React.lazy( () => import( "./views/Loan/Container" ) );
+const Container = React.lazy( () => import( "./views/Loan/Menu/Container" ) );
 // const Flags = React.lazy(() => import('./views/Icons/Flags'));
 // const FontAwesome = React.lazy(() => import('./views/Icons/FontAwesome'));
 // const SimpleLineIcons = React.lazy(() => import('./views/Icons/SimpleLineIcons'));
@@ -35,7 +36,7 @@ const routes = [
   // { path: '/notifications', exact: true, name: 'Notifications', component: Alerts },
   // { path: '/notifications/alerts', name: 'Alerts', component: Alerts },
   // { path: '/notifications/badges', name: 'Badges', component: Badges },
-  // { path: '/notifications/modals', name: 'Modals', component: Modals },
+  { path: '/menu', name: 'Container', component: Container },
   { path: "/loan", name: "Loan", component: Loan},
   { path: "/transaction/transfer", name: "Transaction", component: Transactions },
   { path: "/transaction/withdraw", name: "Transaction", component: Withdraw },

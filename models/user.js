@@ -23,10 +23,10 @@ const userSchema = new Schema( {
   } ],
   earnings: [ {
     amount: Number,
-    date: Date
+    date: { type: Date, default: Date().now }
   }],
   otp: { type: String, expires: "3m"},
-  network: [ { type: String }],
+  networks: { type: Number, default: 0 },
   cardBought: { type: Boolean, default: false },
   photo: { data: Buffer, ContentType: String },
   role: { type: String, enum: [ "admin", "agent", "support" ], default: "agent" },

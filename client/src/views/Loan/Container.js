@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { verifyOtp } from "../../store/actions/action_loan";
 import { sendOTP } from "../../store/actions/action_login";
 import Loan from "./Loan";
@@ -20,6 +21,10 @@ class Container extends Component{
   }
   
   render() {
+    const { loan } = this.props;
+    if ( loan.loan && loan.loan.message === "Success" ) {
+      return <Redirect to="/menu" />
+    }
     return (
       <div>
         {this.onStepChange()}

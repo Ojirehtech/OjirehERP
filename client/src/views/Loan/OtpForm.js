@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import {
   Card,
   CardBody,
@@ -25,7 +24,6 @@ class OtpForm extends Component {
     let fields = this.state;
     fields[ name ] = e.target.value;
     this.setState( { fields } );
-    console.log( this.state );
   }
 
   handleVerification = async ( e, name ) => {
@@ -34,10 +32,7 @@ class OtpForm extends Component {
     const { verifyOtp } = this.props;
 
     try {
-      if ( name === "phone" ) {
-        await verifyOtp( otp );
-      } else {
-      }
+      await verifyOtp( otp );
     } catch ( err ) { }
   }
 
@@ -52,7 +47,7 @@ class OtpForm extends Component {
             <Row className="justify-content-md-center mt-5">
               <Col xs="12" xl="5">
                 <h3>Welcome {user.name}</h3>
-                <p className="text-muted">Kindly enter the OTP code sent to your phone</p>
+                <p className="text-muted">We sent you a verificatio code. Please enter code here</p>
                 <Form onSubmit={( e ) => this.handleVerification( e, "phone" )}>
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">

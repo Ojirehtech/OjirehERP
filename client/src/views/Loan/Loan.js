@@ -13,7 +13,6 @@ import {
   Form,
 } from "reactstrap";
 import { isAuthenticated } from "../../helper/authenticate";
-import { sendOTP } from "../../store/actions/action_login";
 
 class Loan extends Component {
   state = {
@@ -26,20 +25,16 @@ class Loan extends Component {
     let fields = this.state;
     fields[ name ] = e.target.value;
     this.setState( { fields } );
-    console.log( this.state );
   }
 
   handleVerification = async (e, name) => {
     e.preventDefault();
-    const { phone, otp } = this.state;
-    const { sendOTP, verifyOtp } = this.props;
+    const { phone } = this.state;
+    const { sendOTP } = this.props;
     
     try {
-      if ( name === "phone" ) {
-        await sendOTP( phone );
-      } else {
-        await verifyOtp( otp );
-      }
+     
+      await sendOTP( phone );
     } catch(err) {}
   }
 

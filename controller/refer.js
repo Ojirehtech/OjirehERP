@@ -27,11 +27,9 @@ exports.refer = ( req, res ) => {
 */
 exports.refererSettlement = ( req, res ) => {
   const { refererPhone } = req.params;
-  // const { refererId } = req.cookies;
   if ( !refererPhone ) return res.status( 400 ).json( { error: "Unknown referer. You must have a refer to complete this operation" } );
-  // if ( !refererId ) return res.status( 400 ).json( { error: "You do not have a referer" } );
-  const newEarning = { amount: 50, date: new Date().now }
-  User.findOneAndUpdate( { phone: refererPhone }, { $inc: { balance: +200 }, $push: { earnings: newEarning} }, { new: true } )
+  const newEarning = { amount: 200 }
+  User.findOneAndUpdate( { phone: refererPhone }, { $inc: { balance: +200, networks: +1 }, $push: { earnings: newEarning } }, { new: true } )
     .then( user => {
       if ( !user ) return;
       const phone = user.phone;
@@ -39,9 +37,10 @@ exports.refererSettlement = ( req, res ) => {
       creditSms( res, phone, 200, totalBal );
       const grandReferer = user.parentId;
       if ( !grandReferer ) return;
-      console.log( user, "this. the first user to get reward" )
-      const myeEarning = { amount: 50, date: new Date().now }
-      User.findByIdAndUpdate( { _id: grandReferer }, { $inc: { balance: +50 }, $push: { earnings: myeEarning} }, { new: true } )
+      console.log( user, "this. the first user to get reward" );
+
+      const myeEarning = { amount: 50 }
+      User.findByIdAndUpdate( { _id: grandReferer }, { $inc: { balance: +50, networks: +1 }, $push: { earnings: myeEarning } }, { new: true } )
         .then( resp => {
           if ( !resp ) return;
           const ancestralParentId = resp.parentId;
@@ -49,8 +48,8 @@ exports.refererSettlement = ( req, res ) => {
           const phone = resp.phone;
           const total = resp.balance;
           creditSms( res, phone, 50, total );
-          const earning = { amount: 8, date: new Date().now }
-          User.findByIdAndUpdate( { _id: ancestralParentId }, { $inc: { balance: +8 }, $push: { earnings: earning} }, { new: true } )
+          const earning = { amount: 8 };
+          User.findByIdAndUpdate( { _id: ancestralParentId }, { $inc: { balance: +8, networks: +1 }, $push: { earnings: earning } }, { new: true } )
             .then( response => {
               const phone = response.phone;
               const balance = response.balance;
