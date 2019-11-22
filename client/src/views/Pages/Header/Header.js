@@ -40,7 +40,7 @@ const Header = ( props ) => {
           <Nav className="mr-auto" navbar>
             <NavItem>
                 <NavLink
-                  href="/components/"
+                  href={`${process.env.REACT_APP_SITE_URL}`}
                   style={styles.nav}
                 >Home</NavLink>
             </NavItem>
@@ -50,41 +50,49 @@ const Header = ( props ) => {
               </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    What We Do
+                    <NavLink href={`${ process.env.REACT_APP_SITE_URL }/about-us/#wwd`}>
+                      What We Do
+                    </NavLink>
                   </DropdownItem>
                   <DropdownItem>
-                    Our Vision, Mission, Core Values
+                    <NavLink href={`${ process.env.REACT_APP_SITE_URL }/about-us/#vision`}>
+                      Our Vision, Mission, Core Values
+                    </NavLink>
                   </DropdownItem>
                   <DropdownItem>
-                    Roadmap
+                    <NavLink href={`${ process.env.REACT_APP_SITE_URL }/about-us/#roadmap`}>
+                      Roadmap
+                    </NavLink>
                   </DropdownItem>
                   <DropdownItem>
-                    Our Team
+                    <NavLink href={`${ process.env.REACT_APP_SITE_URL }/about-us/#team`}>
+                      Our Team
+                    </NavLink>
                   </DropdownItem>
                 </DropdownMenu>
                 </UncontrolledDropdown>
               <NavItem>
                 <NavLink
-                  href="/components/"
+                  href={`${ process.env.REACT_APP_SITE_URL }/faqs`}
                   style={styles.nav}
                 >FAQs</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
-                  href="/components/"
+                  href={`${ process.env.REACT_APP_SITE_URL }/blog`}
                   style={styles.nav}
                 >Blog</NavLink>
                 
               </NavItem>
               <NavItem>
                 <NavLink
-                  href="/components/"
+                  href={`${ process.env.REACT_APP_SITE_URL }/careers`}
                   style={styles.nav}
                 >Careers</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
-                  href="/components/"
+                  href="https://ojireh.com"
                   style={styles.nav}
                 >Online Store</NavLink>
               </NavItem>
