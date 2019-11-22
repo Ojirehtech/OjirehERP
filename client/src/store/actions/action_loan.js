@@ -33,8 +33,9 @@ export const generateOtpFailed = ( error ) => {
 
 export const generateOtp = ( data ) => {
   const userId = isAuthenticated().user._id;
+  console.log("hello from generate otp")
   return dispatch => {
-    dispatch( verifyOtpStart() );
+    dispatch( generateOtpStart() );
     fetch( `${ BASE_URL }/user/generate/${userId}/${ data }`, {
       method: "POST",
       headers: {
@@ -46,13 +47,13 @@ export const generateOtp = ( data ) => {
       .then( response => response.json() )
       .then( resp => {
         if ( resp.error ) {
-          dispatch( verifyOtpFailed( resp.error ) );
+          dispatch( generateOtpFailed( resp.error ) );
           return;
         }
-        dispatch( verifyOtpSuccess( resp ) );
+        dispatch( generateOtpSuccess( resp ) );
       } )
       .catch( err => {
-        dispatch( verifyOtpFailed( err.message ) );
+        dispatch( generateOtpFailed( err.message ) );
       } );
   }
 }

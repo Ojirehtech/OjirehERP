@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { verifyOtp, generateOtp } from "../../store/actions/action_loan";
-import { sendOTP } from "../../store/actions/action_login";
 import Loan from "./Loan";
 import OtpForm from "./OtpForm";
 import { getUser } from "../../store/actions/action_user";
@@ -20,11 +19,11 @@ class Container extends Component{
   }
 
   onStepChange = () => {
-    const { loan, login, verifyOtp } = this.props;
+    const { loan, login, generateOtp, verifyOtp } = this.props;
     if ( login.otpSuccess && login.otpSuccess === true ) {
       return <OtpForm loan={loan} verifyOtp={verifyOtp} />
     } else {
-      return <Loan login={login} generateOtp={generateOtp} />
+      return <Loan loan={loan} generateOtp={generateOtp} />
     }
   }
   

@@ -19,6 +19,7 @@ class Loan extends Component {
     otp: "",
     phone: "",
     otpSuccess: false,
+    errorMsg: "",
   }
 
   onChange = ( e, name ) => {
@@ -33,14 +34,16 @@ class Loan extends Component {
     const { generateOtp } = this.props;
     
     try {
-     
+      if ( !phone ) {
+       return this.setState( { errorMsg: "Enter your phone number" } );
+      }
       await generateOtp( phone );
     } catch(err) {}
   }
 
   render() {
-    const { login } = this.props;
-    const { phone } = this.state;
+    const { loan } = this.props;
+    const { phone, errorMsg, } = this.state;
     const user = isAuthenticated().user && isAuthenticated().user;
     return (
       <div>
@@ -49,6 +52,8 @@ class Loan extends Component {
             <Row className="justify-content-md-center mt-5">
               <Col xs="12" xl="5">
                 <h3>Welcome {user.name}</h3>
+                {loan.error && loan.error.length > 0 ? <p style={{ color: "#ff0000" }}>{loan.error}</p> : null}
+                {errorMsg.length > 0 ? <p style={{ color: "#ff0000" }}>{errorMsg}</p> : null}
                 <p className="text-muted">Please enter your number to see your loan offer</p>
                 <Form onSubmit={(e) => this.handleVerification(e, "phone")}>
                   <InputGroup className="mb-3">
@@ -66,7 +71,7 @@ class Loan extends Component {
                   </InputGroup>
                   <Row>
                     <Col xs="12">
-                      {login.loading === true ? <Spinner color="primary" /> : (
+                      {loan.loading === true ? <Spinner color="success" /> : (
                         <Button color="success" className="px-4">Send</Button>
                       )}
                     </Col>

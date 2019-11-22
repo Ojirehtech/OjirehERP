@@ -65,7 +65,7 @@ class OtpForm extends Component {
                   <Row>
                     <Col xs="12">
                       {loan.loading === true ? <Spinner color="primary" /> : (
-                        <Button color="success" className="px-4">Send</Button>
+                        <Button color="success" className="px-4">Verify</Button>
                       )}
                     </Col>
                   </Row>

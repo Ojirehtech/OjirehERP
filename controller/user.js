@@ -48,17 +48,18 @@ exports.signup = ( req, res ) => {
 exports.generateOTP = ( req, res ) => {
   const otpCode = Math.floor( 1000 + Math.random() * 9000 );
   const { phone } = req.params;
+  console.log( phone, " phone number" )
+
   if ( !phone ) return res.status( 400 ).json( { error: "Your phone number is required" } );
   const sender = "OjirehPrime";
   const message = `Your verification pass code is ${ otpCode }`;
   const url = `http://www.jamasms.com/smsapi/?username=${process.env.SMS_USERNAME}&password=${process.env.SMS_PASS}&sender=${sender}&numbers=${phone}&message=${message}
 `
-  if ( !phone ) return res.status( 400 ).json( { error: "Your phone is required" } );
-  User.find( { phone } )
+  User.findOne( { phone: phone } )
     .then( user => {
-      if ( !user ) return res.status( 400 ).json( { error: `User with the phone number ${ userId } does not exist` } );
-      const userId = user[ 0 ]._id;
-      User.findByIdAndUpdate( { _id: userId }, { $set: { otp: otpCode } }, { new: true } )
+      if ( !user ) return res.status( 400 ).json( { error: `You do not have Ojirehprime card ${ phone }. Click on Register to buy a card` } );
+      
+      User.findByIdAndUpdate( { _id: user._id }, { $set: { otp: otpCode } }, { new: true } )
         .then( resp => {
           console.log( resp )
           fetch( url, {
@@ -124,13 +125,12 @@ exports.generateLoanOTP = ( req, res ) => {
   const url = `http://www.jamasms.com/smsapi/?username=${ process.env.SMS_USERNAME }&password=${ process.env.SMS_PASS }&sender=${ sender }&numbers=${ phone }&message=${ message }
 `
   if ( !phone ) return res.status( 400 ).json( { error: "Your phone is required" } );
-  User.find( { phone } )
+  User.findOne( { phone: phone } )
     .then( user => {
-      if ( !user ) return res.status( 400 ).json( { error: `User with the phone number ${ userId } does not exist` } );
-      const userId = user[ 0 ]._id;
-      User.findByIdAndUpdate( { _id: userId }, { $set: { otp: otpCode } }, { new: true } )
+      if ( !user ) return res.status( 400 ).json( { error: `You do not have Ojirehprime card. Click on Register to buy one.` } );
+      User.findByIdAndUpdate( { _id: user._id }, { $set: { otp: otpCode } }, { new: true } )
         .then( resp => {
-          console.log( resp )
+          console.log( resp );
           fetch( url, {
             method: "POST",
             headers: {

@@ -45,9 +45,9 @@ class Dashboard extends Component {
         const date = new Date();
         date.setDate( date.getDate() - 30 );
         const dateString = date.toISOString().split( 'T' )[ 0 ];
-        if ( earnings[ i ].date.toISOString().split( "T" )[ 0 ] >= dateString ) {
-          allEarnings.push( earnings[ i ].amount );
-        }
+        // if ( earnings[ i ] && earnings[ i ].date && earnings[ i ].date.toISOString().split( "T" )[ 0 ] >= dateString ) {
+        //   allEarnings.push( earnings[ i ].amount );
+        // }
       }
       sumEarning = allEarnings.reduce( ( a, b ) => a + b, 0 );
     }

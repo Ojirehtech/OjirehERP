@@ -4,7 +4,7 @@ import { Button, Card, CardBody, CardGroup, Spinner, Col, Form, Input, InputGrou
 import logo from "../../../assets/img/brand/ojirehprime_logo.png";
 
 
-const OtpLogin = ( { login, phone, handleChange, onSubmitOtp } ) => {
+const OtpLogin = ( { errMsg, login, phone, handleChange, onSubmitOtp } ) => {
   return (
     <div className="mt-5">
       <Row className="justify-content-md-center mt-5">
@@ -18,7 +18,8 @@ const OtpLogin = ( { login, phone, handleChange, onSubmitOtp } ) => {
                 <p className="text-center">Welcome to Ojirehprime</p>
                 <Form onSubmit={onSubmitOtp}>
                   <p className="text-muted">Kindly verify your phone number</p>
-                  {login.error && login.error.length > 0 ? <p color="danger">{login.error}</p> : null}
+                  {login.error && login.error.length > 0 ? <p style={{ color: "#ff0000" }}>{login.error}</p> : null}
+                  {errMsg.length > 0 ? <p style={{ color: "#ff0000"}}>{errMsg}</p> : null}
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
