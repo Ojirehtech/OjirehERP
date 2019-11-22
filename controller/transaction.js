@@ -75,23 +75,19 @@ exports.getRequest = ( req, res ) => {
  * handles withdrawal requests approvals by the admin
  */
 exports.requestApproval = ( req, res ) => {
-  const { userId, agentId, requestId, role } = req.params;
+  const { userId, agentId, requestId } = req.params;
   const { amount } = req.body;
-  console.log(amount,  " the value of amount")
   if ( amount < 10 ) return res.status( 400 ).json( { error: "You can not approve request with amount less then 1000" } );
   if ( !userId ) return res.status( 400 ).json( { error: "Unknown user. Please ensure you are an agent" } );
   if ( !requestId ) return res.status( 400 ).json( { error: "Unknown request. Make sure you have the right access to approve requests" } );
-  // if ( role !== "admin" ) return res.status( 400 ).json( { error: "Only an admin can approve fund withdrawal requests" } );
   if ( !agentId ) return res.status( 400 ).json( { error: "User ID must be provided to approve this request" } );
   const amt = Number( amount );
-  console.log(typeof amt, "type of amt", typeof amount, " type of amount")
   User.findByIdAndUpdate( { _id: agentId }, {$inc: { balance: -amt}}, { new: true} )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: "Failed to debit user" } );
       Request.findByIdAndUpdate( { _id: requestId }, { $set: { status: true } }, { new: true } )
         .then( request => {
           if ( !request ) return res.status( 400 ).json( { error: "Request approval failed. Try again" } );
-          console.log( request, " request" );
           debitSms(res,)
         } );
       
@@ -139,6 +135,26 @@ exports.transferFund = ( req, res ) => {
     } )
     .catch( err => {
       console.log(err.message, "error from transaction ")
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
+
+/**
+ * Handles money rain request
+ */
+exports.withdrawMoneyRain = ( req, res ) => {
+  const { userId, phone } = req.params;
+  const { _id } = req.user;
+  if ( !userId ) return res.status( 400 ).json( { error: "" } );
+  if ( !_id ) return res.status( 400 ).json( { error: "You have to login to access this operation" } );
+  if ( !phone ) return res.status( 400 ).json( { error: "You are not a valid Ojirehprime card user" } );
+  if ( userId !== _id ) return res.status( 400 ).json( { error: "You cannot access this operation" } );
+  User.findByIdAndUpdate( { _id: userId }, { $set: { loan: amount }, $inc: { loanRequestCount: +1 } }, { new: true } )
+    .then( resp => {
+      if ( !resp ) return res.status( 400 ).json( { error: "Loan request failed. Try again" } );
+      res.json( resp );
+    } )
+    .catch( err => {
       res.status( 400 ).json( { error: err.message } );
     } );
 }
