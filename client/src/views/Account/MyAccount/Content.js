@@ -82,7 +82,7 @@ class Content extends Component {
             <Card className="text-white bg-success">
               <CardBody className="pb-0">
                 <h3 className="mb-3">Available Balance</h3>
-                <h2 className="mb-3"><strong>&#8358;{user && user.balance}.00</strong></h2>
+                <h2 className="mb-3"><strong>&#8358;{user && user.balance ? user.balance : 0}.00</strong></h2>
               </CardBody>
             </Card>
           </Col>

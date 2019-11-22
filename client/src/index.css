@@ -21,6 +21,17 @@
   margin-top: -700px;
 }
 
+.loanCard {
+   height: 500px;
+   padding-top: 50px
+}
+
+@media only screen and (max-width: 480px) {
+  .loanCard {
+    height: 500px;
+    padding-top: 100px;
+  }
+}
 @media only screen and (max-width: 480px) {
   .reg-particles {
     margin-top: -150px;
