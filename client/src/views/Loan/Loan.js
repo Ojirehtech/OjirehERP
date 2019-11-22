@@ -30,11 +30,11 @@ class Loan extends Component {
   handleVerification = async (e, name) => {
     e.preventDefault();
     const { phone } = this.state;
-    const { sendOTP } = this.props;
+    const { generateOtp } = this.props;
     
     try {
      
-      await sendOTP( phone );
+      await generateOtp( phone );
     } catch(err) {}
   }
 

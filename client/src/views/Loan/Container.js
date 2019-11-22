@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { verifyOtp } from "../../store/actions/action_loan";
+import { verifyOtp, generateOtp } from "../../store/actions/action_loan";
 import { sendOTP } from "../../store/actions/action_login";
 import Loan from "./Loan";
 import OtpForm from "./OtpForm";
@@ -20,17 +20,16 @@ class Container extends Component{
   }
 
   onStepChange = () => {
-    const { loan, login, verifyOtp, sendOTP } = this.props;
+    const { loan, login, verifyOtp } = this.props;
     if ( login.otpSuccess && login.otpSuccess === true ) {
       return <OtpForm loan={loan} verifyOtp={verifyOtp} />
     } else {
-      return <Loan login={login} sendOTP={sendOTP} />
+      return <Loan login={login} generateOtp={generateOtp} />
     }
   }
   
   render() {
-    const { loan, users } = this.props;
-    console.log( users, " hellow users" );
+    const { loan } = this.props;
 
     if ( loan.loan && loan.loan.message === "Success" ) {
       return <Redirect to="/menu" />
@@ -55,7 +54,7 @@ const mapStateToProps = ( state ) => {
 
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
-    sendOTP: ( data ) => dispatch( sendOTP( data ) ),
+    generateOtp: ( data ) => dispatch( generateOtp( data ) ),
     verifyOtp: ( data ) => dispatch( verifyOtp( data ) ),
     getUser: () => dispatch(getUser())
   }

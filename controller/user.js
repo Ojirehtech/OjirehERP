@@ -48,8 +48,9 @@ exports.signup = ( req, res ) => {
 exports.generateOTP = ( req, res ) => {
   const otpCode = Math.floor( 1000 + Math.random() * 9000 );
   const { phone } = req.params;
+  if ( !phone ) return res.status( 400 ).json( { error: "Your phone number is required" } );
   const sender = "OjirehPrime";
-  const message = `Your verification pass code is ${otpCode}`
+  const message = `Your verification pass code is ${ otpCode }`;
   const url = `http://www.jamasms.com/smsapi/?username=${process.env.SMS_USERNAME}&password=${process.env.SMS_PASS}&sender=${sender}&numbers=${phone}&message=${message}
 `
   if ( !phone ) return res.status( 400 ).json( { error: "Your phone is required" } );
@@ -107,8 +108,52 @@ exports.signIn = ( req, res ) => {
     } );
 }
 
+
 /**
- * Verifies OTP code
+ * Generate OTP code for Loan request
+ */
+exports.generateLoanOTP = ( req, res ) => {
+  const otpCode = Math.floor( 1000 + Math.random() * 9000 );
+  const { phone, userId } = req.params;
+  const { _id } = req.user;
+  if ( !phone ) return res.status( 400 ).json( { error: "Your phone number is required." } );
+  if ( !userId ) return res.status( 400 ).json( { error: "Oops! Seems like you're not properly logged in." } );
+  if ( userId !== _id ) return res.status( 400 ).json( { error: "Ooops! Malicious user!! User not recognized" } );
+  const sender = "OjirehPrime";
+  const message = `Your verification pass code is ${ otpCode }`;
+  const url = `http://www.jamasms.com/smsapi/?username=${ process.env.SMS_USERNAME }&password=${ process.env.SMS_PASS }&sender=${ sender }&numbers=${ phone }&message=${ message }
+`
+  if ( !phone ) return res.status( 400 ).json( { error: "Your phone is required" } );
+  User.find( { phone } )
+    .then( user => {
+      if ( !user ) return res.status( 400 ).json( { error: `User with the phone number ${ userId } does not exist` } );
+      const userId = user[ 0 ]._id;
+      User.findByIdAndUpdate( { _id: userId }, { $set: { otp: otpCode } }, { new: true } )
+        .then( resp => {
+          console.log( resp )
+          fetch( url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "text/html"
+            }
+          } )
+            .then( result => {
+              res.json( { message: "Success" } );
+            } )
+            .catch( err => {
+              res.status( 400 ).json( { error: err.message } );
+            } );
+        } );
+
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
+
+
+/**
+ * Verifies OTP code for loan request
  */
 exports.otpVerification = ( req, res ) => {
   const { otp } = req.params;
