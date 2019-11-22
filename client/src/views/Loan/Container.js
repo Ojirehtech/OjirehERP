@@ -19,8 +19,8 @@ class Container extends Component{
   }
 
   onStepChange = () => {
-    const { loan, login, generateOtp, verifyOtp } = this.props;
-    if ( login.otpSuccess && login.otpSuccess === true ) {
+    const { loan, generateOtp, verifyOtp } = this.props;
+    if ( loan.loan && loan.loan.message === "Success" ) {
       return <OtpForm loan={loan} verifyOtp={verifyOtp} />
     } else {
       return <Loan loan={loan} generateOtp={generateOtp} />
@@ -30,7 +30,7 @@ class Container extends Component{
   render() {
     const { loan } = this.props;
 
-    if ( loan.loan && loan.loan.message === "Success" ) {
+    if ( loan.otp && loan.otp.message === "Success" ) {
       return <Redirect to="/menu" />
     }
 

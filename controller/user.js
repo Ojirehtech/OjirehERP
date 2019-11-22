@@ -118,19 +118,20 @@ exports.generateLoanOTP = ( req, res ) => {
   const { phone, userId } = req.params;
   const { _id } = req.user;
   if ( !phone ) return res.status( 400 ).json( { error: "Your phone number is required." } );
-  if ( !userId ) return res.status( 400 ).json( { error: "Oops! Seems like you're not properly logged in." } );
+  if ( !userId || !_id ) return res.status( 400 ).json( { error: "Oops! Seems like you're not properly logged in." } );
   if ( userId !== _id ) return res.status( 400 ).json( { error: "Ooops! Malicious user!! User not recognized" } );
   const sender = "OjirehPrime";
   const message = `Your verification pass code is ${ otpCode }`;
   const url = `http://www.jamasms.com/smsapi/?username=${ process.env.SMS_USERNAME }&password=${ process.env.SMS_PASS }&sender=${ sender }&numbers=${ phone }&message=${ message }
-`
+`;
   if ( !phone ) return res.status( 400 ).json( { error: "Your phone is required" } );
-  User.findOne( { phone: phone } )
+  User.findById( { _id: userId } )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: `You do not have Ojirehprime card. Click on Register to buy one.` } );
+      if ( user.phone !== phone ) return res.status( 400 ).json( { error: `The number ${ phone } is not your number` } );
       User.findByIdAndUpdate( { _id: user._id }, { $set: { otp: otpCode } }, { new: true } )
         .then( resp => {
-          console.log( resp );
+          console.log( resp.otp );
           fetch( url, {
             method: "POST",
             headers: {

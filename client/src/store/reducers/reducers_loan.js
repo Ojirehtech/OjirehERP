@@ -9,6 +9,7 @@ import {
 
 const initialState = {
   loan: {},
+  otp: {},
   loading: false,
   success: false,
   error: ""
@@ -45,7 +46,7 @@ const loanReducer = ( state = initialState, action ) => {
         ...state,
         loading: false,
         success: true,
-        loan: action.data
+        otp: action.data
       }
     case VERIFY_OTP_FAILED:
       return {

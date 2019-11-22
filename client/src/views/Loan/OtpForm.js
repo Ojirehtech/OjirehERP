@@ -57,7 +57,7 @@ class OtpForm extends Component {
                     </InputGroupAddon>
                     <Input
                       type="tel"
-                      placeholder="0xxx xxx xxxx"
+                      placeholder="Enter code"
                       value={otp}
                       onChange={( e ) => this.onChange( e, "otp" )}
                     />
