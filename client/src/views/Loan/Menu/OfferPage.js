@@ -37,11 +37,10 @@ class OfferPage extends Component {
               <Col xs="10" xl="4">
                 <p className="text-muted">Withdraw to pay back in two weeks time from your account</p>
                 <InputGroup className="mb-3">
-                  <Label>I agree to the terms and conditions</Label>
+                  <Label htmlFor="check">I agree to the terms and conditions</Label>
                   <Input
                     type="checkbox"
-                    // value={"yes"}
-                    // cheched={this.state.agree}
+                    id="check"
                     onChange={( e ) => this.onChange( e )}
                   />
                 </InputGroup>

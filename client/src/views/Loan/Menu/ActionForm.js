@@ -32,22 +32,24 @@ class ActionForm extends Component {
               <Col xs="10" xl="3">
                 <Form>
                   <InputGroup className="mb-3">
-                    <Label className="text-muted">
+                    <Label htmlFor="offer" className="text-muted">
                       Check Loan offer
                     </Label>
                     <Input
                       type="radio"
+                      id="offer"
                       value="offer"
                       checked={this.props.action === "offer"}
                       onChange={handleChange}
                     />
                   </InputGroup>
                   <InputGroup className="mb-3">
-                    <Label className="text-muted">
+                    <Label htmlFor="pay" className="text-muted">
                       Pay loan
                     </Label>
                     <Input
                       type="radio"
+                      id="pay"
                       value="pay"
                       checked={this.props.action === "pay"}
                       onChange={handleChange} />
