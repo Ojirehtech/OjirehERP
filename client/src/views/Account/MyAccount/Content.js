@@ -14,6 +14,7 @@ import {
   Spinner,
   CardGroup
 } from 'reactstrap';
+import DataTab from "./Tab";
 
 class Content extends Component {
   state = {
@@ -36,36 +37,7 @@ class Content extends Component {
     const { showStatement } = this.state;
     if ( showStatement ) {
       return (
-        <Table className="mt-5">
-          <thead>
-            <tr style={{ color: '#20a8d8' }}>
-              <th>S/N</th>
-              <th>Name</th>
-              <th>Bal before</th>
-              <th>Amount withdraw</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Transaction type</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transaction.requestLoading === true ? <Spinner color="primary" /> : (
-              request.length > 0 ? request.map( ( req, i ) => (
-                <tr key={req._id}>
-                  <th scope="row" key={transaction._id}>{i + 1}</th>
-                  <td>{req.userId && req.userId.name}</td>
-                  <td>{req.balance}</td>
-                  <td>{req.amount}</td>
-                  <td>{req.createdAt && req.createdAt.slice(0, 10)}</td>
-                  <td>{req.createdAt.slice(11, 16)}</td>
-                  <td>Withdraw</td>
-                  <td>{req.status === false ? "False" : "Complete"}</td>
-                </tr>
-              )) : "Request list is empty"
-            )}
-          </tbody>
-        </Table>
+        <DataTab transaction={transaction} request={request} />
       )
     }
   }
