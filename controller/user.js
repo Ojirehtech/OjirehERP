@@ -46,39 +46,29 @@ exports.signup = ( req, res ) => {
  * User account signup
  */
 exports.dataUpload = ( req, res ) => {
-  const {
-    email,
-    phone,
-    name,
-    refererPhone,
-    address
-  } = req.body;
-  
-  if ( !email ) return res.status( 400 ).json( { error: "Enter your email address" } );
-  if ( !phone ) return res.status( 400 ).json( { error: "Phone number is missing" } );
-  if ( !name ) return res.status( 400 ).json( { error: "Your first name is required" } );
-  if ( !address ) return res.status( 400 ).json( { error: "Your last name is required" } );
-  // if (refererPhone) return res.status(400).json({ error: "Your referer phone number is required"});
-
-  User.findOne( { phone: phone } )
-    .then( user => {
-      if ( user ) return res.status( 400 ).json( { error: `The phone number ${ phone } has been used by another user` } );
-      let newUser = new User( req.body )
-
-      newUser.save();
-      const token = newUser.generateToken();
-      const { _id, email, name, phone, parentId, refererPhone, role, profileUpdated } = newUser;
-      const refererLink = `${ process.env.API_URL }/ojirehprime/agent/${ _id }`;
-      res.cookie( "token", token, { expire: new Date() + 9999 } );
-      res.header( "x-auth-token", token ).json( {
-        token,
-        user: { _id, email, phone, refererPhone, parentId, role, name, refererLink, profileUpdated }
+  const data = req.body;
+  data.forEach( d => {
+    if ( !d.name ) return res.status( 400 ).json( { error: "Name is required" } );
+    if ( !d.email ) return res.status( 400 ).json( { error: "User email is required" } );
+    if ( !d.phone ) return res.status( 400 ).json( { error: "Phone number is required" } );
+    if ( !d.address ) return res.status( 400 ).json( { error: "You must provide user address to continue" } );
+    User.findOne( { phone: d.phone, email: d.email } )
+      .then( result => {
+        if ( result ) return res.status( 400 ).json( { error: `User with the phone number ${ d.phone } already exists` } );
+        let newUser = new User( {
+          name: d.name,
+          email: d.email,
+          phone: d.phone,
+          address: d.address
+        } );
+        newUser.save();
+        console.log( newUser );
+        res.json( newUser );
+      } )
+      .catch( err => {
+        console.log( err.message );
       } );
-    } )
-    .catch( err => {
-      console.log( err.message )
-      res.status( 400 ).json( { error: err.message } );
-    } );
+  } );
 }
 
 /**
@@ -87,7 +77,6 @@ exports.dataUpload = ( req, res ) => {
 exports.generateOTP = ( req, res ) => {
   const otpCode = Math.floor( 1000 + Math.random() * 9000 );
   const { phone } = req.params;
-  console.log( phone, " phone number" )
 
   if ( !phone ) return res.status( 400 ).json( { error: "Your phone number is required" } );
   const sender = "OjirehPrime";

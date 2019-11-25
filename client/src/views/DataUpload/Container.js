@@ -14,7 +14,7 @@ import {
 } from "reactstrap";
 import Header from "../Pages/Header/Header";
 import Particles from "react-particles-js";
-import { register } from "../../store/actions/actions_signup";
+import { register, dataUpload } from "../../store/actions/actions_signup";
 
 const particleOpt = {
   particles: {
@@ -54,9 +54,10 @@ class Container extends Component{
   }
 
   handleSubmit = async () => {
-    console.log({...this.state.userData}, "from handlesubmit")
+    const data = this.state.userData;
+    const { dataUpload } = this.props;
     try {
-      // await this.props.register();
+      await dataUpload(data);
     } catch(err) {}
   }
 
@@ -179,7 +180,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   const dispatchProps = {
-    register: (data) => dispatch(register(data))
+    dataUpload: (data) => dispatch(dataUpload(data))
   }
 
   return dispatchProps;

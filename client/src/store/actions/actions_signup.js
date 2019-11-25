@@ -85,7 +85,7 @@ export const dataUploadFailed = ( error ) => {
 export const dataUpload = ( data ) => {
   return dispatch => {
     dispatch( dataUploadStart() );
-    fetch( `${ process.env.REACT_APP_API_URL }/user/dataUpload`, {
+    fetch( `${ process.env.REACT_APP_API_URL }/users/data_upload`, {
       method: "POST",
       headers: {
         ACCEPT: "application/json",

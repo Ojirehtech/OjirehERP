@@ -27,7 +27,7 @@ router.post( "/signup", signup );
 router.post( "/login", signIn );
 router.get( "/signout", signout );
 router.get( "/users", requireLogin, fetchUsers );
-router.post( "/users/upload", dataUpload );
+router.post( "/users/data_upload", dataUpload );
 router.get( "/user/:userId", requireLogin, fetchUser );
 router.put( "/user/card/:userId", requireLogin, cardBought );
 router.post( "/user/otp/:phone", generateOTP );

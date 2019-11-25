@@ -11,7 +11,6 @@ const DefaultLayout = React.lazy(() => import('./containers/DefaultLayout'));
 const Login = React.lazy(() => import('./views/Pages/Login'));
 const Register = React.lazy( () => import( './views/Pages/Register' ) );
 const Page404 = React.lazy(() => import('./views/Pages/Page404'));
-const Page500 = React.lazy( () => import( './views/Pages/Page500' ) );
 const EditPage = React.lazy( () => import( "./views/Pages/Edit/EditPage" ) );
 const UserData = React.lazy( () => import( "./views/DataUpload/Container" ) );
 class App extends Component {
@@ -25,7 +24,6 @@ class App extends Component {
             <Route exact path="/register" name="Register Page" render={props => <Register {...props} />} />
             <Route exact path="/editProfile" name="Edit Page" render={(props) => <EditPage {...props}/>} />
             <Route exact path="/data_upload" name="Data Upload" render={props => <UserData {...props} />} />
-            {/* <Route exact path="/500" name="Page 500" render={props => <Page500 {...props}/>} /> */}
             <Route path="/" name="Index" render={props => <DefaultLayout {...props} />} />
             <Route exact path="/*" name="Page 404" render={props => <Page404 {...props} />} />
           </Switch>
