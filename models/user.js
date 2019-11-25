@@ -28,7 +28,7 @@ const userSchema = new Schema( {
     status: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date().now }
   } ],
-
+  loanPaid: { type: Boolean, default: false },
   earnings: [ {
     amount: Number,
     date: { type: Date, default: Date().now }
