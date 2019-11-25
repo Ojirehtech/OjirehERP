@@ -3,6 +3,10 @@ export const REGISTRATION_START = "REGISTRATION_START";
 export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
 export const REGISTRATION_FAILED = "REGISTRATION_FAILED";
 
+export const DATA_UPLOAD_START = "DATA_UPLOAD_START";
+export const DATA_UPLOAD_SUCCESS = "DATA_UPLOAD_SUCCESS";
+export const DATA_UPLOAD_FAILED = "DATA_UPLOAD_FAILED";
+
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 /**
@@ -41,7 +45,7 @@ export const register = ( data ) => {
         ACCEPT: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify( data )
     } )
       .then( response => response.json() )
       .then( resp => {
@@ -53,7 +57,52 @@ export const register = ( data ) => {
         dispatch( registrationSuccess( resp ) );
       } )
       .catch( err => {
-      dispatch(registrationFailed(`Sorry we cannot process your request. Check your network and try again`))
-    })
+        dispatch( registrationFailed( `Sorry we cannot process your request. Check your network and try again` ) )
+      } );
+  }
+}
+
+export const dataUploadStart = () => {
+  return {
+    type: DATA_UPLOAD_START
+  }
+}
+
+export const dataUploadSuccess = ( data ) => {
+  return {
+    type: DATA_UPLOAD_SUCCESS,
+    data
+  }
+}
+
+export const dataUploadFailed = ( error ) => {
+  return {
+    type: DATA_UPLOAD_FAILED,
+    error
+  }
+}
+
+export const dataUpload = ( data ) => {
+  return dispatch => {
+    dispatch( dataUploadStart() );
+    fetch( `${ process.env.REACT_APP_API_URL }/user/dataUpload`, {
+      method: "POST",
+      headers: {
+        ACCEPT: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify( data )
+    } )
+      .then( response => response.json() )
+      .then( resp => {
+        if ( resp.error ) {
+          dispatch( dataUploadFailed( resp.error ) );
+          return;
+        }
+        dispatch( dataUploadSuccess( resp ) );
+      } )
+      .catch( err => {
+        dispatch( dataUploadFailed( "Data upload failed. Please try again" ) );
+      } );
   }
 }

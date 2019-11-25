@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Col,
   Button,
@@ -7,13 +8,13 @@ import {
   InputGroupAddon,
   InputGroupText,
   Spinner,
-  Form,
   Card,
   Row,
   CardBody
 } from "reactstrap";
 import Header from "../Pages/Header/Header";
 import Particles from "react-particles-js";
+import { register } from "../../store/actions/actions_signup";
 
 const particleOpt = {
   particles: {
@@ -41,18 +42,22 @@ class Container extends Component{
     const newUserData = [ ...this.state.userData ];
     newUserData[ index ][ event.target.name ] = event.target.value;
     this.setState( {
-      fundHistory: newUserData
+      userData: newUserData
     } );
+    console.log(this.state.userData)
   }
 
   addNewData = () => {
     const newData = [ ...this.state.userData ];
     newData.push( { name: "", email: "", phone: "", address: "" } );
-    this.setState( state => ( { ...state, userData: newData } ) )
+    this.setState( state => ( { ...state, userData: newData } ) );
   }
 
-  handleSubmit = () => {
-
+  handleSubmit = async () => {
+    console.log({...this.state.userData}, "from handlesubmit")
+    try {
+      // await this.props.register();
+    } catch(err) {}
   }
 
   render() {
@@ -63,105 +68,120 @@ class Container extends Component{
           params={particleOpt}
           className="particles"
         />
-        <Row className="justify-content-md-center">
-          <Col md="9" lg="7" xl="6">
-            <Card>
-              <CardBody>
-                {this.state.userData.map( ( userData, index ) => (
-                  <div className="" key={index + 1}>
-                    <Col xs="12" xl="12">
-                      <InputGroup className="mb-3">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="icon-user"></i>
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input
-                          type="text"
-                          placeholder="Name"
-                          value={userData.name}
-                          name="name"
-                          onChange={this.onDataChange(index)}
-                        />
-                      </InputGroup>
-                    </Col>
-                    <Col xs="12" xl="12">
-                      <InputGroup className="mb-3">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="icon-email"></i>
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input
-                          type="text"
-                          placeholder="Enter your email"
-                          value={userData.email}
-                          name="email"
-                          onChange={this.onDataChange( index )}
-                        />
-                      </InputGroup>
-                    </Col>
-                    
-                    <Col xs="12" xl="12">
-                      <InputGroup className="mb-3">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="icon-phone"></i>
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input
-                          type="text"
-                          placeholder="Name"
-                          value={userData.phone}
-                          name="phone"
-                          onChange={this.onDataChange( index )}
-                        />
-                      </InputGroup>
-                    </Col>
-                    <Col xs="12" xl="12">
-                      <InputGroup className="mb-3">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="icon-home"></i>
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input
-                          type="text"
-                          placeholder="Enter your address"
-                          value={userData.address}
-                          name="address"
-                          onChange={this.onDataChange( index )}
-                        />
-                      </InputGroup>
-                    </Col>
-                  </div>
-                ) )}
-                <Button
-                  color="primary"
-                  className="float-left"
-                  outline
-                  onClick={() => this.addNewData()}
-                >
-                  ADD ANOTHER ROUND
-                    </Button>
+        <div className="reg-particles">
+          <Row className="justify-content-md-center">
+            <Col md="9" lg="7" xl="6">
+              <Card>
+                <CardBody>
+                  {this.state.userData.map( ( userData, index ) => (
+                    <div className="" key={index + 1}>
+                      <Col xs="12" xl="12">
+                        <InputGroup className="mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="icon-user"></i>
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            type="text"
+                            placeholder="Name"
+                            value={userData.name}
+                            name="name"
+                            onChange={this.onDataChange(index)}
+                          />
+                        </InputGroup>
+                      </Col>
+                      <Col xs="12" xl="12">
+                        <InputGroup className="mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="icon-email"></i>
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            type="text"
+                            placeholder="Enter your email"
+                            value={userData.email}
+                            name="email"
+                            onChange={this.onDataChange( index )}
+                          />
+                        </InputGroup>
+                      </Col>
+                      
+                      <Col xs="12" xl="12">
+                        <InputGroup className="mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="icon-phone"></i>
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            type="text"
+                            placeholder="Name"
+                            value={userData.phone}
+                            name="phone"
+                            onChange={this.onDataChange( index )}
+                          />
+                        </InputGroup>
+                      </Col>
+                      <Col xs="12" xl="12">
+                        <InputGroup className="mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="icon-home"></i>
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            type="text"
+                            placeholder="Enter your address"
+                            value={userData.address}
+                            name="address"
+                            onChange={this.onDataChange( index )}
+                          />
+                        </InputGroup>
+                      </Col>
+                    </div>
+                  ) )}
+                  <Button
+                    color="primary"
+                    className="float-left"
+                    outline
+                    onClick={() => this.addNewData()}
+                  >
+                    ADD ANOTHER ROUND
+                      </Button>
 
-                <Button color="primary" outline onClick={this.toggleSummaryModal}>
-                  Cancel
-                    </Button>
-                {/* {this.props.fundingHistory.loading === true ? <Spinner color="primary" /> : ( */}
-                  <div>
-                    <Button color="primary" onClick={this.handleSubmit}>
-                      Save
-                    </Button>{' '}
-                  </div>
-                {/* )} */}
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
+                  <Button color="primary" outline onClick={this.toggleSummaryModal}>
+                    Cancel
+                      </Button>
+                  {/* {this.props.fundingHistory.loading === true ? <Spinner color="primary" /> : ( */}
+                    <div>
+                      <Button color="primary" onClick={this.handleSubmit}>
+                        Save
+                      </Button>{' '}
+                    </div>
+                  {/* )} */}
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        </div>
       </div>
     );
   }
 }
 
-export default Container;
+const mapStateToProps = (state) => {
+  return {
+    registration: state.register
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  const dispatchProps = {
+    register: (data) => dispatch(register(data))
+  }
+
+  return dispatchProps;
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Container);

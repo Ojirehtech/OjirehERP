@@ -20,7 +20,7 @@ exports.signup = ( req, res ) => {
   if ( !phone ) return res.status( 400 ).json( { error: "Phone number is missing" } );
   if ( !name ) return res.status( 400 ).json( { error: "Your first name is required" } );
   if ( !address ) return res.status( 400 ).json( { error: "Your last name is required" } );
-  if (!refererPhone) return res.status(400).json({ error: "Your referer phone number is required"});
+  // if (refererPhone) return res.status(400).json({ error: "Your referer phone number is required"});
 
   User.findOne( { phone: phone } )
     .then( user => {
@@ -38,6 +38,45 @@ exports.signup = ( req, res ) => {
     } )
     .catch( err => {
       console.log(err.message)
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
+
+/**
+ * User account signup
+ */
+exports.dataUpload = ( req, res ) => {
+  const {
+    email,
+    phone,
+    name,
+    refererPhone,
+    address
+  } = req.body;
+  
+  if ( !email ) return res.status( 400 ).json( { error: "Enter your email address" } );
+  if ( !phone ) return res.status( 400 ).json( { error: "Phone number is missing" } );
+  if ( !name ) return res.status( 400 ).json( { error: "Your first name is required" } );
+  if ( !address ) return res.status( 400 ).json( { error: "Your last name is required" } );
+  // if (refererPhone) return res.status(400).json({ error: "Your referer phone number is required"});
+
+  User.findOne( { phone: phone } )
+    .then( user => {
+      if ( user ) return res.status( 400 ).json( { error: `The phone number ${ phone } has been used by another user` } );
+      let newUser = new User( req.body )
+
+      newUser.save();
+      const token = newUser.generateToken();
+      const { _id, email, name, phone, parentId, refererPhone, role, profileUpdated } = newUser;
+      const refererLink = `${ process.env.API_URL }/ojirehprime/agent/${ _id }`;
+      res.cookie( "token", token, { expire: new Date() + 9999 } );
+      res.header( "x-auth-token", token ).json( {
+        token,
+        user: { _id, email, phone, refererPhone, parentId, role, name, refererLink, profileUpdated }
+      } );
+    } )
+    .catch( err => {
+      console.log( err.message )
       res.status( 400 ).json( { error: err.message } );
     } );
 }

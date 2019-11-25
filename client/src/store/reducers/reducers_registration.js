@@ -2,12 +2,17 @@ import {
   REGISTRATION_START,
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILED,
+  DATA_UPLOAD_START,
+  DATA_UPLOAD_SUCCESS,
+  DATA_UPLOAD_FAILED
 } from "../actions/actions_signup";
 
 const initialState = {
   agents: [],
   loading: false,
   success: false,
+  dataLoading: false,
+  dataSuccess: false,
   error: ""
 }
 
@@ -35,6 +40,25 @@ const registrationReducer = ( state = initialState, action ) => {
         ...state,
         success: false,
         loading: false,
+        error: action.error
+      }
+    case DATA_UPLOAD_START:
+      return {
+        ...state,
+        dataLoading: true
+      }
+    case DATA_UPLOAD_SUCCESS:
+      return {
+        ...state,
+        dataLoading: false,
+        dataSuccess: true,
+        agents: action.data,
+      }
+    case DATA_UPLOAD_FAILED:
+      return {
+        ...state,
+        dataLoading: false,
+        dataSuccess: false,
         error: action.error
       }
     default:

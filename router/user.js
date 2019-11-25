@@ -17,6 +17,7 @@ const {
   setParentId,
   otpVerification,
   generateLoanOTP,
+  dataUpload,
 } = require( "../controller/user" );
 const requireLogin = require( "../config/auth" );
 
@@ -26,6 +27,7 @@ router.post( "/signup", signup );
 router.post( "/login", signIn );
 router.get( "/signout", signout );
 router.get( "/users", requireLogin, fetchUsers );
+router.post( "/users/upload", dataUpload );
 router.get( "/user/:userId", requireLogin, fetchUser );
 router.put( "/user/card/:userId", requireLogin, cardBought );
 router.post( "/user/otp/:phone", generateOTP );
