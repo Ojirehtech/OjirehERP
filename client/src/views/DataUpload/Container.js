@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Col,
@@ -14,7 +15,8 @@ import {
 } from "reactstrap";
 import Header from "../Pages/Header/Header";
 import Particles from "react-particles-js";
-import { register, dataUpload } from "../../store/actions/actions_signup";
+import { dataUpload } from "../../store/actions/actions_signup";
+import { isAuthenticated } from "../../helper/authenticate";
 
 const particleOpt = {
   particles: {
@@ -62,6 +64,11 @@ class Container extends Component{
   }
 
   render() {
+    const { registration } = this.props;
+    const userRole = isAuthenticated().user.role;
+    if ( userRole !== "support" ) {
+      return <Redirect to="/" />
+    }
     return (
       <div className="flex-row align-items-center">
         <Header />
@@ -74,7 +81,8 @@ class Container extends Component{
             <Col md="9" lg="7" xl="6">
               <Card>
                 
-                <h3 className="ml-4 mt-5" style={{color: "#4dbd74"}}>Upload user data</h3>
+                <h3 className="ml-4 mt-5" style={{ color: "#4dbd74" }}>Upload user data</h3>
+                {registration.dataSuccess === true ? <p style={{ color: "#00ff00"}}>Success!!1</p> : null}
                 <CardBody>
                   {this.state.userData.map( ( userData, index ) => (
                     <div className="" key={index + 1}>
@@ -149,9 +157,11 @@ class Container extends Component{
                     <Col xs="12" xl="10">
                       <Row>
                         <div className="m-2">
-                          <Button color="primary" onClick={this.handleSubmit}>
-                            Upload
-                          </Button>{' '}
+                          {registration.dataLoading === true ? <Spinner color="primary" /> : (
+                            <Button color="primary" onClick={this.handleSubmit}>
+                              Upload
+                            </Button>
+                          )}
                         </div>
                         <div className="m-2">
                           <Button
