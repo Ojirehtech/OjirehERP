@@ -139,22 +139,3 @@ exports.transferFund = ( req, res ) => {
     } );
 }
 
-/**
- * Handles money rain request
- */
-exports.withdrawMoneyRain = ( req, res ) => {
-  const { userId, phone } = req.params;
-  const { _id } = req.user;
-  if ( !userId ) return res.status( 400 ).json( { error: "" } );
-  if ( !_id ) return res.status( 400 ).json( { error: "You have to login to access this operation" } );
-  if ( !phone ) return res.status( 400 ).json( { error: "You are not a valid Ojirehprime card user" } );
-  if ( userId !== _id ) return res.status( 400 ).json( { error: "You cannot access this operation" } );
-  User.findByIdAndUpdate( { _id: userId }, { $set: { loan: amount }, $inc: { loanRequestCount: +1 } }, { new: true } )
-    .then( resp => {
-      if ( !resp ) return res.status( 400 ).json( { error: "Loan request failed. Try again" } );
-      res.json( resp );
-    } )
-    .catch( err => {
-      res.status( 400 ).json( { error: err.message } );
-    } );
-}
