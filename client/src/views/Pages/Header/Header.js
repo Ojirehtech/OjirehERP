@@ -40,7 +40,7 @@ const Header = ( props ) => {
           <Nav className="mr-auto" navbar>
             <NavItem>
                 <NavLink
-                  href={`${process.env.REACT_APP_SITE_URL}`}
+                  href="https://ojirehprime.com"
                   style={styles.nav}
                 >Home</NavLink>
             </NavItem>
@@ -50,22 +50,22 @@ const Header = ( props ) => {
               </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    <NavLink href={`${ process.env.REACT_APP_SITE_URL }/about-us/#wwd`}>
+                    <NavLink href={`https://ojirehprime.com/about-us/#wwd`}>
                       What We Do
                     </NavLink>
                   </DropdownItem>
                   <DropdownItem>
-                    <NavLink href={`${ process.env.REACT_APP_SITE_URL }/about-us/#vision`}>
+                    <NavLink href={`https://ojirehprime.com/about-us/#vision`}>
                       Our Vision, Mission, Core Values
                     </NavLink>
                   </DropdownItem>
                   <DropdownItem>
-                    <NavLink href={`${ process.env.REACT_APP_SITE_URL }/about-us/#roadmap`}>
+                    <NavLink href={`https://ojirehprime.com/about-us/#roadmap`}>
                       Roadmap
                     </NavLink>
                   </DropdownItem>
                   <DropdownItem>
-                    <NavLink href={`${ process.env.REACT_APP_SITE_URL }/about-us/#team`}>
+                    <NavLink href={`https://ojirehprime.com/about-us/#team`}>
                       Our Team
                     </NavLink>
                   </DropdownItem>
@@ -73,20 +73,20 @@ const Header = ( props ) => {
                 </UncontrolledDropdown>
               <NavItem>
                 <NavLink
-                  href={`${ process.env.REACT_APP_SITE_URL }/faqs`}
+                  href={`https://ojirehprime.com/faqs`}
                   style={styles.nav}
                 >FAQs</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
-                  href={`${ process.env.REACT_APP_SITE_URL }/blog`}
+                  href={`https://ojirehprime.com/blog`}
                   style={styles.nav}
                 >Blog</NavLink>
                 
               </NavItem>
               <NavItem>
                 <NavLink
-                  href={`${ process.env.REACT_APP_SITE_URL }/careers`}
+                  href={`https://ojirehprime.com/careers`}
                   style={styles.nav}
                 >Careers</NavLink>
               </NavItem>

@@ -13,16 +13,22 @@ const userSchema = new Schema( {
   refererPhone: { type: String },
   address: { type: String, required: [ true, "Address is not provided"]},
   balance: { type: Number, default: 0 },
-  request: [ {
-    name: { type: String },
-    balance: { type: Number },
-    amount: { type: Number },
-    date: { type: String },
-    time: { type: String },
-    status: { type: Boolean }
-  } ],
+  // request: [ {
+  //   name: { type: String },
+  //   balance: { type: Number },
+  //   amount: { type: Number },
+  //   date: { type: String },
+  //   time: { type: String },
+  //   status: { type: Boolean }
+  // } ],
+
   loanRequestCount: { type: Number, default: 0 },
-  loan: { type: Number, default: 0 },
+  loan: [ {
+    amount: { type: Number, default: 0 },
+    status: { type: Boolean, default: false },
+    createdAt: { type: Date, default: Date().now }
+  } ],
+
   earnings: [ {
     amount: Number,
     date: { type: Date, default: Date().now }
