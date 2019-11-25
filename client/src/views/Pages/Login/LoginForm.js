@@ -10,9 +10,6 @@ const LoginForm = ( { errMsg, toggelState, login, otp, handleChange, onLogin}) =
           <CardGroup>
             <Card>
               <CardBody>
-                <Row className="justify-content-md-center m-4">
-                  <img src={logo} alt="logo" />
-                </Row>
                 <p className="text-center">We sent a verification code to your phone number</p>
                 <Form onSubmit={onLogin}>
                   {errMsg.length > 0 ? <p style={{ color: "#ff0000" }}>{errMsg}</p> : null}

@@ -63,7 +63,6 @@ exports.dataUpload = ( req, res ) => {
         } );
         newUser.save();
         console.log( newUser );
-        res.json( newUser );
       } )
       .catch( err => {
         console.log( err.message );

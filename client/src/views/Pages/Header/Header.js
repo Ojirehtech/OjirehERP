@@ -35,37 +35,45 @@ const Header = ( props ) => {
         <NavbarBrand href="/">
           <img src={logo} alt="" />
         </NavbarBrand>
-        <NavbarToggler onClick={toggle} />
+          <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
+          <Nav className="mr-auto" navbar navbar-dark bg-dark>
             <NavItem>
-                <NavLink
-                  href="https://ojirehprime.com"
-                  style={styles.nav}
-                >Home</NavLink>
+              <NavLink
+                href="https://ojirehprime.com"
+                style={styles.nav}
+              >Home</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret style={styles.nav}>
+              <DropdownToggle nav caret style={styles.nav}>
                 About Us
               </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    <NavLink href={`https://ojirehprime.com/about-us/#wwd`}>
+                    <NavLink
+                      style={styles.nav}
+                      href={`https://ojirehprime.com/about-us/#wwd`}>
                       What We Do
                     </NavLink>
                   </DropdownItem>
                   <DropdownItem>
-                    <NavLink href={`https://ojirehprime.com/about-us/#vision`}>
+                    <NavLink
+                      style={styles.nav}
+                      href={`https://ojirehprime.com/about-us/#vision`}>
                       Our Vision, Mission, Core Values
                     </NavLink>
                   </DropdownItem>
                   <DropdownItem>
-                    <NavLink href={`https://ojirehprime.com/about-us/#roadmap`}>
+                    <NavLink
+                      style={styles.nav}
+                      href={`https://ojirehprime.com/about-us/#roadmap`}>
                       Roadmap
                     </NavLink>
                   </DropdownItem>
                   <DropdownItem>
-                    <NavLink href={`https://ojirehprime.com/about-us/#team`}>
+                    <NavLink
+                      style={styles.nav}
+                      href={`https://ojirehprime.com/about-us/#team`}>
                       Our Team
                     </NavLink>
                   </DropdownItem>

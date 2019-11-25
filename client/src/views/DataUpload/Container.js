@@ -73,6 +73,8 @@ class Container extends Component{
           <Row className="justify-content-md-center">
             <Col md="9" lg="7" xl="6">
               <Card>
+                
+                <h3 className="ml-4 mt-5" style={{color: "#4dbd74"}}>Upload user data</h3>
                 <CardBody>
                   {this.state.userData.map( ( userData, index ) => (
                     <div className="" key={index + 1}>
@@ -143,25 +145,27 @@ class Container extends Component{
                       </Col>
                     </div>
                   ) )}
-                  <Button
-                    color="primary"
-                    className="float-left"
-                    outline
-                    onClick={() => this.addNewData()}
-                  >
-                    ADD ANOTHER ROUND
-                      </Button>
-
-                  <Button color="primary" outline onClick={this.toggleSummaryModal}>
-                    Cancel
-                      </Button>
-                  {/* {this.props.fundingHistory.loading === true ? <Spinner color="primary" /> : ( */}
-                    <div>
-                      <Button color="primary" onClick={this.handleSubmit}>
-                        Save
-                      </Button>{' '}
-                    </div>
-                  {/* )} */}
+                  <Row className="justify-content-center">
+                    <Col xs="12" xl="10">
+                      <Row>
+                        <div className="m-2">
+                          <Button color="primary" onClick={this.handleSubmit}>
+                            Upload
+                          </Button>{' '}
+                        </div>
+                        <div className="m-2">
+                          <Button
+                            color="primary"
+                            className="float-left"
+                            outline
+                            onClick={() => this.addNewData()}
+                          >
+                            ADD ANOTHER ROUND
+                          </Button>
+                        </div>
+                      </Row>
+                    </Col>
+                  </Row>
                 </CardBody>
               </Card>
             </Col>

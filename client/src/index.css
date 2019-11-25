@@ -15,7 +15,7 @@
   background: linear-gradient(to right, #0a7e07 0%, #0a7e07 100%);
 }
 .reg-particles {
-  margin-top: -650px;
+  margin-top: -700px;
 }
 .particle-page {
   margin-top: -700px;
@@ -34,13 +34,13 @@
 }
 @media only screen and (max-width: 480px) {
   .reg-particles {
-    margin-top: -150px;
+    margin-top: -250px;
   }
 }
 
 @media only screen and (max-width: 490px) {
   .particle-page {
-    margin-top: -150px;
+    margin-top: -250px;
     padding: 15px;
   }
 }
