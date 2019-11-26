@@ -6,7 +6,7 @@ export const ADMIN_SIGNIN_START = "ADMIN_SIGNIN_START";
 export const ADMIN_SIGNIN_SUCCESS = "ADMIN_SIGNIN_SUCCESS";
 export const ADMIN_SIGNIN_FAILED = "ADMIN_SIGNIN_FAILED";
 
-const BASE_URL = process.env.REACT_APP_API_RUL;
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const adminSignupStart = () => {
   return {
@@ -86,7 +86,7 @@ export const adminSigninFailed = ( error ) => {
 export const adminSignin = ( data ) => {
   return dispatch => {
     dispatch( adminSigninStart() );
-    fetch( `${ BASE_URL }/admin/signup`, {
+    fetch( `${ BASE_URL }/admin/signin`, {
       method: "POST",
       headers: {
         ACCEPT: "application/json",

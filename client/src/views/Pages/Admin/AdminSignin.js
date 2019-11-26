@@ -64,7 +64,7 @@ class AdminSignin extends Component {
 
   render() {
     const { admin } = this.props;
-    const { errMsg, name, email, password } = this.state;
+    const { errMsg, email, password } = this.state;
 
     if ( admin.success === true ) {
       return <Redirect to="/dashboard" />;
