@@ -49,7 +49,7 @@ exports.refererSettlement = ( req, res ) => {
           const total = resp.balance;
           creditSms( res, phone, 50, total );
           const earning = { amount: 8 };
-          User.findByIdAndUpdate( { _id: ancestralParentId }, { $inc: { balance: +8, networks: +1 }, $push: { earnings: earning } }, { new: true } )
+          User.findByIdAndUpdate( { _id: ancestralParentId }, { $inc: { balance: +15, networks: +1 }, $push: { earnings: earning } }, { new: true } )
             .then( response => {
               const phone = response.phone;
               const balance = response.balance;

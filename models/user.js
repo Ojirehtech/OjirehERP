@@ -9,19 +9,11 @@ const userSchema = new Schema( {
   email: { type: String, unique: [ true, "Email address already in use by another user"] },
   name: { type: String },
   parentId: { type: String },
-  phone: { type: String, required: [ true, "Your phone number is required"] },
+  phone: { type: String },
+  password: { type: String },
   refererPhone: { type: String },
-  address: { type: String, required: [ true, "Address is not provided"]},
+  address: { type: String },
   balance: { type: Number, default: 0 },
-  // request: [ {
-  //   name: { type: String },
-  //   balance: { type: Number },
-  //   amount: { type: Number },
-  //   date: { type: String },
-  //   time: { type: String },
-  //   status: { type: Boolean }
-  // } ],
-
   loanRequestCount: { type: Number, default: 0 },
   loan: [ {
     amount: { type: Number, default: 0 },

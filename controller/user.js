@@ -345,3 +345,72 @@ exports.deleteUser = ( req, res ) => {
       res.status( 400 ).json( { error: err.message } );
     } );
 }
+
+/**
+ * User account signup
+ */
+exports.adminsignup = ( req, res ) => {
+  const name = req.body.name,
+    email = req.body.email,
+    password = req.body.password;
+  
+  if ( !email ) return res.status( 400 ).json( { error: "Enter your email address" } );
+  if ( !password ) return res.status( 400 ).json( { error: "Enter your password to continue" } );
+  if ( !name ) return res.status( 400 ).json( { error: "Name is required" } );
+
+  User.findOne( { email: email } )
+    .then( user => {
+      if ( user ) return res.status( 400 ).json( { error: `User with the email ${ email } already exists` } );
+      return bcrypt.hash( password, 12 )
+        .then( hashedPassword => {
+          if ( !hashedPassword ) return res.status( 400 ).json( { error: "Request failed. Try again" } );
+          let newUser = new User( {
+            email: req.body.email,
+            password: hashedPassword,
+            name: req.body.name,
+            role: "admin"
+          } );
+
+          newUser.save();
+          const token = newUser.generateToken();
+          const { _id, email, name, role } = newUser;
+          res.cookie( "token", token, { expire: new Date() + 9999 } );
+          res.header( "x-auth-token", token ).json( {
+            token,
+            user: { _id, email, name, role }
+          } );
+        } );
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
+
+/**
+ * User account login 
+ */
+exports.adminSignIn = ( req, res ) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  if ( !email ) return res.status( 400 ).json( { error: "Enter your email" } );
+  if ( !password ) return res.status( 400 ).json( { error: "Password is required" } );
+  User.findOne( { email: email } )
+    .then( user => {
+      console.log( user.password );
+      if ( !user ) return res.status( 400 ).json( { error: `User does not exist` } );
+      return bcrypt.compare( password, user.password )
+        .then( passwordMatched => {
+          if ( !passwordMatched ) return res.status( 400 ).json( { error: "Invalid email or password" } );
+          const token = user.generateToken();
+          const { _id, email, name, role } = user;
+          res.cookie( "token", token, { expire: new Date() + 9999 } );
+          res.json( {
+            token,
+            user: { _id, email, role, name }
+          } );
+        } )
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
