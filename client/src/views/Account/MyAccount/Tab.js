@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import {
   TabContent, TabPane,
   Nav, NavItem, NavLink,
-  Card, Button, CardTitle,
-  CardText, Row, Col,
+  Row, Col,
   Table, Spinner
 } from 'reactstrap';
 import classnames from 'classnames';

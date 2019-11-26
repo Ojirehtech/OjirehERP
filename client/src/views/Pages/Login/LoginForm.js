@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Card, CardBody, CardGroup, Spinner, Col, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
-import logo from "../../../assets/img/brand/ojirehprime_logo.png";
 
 const LoginForm = ( { errMsg, toggelState, login, otp, handleChange, onLogin}) =>{
   return (

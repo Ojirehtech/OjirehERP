@@ -15,10 +15,10 @@ class User extends Component {
 
   async componentDidMount() {
     document.title = "Profile page"
-    const { getUser } = this.props;
-
+    const { getUser, match } = this.props;
+    const userId = match.param.id
     try {
-      await getUser();
+      await getUser(userId);
     } catch ( err ) { }
   }
 
@@ -31,7 +31,6 @@ class User extends Component {
     e.preventDefault();
     console.log( "you clicked to submit" )
     const { assignRole } = this.props;
-    console.log( role, userId)
     try {
       await assignRole( role, userId )
     } catch ( err ) { }
@@ -222,7 +221,7 @@ const mapStateToProps = ( state ) => {
 
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
-    getUser: () => dispatch( getUser() ),
+    getUser: (data) => dispatch( getUser(data) ),
     assignRole: (role, userId) => dispatch(assignRole(role, userId))
   }
   return dispatchProps;

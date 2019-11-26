@@ -41,8 +41,7 @@ export const getUserFailed = ( error ) => {
   }
 }
 
-export const getUser = () => {
-  const userId = isAuthenticated().user._id;
+export const getUser = (userId) => {
   const token = isAuthenticated().token;
   return dispatch => {
     dispatch( getUserStart() );

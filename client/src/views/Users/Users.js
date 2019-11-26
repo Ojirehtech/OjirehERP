@@ -79,7 +79,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
-    getUsers: () => dispatch(getUsers())
+    getUsers: () => dispatch(getUsers()),
   }
 
   return dispatchProps;

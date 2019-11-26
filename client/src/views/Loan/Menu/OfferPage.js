@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, CardBody, Button, Input, InputGroup, Form, Spinner, Row, Col, Label } from "reactstrap";
+import { Card, CardBody, Button, Input, InputGroup, Form, Row, Col, Label } from "reactstrap";
 
 class OfferPage extends Component {
   state = {

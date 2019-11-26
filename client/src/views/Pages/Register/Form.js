@@ -16,7 +16,6 @@ import {
   Row
 } from 'reactstrap';
 import Ravepay from "../../Payment/Ravepay";
-import logo from "../../../assets/img/brand/ojirehprime_logo.png";
 
 const RegisterationForm = ( {
   registration,
