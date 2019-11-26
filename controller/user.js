@@ -62,7 +62,7 @@ exports.dataUpload = ( req, res ) => {
           address: d.address
         } );
         newUser.save();
-        console.log( newUser );
+        return res.json({ message: "Success"})
       } )
       .catch( err => {
         console.log( err.message );

@@ -28,7 +28,7 @@ exports.refer = ( req, res ) => {
 exports.refererSettlement = ( req, res ) => {
   const { refererPhone } = req.params;
   if ( !refererPhone ) return res.status( 400 ).json( { error: "Unknown referer. You must have a refer to complete this operation" } );
-  const newEarning = { amount: 200 }
+  const newEarning = { amount: 200, date: new Date().now }
   User.findOneAndUpdate( { phone: refererPhone }, { $inc: { balance: +200, networks: +1 }, $push: { earnings: newEarning } }, { new: true } )
     .then( user => {
       if ( !user ) return;
@@ -37,9 +37,8 @@ exports.refererSettlement = ( req, res ) => {
       creditSms( res, phone, 200, totalBal );
       const grandReferer = user.parentId;
       if ( !grandReferer ) return;
-      console.log( user, "this. the first user to get reward" );
 
-      const myeEarning = { amount: 50 }
+      const myeEarning = { amount: 50, date: new Date().now }
       User.findByIdAndUpdate( { _id: grandReferer }, { $inc: { balance: +50, networks: +1 }, $push: { earnings: myeEarning } }, { new: true } )
         .then( resp => {
           if ( !resp ) return;
@@ -48,7 +47,7 @@ exports.refererSettlement = ( req, res ) => {
           const phone = resp.phone;
           const total = resp.balance;
           creditSms( res, phone, 50, total );
-          const earning = { amount: 15 };
+          const earning = { amount: 15, date: new Date().now };
           User.findByIdAndUpdate( { _id: ancestralParentId }, { $inc: { balance: +15, networks: +1 }, $push: { earnings: earning } }, { new: true } )
             .then( response => {
               if ( !response ) return;
@@ -56,7 +55,7 @@ exports.refererSettlement = ( req, res ) => {
               const phone = response.phone;
               const balance = response.balance;
               creditSms( res, phone, 15, balance );
-              const forthEarning = 8;
+              const forthEarning = { amount: 8, date: new Date().now };
               User.findByIdAndUpdate( { _id: forthParentId }, { $inc: { balance: +8, networks: +1 }, $push: { earnings: forthEarning } }, { new: true } )
                 .then( result => {
                   if ( !result ) return;
@@ -64,7 +63,7 @@ exports.refererSettlement = ( req, res ) => {
                   const contact = result.phone;
                   const bal = result.balance;
                   creditSms( res, contact, 8, bal );
-                  const fifthEarning = 4;
+                  const fifthEarning = {amount: 4, date: new Date().now};
                   User.findByIdAndUpdate( { _id: id }, { $inc: { balance: +4, networks: +1 }, $push: { earnings: fifthEarning } }, { new: true } )
                     .then( respo => {
                       if ( !respo ) return;

@@ -57,7 +57,7 @@ export const register = ( data ) => {
         dispatch( registrationSuccess( resp ) );
       } )
       .catch( err => {
-        dispatch( registrationFailed( `Sorry we cannot process your request. Check your network and try again` ) )
+        dispatch( registrationFailed( `Network error. Please try again` ) )
       } );
   }
 }

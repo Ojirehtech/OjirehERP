@@ -22,10 +22,11 @@ class Dashboard extends Component {
 
   async componentDidMount() {
     const { updateParentId, getUser, getByParentId } = this.props;
+    const userId = isAuthenticated().user._id;
     document.title = "Dashboard"
     try {
       await updateParentId();
-      await getUser();
+      await getUser(userId);
       await getByParentId();
     }catch(err) {}
   }
@@ -35,6 +36,7 @@ class Dashboard extends Component {
   render() {
     const { users } = this.props;
     const user = users.user && users.user;
+    console.log(user, " user data")
     const networkCount = users.user && users.user.networks;
     const refererLink = isAuthenticated().user ? isAuthenticated().user.refererLink : null;
     const earnings = user.earnings && user.earnings;
@@ -141,7 +143,7 @@ const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
     updateParentId: () => dispatch( updateParentId() ),
     getByParentId: () => dispatch( getByParentId() ),
-    getUser: () => dispatch(getUser()),
+    getUser: (data) => dispatch(getUser(data)),
   }
   return dispatchProps;
 }

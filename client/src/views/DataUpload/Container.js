@@ -60,12 +60,19 @@ class Container extends Component{
     const { dataUpload } = this.props;
     try {
       await dataUpload(data);
-    } catch(err) {}
+    } catch ( err ) { }
+    this.setState( {
+      name: "",
+      email: "",
+      phone: "",
+      address: ""
+    } );
   }
 
   render() {
     const { registration } = this.props;
-    const userRole = isAuthenticated().user.role;
+    console.log( registration, " this is registration" );
+    const userRole = isAuthenticated().user && isAuthenticated().user.role;
     if ( userRole !== "support" ) {
       return <Redirect to="/" />
     }
@@ -80,9 +87,9 @@ class Container extends Component{
           <Row className="justify-content-md-center">
             <Col md="9" lg="7" xl="6">
               <Card>
-                
                 <h3 className="ml-4 mt-5" style={{ color: "#4dbd74" }}>Upload user data</h3>
-                {registration.dataSuccess === true ? <p style={{ color: "#00ff00"}}>Success!!1</p> : null}
+                {registration.dataSuccess === true ? <p style={{ color: "#ff0000" }}>Success!!!</p> : null}
+                {registration.error && registration.error.length > 0 ? <p style={{ color: "#00ff00" }}>{registration.error}</p> : null}
                 <CardBody>
                   {this.state.userData.map( ( userData, index ) => (
                     <div className="" key={index + 1}>
