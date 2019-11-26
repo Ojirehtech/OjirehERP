@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { onLogin, sendOTP } from "../../../store/actions/action_login";
 import Particles from "react-particles-js";
 import Header from '../Header/Header';
+import { Link } from "react-router-dom";
 import {
   Form,
   Input,
@@ -18,8 +18,7 @@ import {
   CardGroup,
   Button
 } from "reactstrap";
-import { adminSignup } from '../../../store/actions/action_admin';
-import { Link } from 'react-router-dom';
+import { adminSignin } from '../../../store/actions/action_admin';
 
 const particleOpt = {
   particles: {
@@ -33,7 +32,7 @@ const particleOpt = {
   }
 }
 
-class AdminSignup extends Component {
+class AdminSignin extends Component {
   state = {
     name: "",
     email: "",
@@ -45,21 +44,21 @@ class AdminSignup extends Component {
     document.title = "Admin Signup";
   }
 
-  
+
   handleChange = ( e, name ) => {
     let fields = this.state;
     fields[ name ] = e.target.value;
     this.setState( { fields } );
   }
 
-  
+
   onSubmit = async ( e ) => {
     e.preventDefault();
-    const { adminSignup } = this.props;
-    const { name, email, password } = this.state;
-    const data = { name, email, password };
+    const { adminSignin } = this.props;
+    const { email, password } = this.state;
+    const data = { email, password };
     try {
-      await adminSignup( data );
+      await adminSignin(data);
     } catch ( err ) { }
   }
 
@@ -89,20 +88,8 @@ class AdminSignup extends Component {
                       <Form onSubmit={this.onSubmit}>
                         {errMsg.length > 0 ? <p style={{ color: "#ff0000" }}>{errMsg}</p> : null}
                         {admin.error && admin.error.length > 0 ? <p style={{ color: "#ff0000" }}>{admin.error}</p> : null}
-                        <p className="text-muted">Signup as an admin</p>
-                        <InputGroup className="mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="icon-user"></i>
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            type="text"
-                            placeholder="Your name"
-                            value={name}
-                            onChange={( e ) => this.handleChange( e, "name" )}
-                          />
-                        </InputGroup>
+                        <p className="text-muted">Login as an admin</p>
+                        
 
                         <InputGroup className="mb-3">
                           <InputGroupAddon addonType="prepend">
@@ -145,7 +132,7 @@ class AdminSignup extends Component {
                           </Col>
                         </Row>
                       </Form>
-                      <p>Already have an account ? <Link to="/signin">Login</Link></p>
+                      <p>Don't have an account ? <Link to="/signup">Signup</Link></p>
                     </CardBody>
                   </Card>
                 </CardGroup>
@@ -166,9 +153,9 @@ const mapStateToProps = ( state ) => {
 
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
-    adminSignup: ( data ) => dispatch( adminSignup( data ) ),
+    adminSignin: ( data ) => dispatch( adminSignin( data ) )
   }
   return dispatchProps;
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( AdminSignup );
+export default connect( mapStateToProps, mapDispatchToProps )( AdminSignin );

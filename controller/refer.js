@@ -48,13 +48,31 @@ exports.refererSettlement = ( req, res ) => {
           const phone = resp.phone;
           const total = resp.balance;
           creditSms( res, phone, 50, total );
-          const earning = { amount: 8 };
+          const earning = { amount: 15 };
           User.findByIdAndUpdate( { _id: ancestralParentId }, { $inc: { balance: +15, networks: +1 }, $push: { earnings: earning } }, { new: true } )
             .then( response => {
+              if ( !response ) return;
+              const forthParentId = response._id;
               const phone = response.phone;
               const balance = response.balance;
-              creditSms( res, phone, 8, balance );
-              if ( !response ) return;
+              creditSms( res, phone, 15, balance );
+              const forthEarning = 8;
+              User.findByIdAndUpdate( { _id: forthParentId }, { $inc: { balance: +8, networks: +1 }, $push: { earnings: forthEarning } }, { new: true } )
+                .then( result => {
+                  if ( !result ) return;
+                  const id = result._id;
+                  const contact = result.phone;
+                  const bal = result.balance;
+                  creditSms( res, contact, 8, bal );
+                  const fifthEarning = 4;
+                  User.findByIdAndUpdate( { _id: id }, { $inc: { balance: +4, networks: +1 }, $push: { earnings: fifthEarning } }, { new: true } )
+                    .then( respo => {
+                      if ( !respo ) return;
+                      const ph = respo.phone;
+                      const ba = respo.balance;
+                      creditSms( res, ph, 4, ba );
+                  })
+              })
             } )
         } )
       res.json( user );
