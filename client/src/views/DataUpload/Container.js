@@ -60,15 +60,7 @@ class Container extends Component{
     const { dataUpload } = this.props;
     try {
       await dataUpload( data );
-      await this.setState( {
-        name: "",
-        email: "",
-        phone: "",
-        address: ""
-      } );
     } catch ( err ) { }
-
-    
   }
 
   render() {

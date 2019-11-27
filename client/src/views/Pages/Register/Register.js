@@ -74,7 +74,7 @@ class Register extends Component {
       history
     } = this.props;
 
-    if ( incentives.success === true || incentives.error.includes( "You do not have" ) ) {
+    if ( registration.success === true ) {
       window.location.href = "/dashboard";
     }
 

@@ -73,8 +73,9 @@ exports.refererSettlement = ( req, res ) => {
                   })
               })
             } )
+          // res.json( resp );
         } )
-      res.json( user );
+      res.json( resp );
     } )
     .catch( err => {
       res.status( 400 ).json( { error: err.message } );
