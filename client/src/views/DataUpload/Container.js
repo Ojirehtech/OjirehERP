@@ -59,14 +59,16 @@ class Container extends Component{
     const data = this.state.userData;
     const { dataUpload } = this.props;
     try {
-      await dataUpload(data);
+      await dataUpload( data );
+      await this.setState( {
+        name: "",
+        email: "",
+        phone: "",
+        address: ""
+      } );
     } catch ( err ) { }
-    this.setState( {
-      name: "",
-      email: "",
-      phone: "",
-      address: ""
-    } );
+
+    
   }
 
   render() {
@@ -88,7 +90,7 @@ class Container extends Component{
             <Col md="9" lg="7" xl="6">
               <Card>
                 <h3 className="ml-4 mt-5" style={{ color: "#4dbd74" }}>Upload user data</h3>
-                {registration.dataSuccess === true ? <p style={{ color: "#ff0000" }}>Success!!!</p> : null}
+                {registration.dataSuccess === true ? <p className="ml-4" style={{ color: "#00ff00" }}>Data uploaded successfully</p> : null}
                 {registration.error && registration.error.length > 0 ? <p style={{ color: "#00ff00" }}>{registration.error}</p> : null}
                 <CardBody>
                   {this.state.userData.map( ( userData, index ) => (
@@ -113,7 +115,7 @@ class Container extends Component{
                         <InputGroup className="mb-3">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
-                              <i className="icon-email"></i>
+                              <i className="icon-envelope"></i>
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
@@ -135,7 +137,7 @@ class Container extends Component{
                           </InputGroupAddon>
                           <Input
                             type="text"
-                            placeholder="Name"
+                            placeholder="Phone"
                             value={userData.phone}
                             name="phone"
                             onChange={this.onDataChange( index )}

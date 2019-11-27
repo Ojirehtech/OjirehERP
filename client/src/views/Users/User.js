@@ -16,7 +16,8 @@ class User extends Component {
   async componentDidMount() {
     document.title = "Profile page"
     const { getUser, match } = this.props;
-    const userId = match.param.id
+    const userId = window.location.pathname.slice(7);
+    console.log(userId)
     try {
       await getUser(userId);
     } catch ( err ) { }

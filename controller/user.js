@@ -47,27 +47,28 @@ exports.signup = ( req, res ) => {
  */
 exports.dataUpload = ( req, res ) => {
   const data = req.body;
-  data.forEach( d => {
-    if ( !d.name ) return res.status( 400 ).json( { error: "Name is required" } );
-    if ( !d.email ) return res.status( 400 ).json( { error: "User email is required" } );
-    if ( !d.phone ) return res.status( 400 ).json( { error: "Phone number is required" } );
-    if ( !d.address ) return res.status( 400 ).json( { error: "You must provide user address to continue" } );
-    User.findOne( { phone: d.phone, email: d.email } )
+  for ( let i = 0; i < data.length; i++ ) {
+    if ( !data[i].name ) return res.status( 400 ).json( { error: "Name is required" } );
+    if ( !data[i].email ) return res.status( 400 ).json( { error: "User email is required" } );
+    if ( !data[i].phone ) return res.status( 400 ).json( { error: "Phone number is required" } );
+    if ( !data[ i ].address ) return res.status( 400 ).json( { error: "You must provide user address to continue" } );
+    
+    User.findOne( { phone: data[i].phone, email: data[i].email } )
       .then( result => {
-        if ( result ) return res.status( 400 ).json( { error: `User with the phone number ${ d.phone } already exists` } );
+        if ( result ) return res.status( 400 ).json( { error: `User with the phone number ${ data[i].phone } already exists` } );
         let newUser = new User( {
-          name: d.name,
-          email: d.email,
-          phone: d.phone,
-          address: d.address
+          name:  data[i].name,
+          email: data[i].email,
+          phone: data[i].phone,
+          address: data[i].address
         } );
         newUser.save();
-        return res.json({ message: "Success"})
+        return res.json( { message: "Success" } );
       } )
       .catch( err => {
         console.log( err.message );
       } );
-  } );
+  }
 }
 
 /**
