@@ -1,6 +1,6 @@
 const mongoose = require( "mongoose" );
 const jwt = require( "jsonwebtoken" );
-const { Schema } = mongoose;
+const { Schema, ObjectId } = mongoose;
 
 /**
  * We create the user schema
@@ -18,6 +18,7 @@ const userSchema = new Schema( {
   loan: [ {
     amount: { type: Number, default: 0 },
     status: { type: Boolean, default: false },
+    requestBy: { type: ObjectId },
     createdAt: { type: Date, default: Date().now }
   } ],
   loanPaid: { type: Boolean, default: false },

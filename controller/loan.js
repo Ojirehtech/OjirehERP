@@ -6,6 +6,7 @@ const Loan = require( "../models/loan" );
 exports.loanRequest = ( req, res ) => {
   const { userId, phone } = req.params;
   const { _id } = req.user;
+  const { requestedAmount } = req.body;
   if ( !userId ) return res.status( 400 ).json( { error: "" } );
   if ( !_id ) return res.status( 400 ).json( { error: "You have to login to access this operation" } );
   if ( !phone ) return res.status( 400 ).json( { error: "You are not a valid Ojirehprime card user" } );
@@ -28,8 +29,10 @@ exports.loanRequest = ( req, res ) => {
       } else {
         return;
       }
-      const loan = { amount };
-      user.findByIdAndUpdate( { _id: userId }, { $push: { loan: loan }, $inc: { loanRequestCount: +1 } }, { new: true } )
+
+      if ( Number(requestedAmount) > amount ) return res.status( 400 ).json( { error: `You don't have access to NGN${ requestedAmount } yet.` } );
+      
+      user.findByIdAndUpdate( { _id: userId }, { $push: { loan: Number(requestedAmount) }, $inc: { loanRequestCount: +1 } }, { new: true } )
         .then( result => {
           if ( !result ) return res.status( 400 ).json( { error: "Request failed due to unknown error" } );
           res.json( result );
@@ -39,4 +42,36 @@ exports.loanRequest = ( req, res ) => {
       res.status( 400 ).json( { error: err.message } );
     } );
 } 
-    
+
+/**
+ * Fetch all loan
+ */
+exports.allLoan = ( req, res ) => {
+  const { userId, role } = req.params;
+  const const { _id } = req.user;
+
+  if ( !userId || !role ) return res.status( 400 ).json( { error: "Invalid parameters" } );
+  if ( userId !== _id ) return res.status( 400 ).json( { error: "You did not log in correctly" } );
+
+  Loan.find( {} )
+    .then( loans => {
+      if ( !loans ) return res.status( 400 ).json( { error: "Loan record is empty" } );
+      res.json( loans );
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
+
+/**
+ * Pays back loan
+ */
+exports.repayLoan = ( req, res ) => {
+  const { userId } = req.params;
+  const { _id } = req.user;
+
+  if ( !userId ) return res.status( 400 ).json( { error: "Unknown user" } );
+  if ( !_id ) return res.status( 400 ).json( { error: "You are not properly logged in" } );
+  if ( userId !== _id ) return res.status( { error: "You do not have the right access" } );
+  userId.findByIdAndUpdate({ _id: userId}, { $inc: { balance: }})
+}
