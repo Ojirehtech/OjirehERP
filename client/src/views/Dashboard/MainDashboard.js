@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+
 import {
   Card,
   CardBody,
@@ -36,7 +37,6 @@ class Dashboard extends Component {
   render() {
     const { users } = this.props;
     const user = users.user && users.user;
-    console.log(user, " user data")
     const networkCount = users.user && users.user.networks;
     const refererLink = isAuthenticated().user ? isAuthenticated().user.refererLink : null;
     const earnings = user.earnings && user.earnings;
@@ -44,16 +44,18 @@ class Dashboard extends Component {
     if ( earnings && earnings.length ) {
       let allEarnings = [];
       for ( let i = 0; i < earnings.length; i++ ) {
+        const timestamp = earnings[ i ]._id.toString().substring( 0, 8 );
+        const timeEarned = new Date( parseInt( timestamp, 16 ) * 1000 ).toISOString().split( "T" )[ 0 ];
         const date = new Date();
         date.setDate( date.getDate() - 30 );
         const dateString = date.toISOString().split( 'T' )[ 0 ];
-        // if ( earnings[ i ] && earnings[ i ].date && earnings[ i ].date.toISOString().split( "T" )[ 0 ] >= dateString ) {
-        //   allEarnings.push( earnings[ i ].amount );
-        // }
+        if ( timeEarned >= dateString ) {
+          allEarnings.push( earnings[ i ].amount );
+        }
       }
       sumEarning = allEarnings.reduce( ( a, b ) => a + b, 0 );
     }
-    
+
     return (
       <div className="card animated fadeIn">
         <div className="card-body">
