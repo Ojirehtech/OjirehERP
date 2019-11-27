@@ -43,9 +43,9 @@ class Transfer extends Component {
       <div className="card">
         <div className="card-body">
           <Row>
-            <Col xs="12" xl="6">
-              <Row className="justify-content-md-center mt-5">
-                <Col xs="12" xl="12">
+            <Col xs="12" xl="12">
+              <Row className="justify-content-center mt-5">
+                <Col xs="12" xl="6">
                   <Content
                     phone={phone}
                     amount={amount}
@@ -55,13 +55,6 @@ class Transfer extends Component {
                   />
                 </Col>
               </Row>
-            </Col>
-            <Col xs="12" xl="6">
-              <img
-                src={cue}
-                alt=""
-                style={{ width: "100%", height: 450}}
-              />
             </Col>
           </Row>
         </div>
