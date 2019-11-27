@@ -79,7 +79,7 @@ class Profile extends Component{
                               </InputGroupAddon>
                               <Input
                                 type="text"
-                                placeholder="First name"
+                                placeholder="Your name"
                                 value={user.name}
                               />
                             </InputGroup>
@@ -93,8 +93,8 @@ class Profile extends Component{
                                 </InputGroupText>
                               </InputGroupAddon>
                               <Input
-                                type="text"
-                                placeholder="Last name"
+                                type="email"
+                                placeholder="Your email"
                               value={user.email}
                               />
                             </InputGroup>
@@ -111,7 +111,7 @@ class Profile extends Component{
                               </InputGroupAddon>
                               <Input
                                 type="text"
-                                placeholder="Email"
+                                placeholder="Phone number"
                                 value={user.phone}
                               />
                             </InputGroup>
@@ -138,7 +138,7 @@ class Profile extends Component{
                             <InputGroup className="mb-3">
                               <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
-                                  <i className="icon-home"></i>
+                                  <i className="icon-phone"></i>
                                 </InputGroupText>
                               </InputGroupAddon>
                               <Input
