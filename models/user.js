@@ -21,7 +21,7 @@ const userSchema = new Schema( {
     requestBy: { type: ObjectId },
     createdAt: { type: Date, default: Date().now }
   } ],
-  loanPaid: { type: Boolean, default: false },
+  loanPaid: { type: Boolean, default: true },
   earnings: [ {
     amount: Number,
     date: { type: Date, default: Date().now }

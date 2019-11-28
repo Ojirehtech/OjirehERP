@@ -4,6 +4,7 @@ const referRoutes = require( '../router/refer' );
 const requestRoutes = require( "../router/transation" );
 const roleRoutes = require( "../router/role" );
 const transferRoutes = require( "../router/transfer" );
+const loanRoutes = require( "../router/loan" );
 
 module.exports = ( app ) => {
   app.use( "/api/v1", userRoutes );
@@ -11,5 +12,6 @@ module.exports = ( app ) => {
   app.use( "/api/v1", requestRoutes );
   app.use( "/api/v1", roleRoutes );
   app.use( "/api/v1", transferRoutes );
+  app.use( "/api/v1", loanRoutes );
   app.use( error );
 }
