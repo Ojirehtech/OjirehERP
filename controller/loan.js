@@ -6,12 +6,12 @@ const { User } = require( "../models/user" );
  */
 exports.loanRequest = ( req, res ) => {
   const { userId } = req.params;
-  // const { _id } = req.user;
+  const { _id } = req.user;
   const { requestedAmount } = req.body;
   if ( !userId ) return res.status( 400 ).json( { error: "" } );
-  // if ( !_id ) return res.status( 400 ).json( { error: "You have to login to access this operation" } );
-  // if ( !phone ) return res.status( 400 ).json( { error: "You are not a valid Ojirehprime card user" } );
-  // if ( userId !== _id ) return res.status( 400 ).json( { error: "You cannot access this operation" } );
+  if ( !_id ) return res.status( 400 ).json( { error: "You have to login to access this operation" } );
+  if ( !phone ) return res.status( 400 ).json( { error: "You are not a valid Ojirehprime card user" } );
+  if ( userId !== _id ) return res.status( 400 ).json( { error: "You cannot access this operation" } );
   let amount;
   User.findById( { _id: userId } )
     .then( resp => {
@@ -21,16 +21,16 @@ exports.loanRequest = ( req, res ) => {
       if ( resp.loanPaid === false ) return res.status( 400 ).json( { error: "You have an outstanding loan to pay" } );
       if ( resp.loanRequestCount === 0 && resp.networks >= 0 ) {
         amount = 5000;
-      } else if ( resp.loanRequestCount === 1 && resp.networks >= 5111 ) {
+      } else if ( resp.loanRequestCount === 1 && resp.networks >= 1 ) {
         amount = 100000;
-      } else if ( loanRequest === 2 && resp.networks >= 31000 ) {
+      } else if ( resp.loanRequestCount === 2 && resp.networks >= 31000 ) {
         amount = 250000;
-      } else if ( loanRequest === 3 && resp.networks >= 136000 ) {
+      } else if ( resp.loanRequestCount === 3 && resp.networks >= 136000 ) {
         amount = 500000;
       } else {
-        return;
+        return res.status(400).json({ error: `NGN${requestedAmount} is more than your accessible loan`})
       }
-
+      console.log(amount)
       if ( Number(requestedAmount) > amount ) return res.status( 400 ).json( { error: `You don't have access to NGN${ requestedAmount } yet.` } );
       
       let newLoan = new Loan( {
@@ -82,13 +82,13 @@ exports.allLoan = ( req, res ) => {
  */
 exports.loanByUser = ( req, res ) => {
   const { role, userId } = req.params;
-  // const { _id } = req.user;
+  const { _id } = req.user;
   if ( !role || !userId ) return res.status( 400 ).json( { error: "Invalid parameters" } );
-  // if ( !_id ) return res.status( 400 ).json( { error: "You're not properly logged in" } );
-  // if ( role !== "admin" || role !== "agent" || role !== "support" ) return res.status( 400 ).json( { error: "Only admin, support and agents can access this operation" } );
+  if ( !_id ) return res.status( 400 ).json( { error: "You're not properly logged in" } );
+  if ( role !== "admin" || role !== "agent" || role !== "support" ) return res.status( 400 ).json( { error: "Only admin, support and agents can access this operation" } );
 
   Loan.find( { _id: userId } )
-    // .sort( "-createdAt" )
+    .sort( "-createdAt" )
     .then( loan => {
       if ( !loan ) return res.status( 400 ).json( { error: "Can not find loan for this agent" } );
       res.json( loan );
@@ -109,20 +109,25 @@ exports.repayLoan = ( req, res ) => {
   if ( !userId ) return res.status( 400 ).json( { error: "Unknown user" } );
   if ( !_id ) return res.status( 400 ).json( { error: "You are not properly logged in" } );
   if ( userId !== _id ) return res.status( { error: "You do not have the right access" } );
-  User.findByIdAndUpdate( { _id: userId }, { $inc: { balance: -intAmount } }, { new: true } )
+  User.findByIdAndUpdate( { _id: userId }, { $inc: { balance: -intAmount }, $set: { loanPaid: true} }, { new: true } )
     .then( result => {
       if ( !result ) return res.status( 400 ).json( { error: "We could not process your request. Try again" } );
       User.findByIdAndUpdate( { _id: accountId }, { $inc: { balance: +intAmount } }, { new: true } )
         .then( d => {
           if ( !d ) return res.status( 400 ).json( { error: "We could not create system account. Please try again" } );
-          Loan.findByIdAndUpdate( { _id: loanId }, { $set: { paid: true } },{ _id: userId }, { $inc: { balance: -intAmount } }, { new: true }, { new: true } )
-            .then( resp => {
-              if ( !resp ) return res.status( 400 ).json( { error: "Could not update loan data" } );
-              res.json( resp );
-            } );
+          Loan.findById( { _id: loanId } )
+            .then( loan => {
+              if ( !loan ) return res.status( 400 ).json( { error: "Loan not found" } );
+              if ( loan.amount > amount ) return res.status( 400 ).json( { error: `Amount ${ amount } is less than ${ loan.amount } owed` } );
+              Loan.findByIdAndUpdate( { _id: loanId }, { $set: { paid: true } }, { new: true } )
+                .then( resp => {
+                  if ( !resp ) return res.status( 400 ).json( { error: "Could not update loan data" } );
+                  res.json( resp );
+                } );
+            })
         } );
     } )
     .catch( err => {
       res.status( 400 ).json( { error: err.message } );
-    } ); 
+    } );
 }
