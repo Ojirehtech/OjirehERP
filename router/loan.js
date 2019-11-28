@@ -13,6 +13,6 @@ const router = express.Router();
 router.post( "/loan/:userId", requireLogin, loanRequest );
 router.get( "/loans/:userId/:role", requireLogin, allLoan );
 router.get( "/loan/:role/:userId", loanByUser );
-router.put( "/loan/:userId/:loanId/:accountId", requireLogin, repayLoan );
+router.put( "/loan/:userId/:loanId", requireLogin, repayLoan );
 
 module.exports = router;

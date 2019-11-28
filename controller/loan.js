@@ -102,9 +102,10 @@ exports.loanByUser = ( req, res ) => {
  * Pays back loan
  */
 exports.repayLoan = ( req, res ) => {
-  const { userId, loanId, accountId } = req.params;
+  const { userId, loanId } = req.params;
   const { _id } = req.user;
   const { amount } = req.body;
+  const accountId = process.env.ACCOUNT_ID;
   const intAmount = Number( amount );
   if ( !userId ) return res.status( 400 ).json( { error: "Unknown user" } );
   if ( !_id ) return res.status( 400 ).json( { error: "You are not properly logged in" } );

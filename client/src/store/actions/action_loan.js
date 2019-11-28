@@ -21,8 +21,6 @@ export const PAY_LOAN_START = "PAY_LOAN_START";
 export const PAY_LOAN_SUCCESS = "PAY_LOAN_SUCCESS";
 export const PAY_LOAN_FAILED = "PAY_LOAN_FAILED";
 
-
-
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const generateOtpStart = () => {
