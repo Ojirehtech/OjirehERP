@@ -1,4 +1,5 @@
-const Loan = require( "../models/loan" );
+const { Loan } = require( "../models/loan" );
+const { User } = require( "../models/user" );
 
 /**
  * Handles money rain request
@@ -25,17 +26,27 @@ exports.loanRequest = ( req, res ) => {
       } else if ( loanRequest === 2 && resp.networks >= 31000 ) {
         amount = 250000;
       } else if ( loanRequest === 3 && resp.networks >= 136000 ) {
-        amount = 500000
+        amount = 500000;
       } else {
         return;
       }
 
       if ( Number(requestedAmount) > amount ) return res.status( 400 ).json( { error: `You don't have access to NGN${ requestedAmount } yet.` } );
       
-      user.findByIdAndUpdate( { _id: userId }, { $push: { loan: Number(requestedAmount) }, $inc: { loanRequestCount: +1 } }, { new: true } )
-        .then( result => {
-          if ( !result ) return res.status( 400 ).json( { error: "Request failed due to unknown error" } );
-          res.json( result );
+      let newLoan = new Loan( {
+        userId: _id,
+        amount: requestedAmount
+      } )
+      return newLoan.save()
+        .then( loan => {
+          if ( !loan ) return res.status( 400 ).json( { error: "Request failed. Refresh the page and try again." } );
+          user.findByIdAndUpdate( { _id: userId }, { $inc: { loanRequestCount: +1 } }, { new: true } )
+            .then( result => {
+              if ( !result ) return res.status( 400 ).json( { error: "Request failed due to unknown error" } );
+              // res.json( result );
+              console.log( result )
+            } );
+          res.json( loan );
         } );
     } )
     .catch( err => {
@@ -52,11 +63,34 @@ exports.allLoan = ( req, res ) => {
 
   if ( !userId || !role ) return res.status( 400 ).json( { error: "Invalid parameters" } );
   if ( userId !== _id ) return res.status( 400 ).json( { error: "You did not log in correctly" } );
-
+  if ( role !== "admin" || role !== "support" ) return res.status( 400 ).json( { error: "Only admin and support can see loan requrests" } );
   Loan.find( {} )
+    .populate("userId", "name email phone _id")
     .then( loans => {
       if ( !loans ) return res.status( 400 ).json( { error: "Loan record is empty" } );
       res.json( loans );
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
+
+
+/**
+ * fetches single loan with the userId
+ */
+exports.loanByUser = ( req, res ) => {
+  const { role, userId } = req.params;
+  const { _id } = req.user;
+  if ( !role || !userId ) return res.status( 400 ).json( { error: "Invalid parameters" } );
+  if ( !_id ) return res.status( 400 ).json( { error: "You're not properly logged in" } );
+  if ( role !== "admin" || role !== "agent" || role !== "support" ) return res.status( 400 ).json( { error: "Only admin, support and agents can access this operation" } );
+
+  Loan.find( { userId: userId } )
+    .sort( "createdAt", -1 )
+    .then( loan => {
+      if ( !loan ) return res.status( 400 ).json( { error: "Can not find loan for this agent" } );
+      res.json( loan );
     } )
     .catch( err => {
       res.status( 400 ).json( { error: err.message } );
@@ -67,11 +101,27 @@ exports.allLoan = ( req, res ) => {
  * Pays back loan
  */
 exports.repayLoan = ( req, res ) => {
-  const { userId } = req.params;
+  const { userId, loanId } = req.params;
   const { _id } = req.user;
-
+  const { amount } = req.body;
+  const intAmount = Number( amount );
   if ( !userId ) return res.status( 400 ).json( { error: "Unknown user" } );
   if ( !_id ) return res.status( 400 ).json( { error: "You are not properly logged in" } );
   if ( userId !== _id ) return res.status( { error: "You do not have the right access" } );
-  userId.findByIdAndUpdate({ _id: userId}, { $inc: { balance: }})
+  User.findByIdAndUpdate( { _id: userId }, { $inc: { balance: -intAmount } }, { new: true } )
+    .then( result => {
+      if ( !result ) return res.status( 400 ).json( { error: "We could not process your request. Try again" } );
+      User.findByIdAndUpdate( { _id: userId }, { $inc: { balance: +intAmount } }, { new: true } )
+        .then( d => {
+          if ( !d ) return res.status( 400 ).json( { error: "We could not create system account. Please try again" } );
+          Loan.findByIdAndUpdate( { _id: loanId }, { $set: { paid: true } }{ _id: userId }, { $inc: { balance: -intAmount } }, { new: true }, { new: true } )
+            .then( resp => {
+              if ( !resp ) return res.status( 400 ).json( { error: "Could not update loan data" } );
+              res.json( resp );
+            } );
+        } );
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } ); 
 }
