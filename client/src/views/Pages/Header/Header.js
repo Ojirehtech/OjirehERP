@@ -25,6 +25,9 @@ const Header = ( props ) => {
   const styles = {
     nav: {
       color: "#fff"
+    },
+    about: {
+      color: "#333"
     }
   }
 
@@ -45,34 +48,34 @@ const Header = ( props ) => {
               >Home</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                About Us
+                <DropdownToggle nav caret style={styles.nav}>
+                  About Us
               </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
                     <NavLink
-                      // style={styles.nav}
+                      style={styles.about}
                       href={`https://ojirehprime.com/about-us/#wwd`}>
                       What We Do
                     </NavLink>
                   </DropdownItem>
                   <DropdownItem>
                     <NavLink
-                      // style={styles.nav}
+                      style={styles.about}
                       href={`https://ojirehprime.com/about-us/#vision`}>
                       Our Vision, Mission, Core Values
                     </NavLink>
                   </DropdownItem>
                   <DropdownItem>
                     <NavLink
-                      // style={styles.nav}
+                      style={styles.about}
                       href={`https://ojirehprime.com/about-us/#roadmap`}>
                       Roadmap
                     </NavLink>
                   </DropdownItem>
                   <DropdownItem>
                     <NavLink
-                      // style={styles.nav}
+                      style={styles.about}
                       href={`https://ojirehprime.com/about-us/#team`}>
                       Our Team
                     </NavLink>
