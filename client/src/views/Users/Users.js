@@ -51,8 +51,8 @@ class Users extends Component {
                       <th scope="col">name</th>
                       <th scope="col">Email</th>
                       <th scope="col">Phone</th>
-                      <th scope="col">Role</th>
                       <th scope="col">Joined</th>
+                      <th scope="col">Role</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>

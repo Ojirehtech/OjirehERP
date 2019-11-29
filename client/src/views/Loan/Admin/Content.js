@@ -15,8 +15,8 @@ import {
 import classnames from 'classnames';
 
 const Content = ( props ) => {
-  // const loans = props.loan && props.loan.loans;
-  // console.log(loans, " all the loans")
+  const loans = props.loan && props.loan.loans;
+  console.log(loans, " all the loans")
   const [ activeTab, setActiveTab ] = useState( '1' );
 
   const toggle = tab => {
@@ -59,17 +59,24 @@ const Content = ( props ) => {
                 <thead>
                   <tr style={{ color: '#20a8d8' }}>
                     <th>S/N</th>
-                    <th>Sender</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone number</th>
                     <th>Amount</th>
-                    <th>Reciever</th>
-                    <th>Reciever phone</th>
-                    <th>Time</th>
+                    <th>Date</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  
+                  {loans && loans.length > 0 ? loans.map( ( loan, i ) => (
+                    <tr key={i}>
+                      <th>{i + 1}</th>
+                      <td>{loan.userId && loan.userId.name}</td>
+                      <td>{loan.userId && loan.userId.email}</td>
+                      <td>{loan.userId && loan.userId.phone}</td>
+                    </tr>
+                  )) : "List empty"}
                 </tbody>
               </Table>
             </Col>
