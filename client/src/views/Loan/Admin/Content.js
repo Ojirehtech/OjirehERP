@@ -31,6 +31,7 @@ const Content = ( props ) => {
           <NavLink
             className={classnames( { active: activeTab === '1' } )}
             onClick={() => { toggle( '1' ); }}
+            style={{ color: '#20a8d8' }}
           >
             All Loan
           </NavLink>
@@ -39,6 +40,7 @@ const Content = ( props ) => {
           <NavLink
             className={classnames( { active: activeTab === '2' } )}
             onClick={() => { toggle( '2' ); }}
+            style={{ color: '#20a8d8' }}
           >
             Paid
           </NavLink>
@@ -47,6 +49,7 @@ const Content = ( props ) => {
           <NavLink
             className={classnames( { active: activeTab === '3' } )}
             onClick={() => { toggle( '3' ); }}
+            style={{ color: '#20a8d8' }}
           >
             Pending Loans
           </NavLink>
@@ -102,7 +105,17 @@ const Content = ( props ) => {
                   </tr>
                 </thead>
                 <tbody>
-
+                  {loans && loans.length > 0 ? loans.map( ( loan, i ) => (
+                    <tr key={i}>
+                      <th>{i + 1}</th>
+                      <td>{loan.userId && loan.userId.name}</td>
+                      <td>{loan.userId && loan.userId.email}</td>
+                      <td>{loan.userId && loan.userId.phone}</td>
+                      <td>{loan.amount}</td>
+                      <td>{moment( loan.created ).format( "DD/MM/YYYY" )}</td>
+                      <td>{loan.paid === true ? "Paid" : "Pending"}</td>
+                    </tr>
+                  ) ) : "List empty"}
                 </tbody>
               </Table>
             </Col>
@@ -125,7 +138,17 @@ const Content = ( props ) => {
                   </tr>
                 </thead>
                 <tbody>
-
+                  {loans && loans.length > 0 ? loans.map( ( loan, i ) => (
+                    <tr key={i}>
+                      <th>{i + 1}</th>
+                      <td>{loan.userId && loan.userId.name}</td>
+                      <td>{loan.userId && loan.userId.email}</td>
+                      <td>{loan.userId && loan.userId.phone}</td>
+                      <td>{loan.amount}</td>
+                      <td>{moment( loan.created ).format( "DD/MM/YYYY" )}</td>
+                      <td>{loan.paid === true ? "Paid" : "Pending"}</td>
+                    </tr>
+                  ) ) : "List empty"}
                 </tbody>
               </Table>
             </Col>

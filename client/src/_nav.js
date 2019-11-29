@@ -116,7 +116,7 @@ const navUser = [
   {
     name: "Loan",
     url: "/loan",
-    icon: "icon-dollar-circle"
+    icon: "icon-briefcase"
   },
   
   {
