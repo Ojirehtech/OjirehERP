@@ -30,17 +30,17 @@ const Header = ( props ) => {
       color: "#333"
     }
   }
-
+// color="light"
   return (
     <div className="custom-header">
-      <Navbar color="dark" dark expand="md">
+      <Navbar className="light"  expand="md">
         <Container>
         <NavbarBrand href="/">
           <img src={logo} alt="" />
         </NavbarBrand>
-          <NavbarToggler onClick={toggle} />
+          <NavbarToggler onClick={toggle} className="menu" />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar navbar-dark bg-dark>
+          <Nav className="mr-auto" navbar  navbar-dark bg-dark>
             <NavItem>
               <NavLink
                 href="https://ojirehprime.com"

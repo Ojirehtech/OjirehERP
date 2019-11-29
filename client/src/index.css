@@ -27,10 +27,11 @@
 }
 
 @media only screen and (max-width: 480px) {
-  .light {
-    background: black;
+  .menu {
+    background: white !important;
   }
 }
+
 @media only screen and (max-width: 480px) {
   .loanCard {
     height: 500px;
