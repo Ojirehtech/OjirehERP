@@ -61,12 +61,12 @@ const navAdmin = [
   {
     name: "Loan",
     url: "/loan",
-    icon: "icon-money"
+    icon: "icon-briefcase"
   },
   {
     name: "Loan Management",
     url: "/loan_board",
-    icon: "icon-money"
+    icon: "icon-briefcase"
   },
   {
     name: "User Management",

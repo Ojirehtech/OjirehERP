@@ -156,7 +156,7 @@ class Profile extends Component{
                 </CardGroup>
               </Col>
               <Col md="4">
-                {users.error && users.error.length > 0 ? <Alert color="danger">{users.error}</Alert> : null}
+                {/* {users.error && users.error.length > 0 ? <Alert color="danger">{users.error}</Alert> : null} */}
                 <Form encType="multipart/form-data">
                   <InputGroup className="mb-3">
                     <Input

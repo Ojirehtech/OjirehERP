@@ -15,8 +15,8 @@ import {
 import classnames from 'classnames';
 
 const Content = ( props ) => {
-  const loans = props.loan && props.loan.loans;
-  console.log(loans, " all the loans")
+  // const loans = props.loan && props.loan.loans;
+  // console.log(loans, " all the loans")
   const [ activeTab, setActiveTab ] = useState( '1' );
 
   const toggle = tab => {
@@ -70,10 +70,6 @@ const Content = ( props ) => {
                 </thead>
                 <tbody>
                   
-                      <Content
-                       
-                      />
-                   
                 </tbody>
               </Table>
             </Col>
@@ -82,14 +78,46 @@ const Content = ( props ) => {
         <TabPane tabId="2">
           <Row>
             <Col sm="12">
-              <h3>Paid loans</h3>
+              <Table className="mt-5">
+                <thead>
+                  <tr style={{ color: '#20a8d8' }}>
+                    <th>S/N</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone number</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+              </Table>
             </Col>
           </Row>
         </TabPane>
         <TabPane tabId="3">
           <Row>
             <Col sm="12">
-              <h3>pending loans</h3>
+              <Table className="mt-5">
+                <thead>
+                  <tr style={{ color: '#20a8d8' }}>
+                    <th>S/N</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone number</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+              </Table>
             </Col>
           </Row>
         </TabPane>
