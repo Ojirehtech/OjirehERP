@@ -12,6 +12,7 @@ import {
   // CardText,
   Row, Col
 } from 'reactstrap';
+import moment from "moment"
 import classnames from 'classnames';
 
 const Content = ( props ) => {
@@ -65,7 +66,6 @@ const Content = ( props ) => {
                     <th>Amount</th>
                     <th>Date</th>
                     <th>Status</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -75,6 +75,8 @@ const Content = ( props ) => {
                       <td>{loan.userId && loan.userId.name}</td>
                       <td>{loan.userId && loan.userId.email}</td>
                       <td>{loan.userId && loan.userId.phone}</td>
+                      <td>{loan.amount}</td>
+                      <td>{moment(loan.created).format("DD/MM/YYYY")}</td>
                     </tr>
                   )) : "List empty"}
                 </tbody>
