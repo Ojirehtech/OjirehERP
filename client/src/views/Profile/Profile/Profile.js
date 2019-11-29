@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Alert } from 'reactstrap';
+import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, } from 'reactstrap';
 import Spinner from 'reactstrap/lib/Spinner';
 import { getUser } from '../../../store/actions/action_user';
 import avatar from "../../../assets/img/brand/avatar.jpg";
@@ -156,7 +156,6 @@ class Profile extends Component{
                 </CardGroup>
               </Col>
               <Col md="4">
-                {/* {users.error && users.error.length > 0 ? <Alert color="danger">{users.error}</Alert> : null} */}
                 <Form encType="multipart/form-data">
                   <InputGroup className="mb-3">
                     <Input
