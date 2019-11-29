@@ -30,7 +30,7 @@ const Header = ( props ) => {
 
   return (
     <div className="custom-header">
-      <Navbar color="light" expand="md">
+      <Navbar color="dark" dark expand="md">
         <Container>
         <NavbarBrand href="/">
           <img src={logo} alt="" />
@@ -45,34 +45,34 @@ const Header = ( props ) => {
               >Home</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret style={styles.nav}>
+              <DropdownToggle nav caret>
                 About Us
               </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
                     <NavLink
-                      style={styles.nav}
+                      // style={styles.nav}
                       href={`https://ojirehprime.com/about-us/#wwd`}>
                       What We Do
                     </NavLink>
                   </DropdownItem>
                   <DropdownItem>
                     <NavLink
-                      style={styles.nav}
+                      // style={styles.nav}
                       href={`https://ojirehprime.com/about-us/#vision`}>
                       Our Vision, Mission, Core Values
                     </NavLink>
                   </DropdownItem>
                   <DropdownItem>
                     <NavLink
-                      style={styles.nav}
+                      // style={styles.nav}
                       href={`https://ojirehprime.com/about-us/#roadmap`}>
                       Roadmap
                     </NavLink>
                   </DropdownItem>
                   <DropdownItem>
                     <NavLink
-                      style={styles.nav}
+                      // style={styles.nav}
                       href={`https://ojirehprime.com/about-us/#team`}>
                       Our Team
                     </NavLink>

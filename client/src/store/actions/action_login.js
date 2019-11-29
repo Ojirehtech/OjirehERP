@@ -62,7 +62,7 @@ export const onLogin = ( data ) => {
         dispatch( loginSuccess( resp ) )
       } )
       .catch( err => {
-        dispatch( loginFailed( `Request failed to complete. Check your network and try again.` ) );
+        dispatch( loginFailed( `Network Error. Refresh and try again` ) );
       } );
    }
 }

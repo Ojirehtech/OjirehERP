@@ -29,12 +29,18 @@ class OfferPage extends Component {
     const { users } = this.props;
     let message;
     const network = users.user && users.user.networks;
-    if ( network >= 1 && network <= 5111 ) {
+    if ( network >= 70 && network < 5111 ) {
       message = <h4>You can access up to<span style={{ fontSize: "20px", color: "#ff0000"}}>NGN5,000</span> loan.</h4>
-    } else if (network >= 5111) {
+    } else if (network >= 5111 && network < 31000) {
       message = <h4>You can access up to<span style={{ fontSize: "20px", color: "#ff0000" }}>NGN100,000</span> loan.</h4>
+    } else if (network >= 31000 && network < 136000){
+      message = <h4>You can access up to < span style = {{ fontSize: "20px", color: "#ff0000" }
+    }> NGN250,000</span > loan.</h4 > 
+    } else if ( network >= 136000 ) {
+      message = <h4>You can access up to < span style={{ fontSize: "20px", color: "#ff0000" }
+      }> NGN250,000</span > loan.</h4 > 
     } else {
-      message = <h4 style={{ fontSize: "20px", color: "#ff0000"}}>No loan is accessible to you yet. Sell more cards to qualify.</h4>
+      message = <h4 style={{ fontSize: "20px", color: "#ff0000" }}>No loan is accessible to you yet. Sell more cards to qualify.</h4>
     }
     return (
       <div>

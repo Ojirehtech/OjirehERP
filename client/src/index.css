@@ -6,7 +6,7 @@
   width: 200px !important;
   color: #fff;
 }
-.bg-light {
+.light {
   background: linear-gradient(to right, #0a7e07 0%, #0a7e07 100%) !important;
   color: #fff !important;
   padding: 15px !important;
@@ -26,6 +26,11 @@
    padding-top: 50px
 }
 
+@media only screen and (max-width: 480px) {
+  .light {
+    background: black;
+  }
+}
 @media only screen and (max-width: 480px) {
   .loanCard {
     height: 500px;
