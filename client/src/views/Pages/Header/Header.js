@@ -30,7 +30,7 @@ const Header = ( props ) => {
       color: "#333"
     }
   }
-// color="light"
+  
   return (
     <div className="custom-header">
       <Navbar className="light"  expand="md">

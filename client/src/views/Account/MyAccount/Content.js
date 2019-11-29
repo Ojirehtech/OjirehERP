@@ -45,7 +45,6 @@ class Content extends Component {
     const { showStatement } = this.state;
     const { users, onRequestClick, onChange, transaction, amount } = this.props;
     const user = users.user ? users.user : null;
-   console.log(transaction, " transaction request")
     return (
       <div className="animated fadeIn">
         <Row>

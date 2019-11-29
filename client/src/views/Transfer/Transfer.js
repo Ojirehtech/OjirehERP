@@ -4,8 +4,7 @@ import { fundTransfer } from "../../store/actions/actions_transaction";
 import { Row, Col } from "reactstrap";
 import { isAuthenticated } from "../../helper/authenticate";
 import Content from "./Content";
-import cue from "../../assets/img/brand/image10.jpg";
-
+ 
 class Transfer extends Component {
   state = {
     phone: "",

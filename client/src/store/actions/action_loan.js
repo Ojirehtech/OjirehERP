@@ -11,12 +11,15 @@ export const VERIFY_OTP_FAILED = "VERIFY_OTP_FAILED";
 export const LOAN_REQUEST_START = "LOAN_REQUEST_START";
 export const LOAN_REQUEST_SUCCESS = "LOAN_REQUEST_SUCCESS";
 export const LOAN_REQUEST_FAILED = "LOAN_REQUEST_FAILED";
+
 export const FETCH_ALL_LOAN_START = "FETCH_ALL_LOAN_START";
 export const FETCH_ALL_LOAN_SUCCESS = "FETCH_ALL_LOAN_SUCCESS";
 export const FETCH_ALL_LOAN_FAILED = "FETCH_ALL_LOAN_FAILED";
+
 export const FETCH_LOAN_START = "FETCH_LOAN_START";
 export const FETCH_LOAN_SUCCESS = "FETCH_LOAN_SUCCESS";
 export const FETCH_LOAN_FAILED = "FETCH_LOAN_FAILED";
+
 export const PAY_LOAN_START = "PAY_LOAN_START";
 export const PAY_LOAN_SUCCESS = "PAY_LOAN_SUCCESS";
 export const PAY_LOAN_FAILED = "PAY_LOAN_FAILED";
@@ -150,7 +153,7 @@ export const loanRequest = ( amount ) => {
         "Content-Type": "application/json",
         "x-auth-token": isAuthenticated().token
       },
-      body: amount
+      body: JSON.stringify(amount)
     } )
       .then( response => response.json() )
       .then( resp => {
@@ -248,7 +251,7 @@ export const fetchLoan = ( amount ) => {
   const role = isAuthenticated().user.role;
   return dispatch => {
     dispatch( fetchLoanStart() );
-    fetch( `${ BASE_URL }/loan/${ userId }/${ role }`, {
+    fetch( `${ BASE_URL }/loan/${ role }/${ userId }`, {
       method: "GET",
       headers: {
         ACCEPT: "application/json",

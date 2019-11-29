@@ -14,6 +14,7 @@ const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy( () => import( './views/Users/User' ) );
 const Transfer = React.lazy( () => import( "./views/Transfer/Transfer" ) );
 const Transactions = React.lazy( () => import( "./views/Transactions/Transactions" ) );
+const LonContainer = React.lazy( () => import( "./views/Loan/Admin/LoanContainer" ) );
 
 const routes = [
   { path: '/', name: 'Home' },
@@ -31,6 +32,7 @@ const routes = [
   { path: '/charts', name: 'Charts', component: Charts },
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  { path: "/loan_dashboard", exact: true, name: "Loan Management", component: LonContainer}
 ];
 
 export default routes;

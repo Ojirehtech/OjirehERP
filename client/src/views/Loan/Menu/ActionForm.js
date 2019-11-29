@@ -23,14 +23,14 @@ class ActionForm extends Component {
         <Card style={{ height: "500px" }}>
           <CardBody>
             <Row className="justify-content-md-center">
-              <Col xs="4">
+              <Col xs="10" xl="3" className="mt-5">
                 <h3>Hello from Menu</h3>
                 <p className="text-muted">Please select an option to continue</p>
               </Col>
             </Row>
             <Row className="justify-content-md-center">
               <Col xs="10" xl="3">
-                <Form>
+                <Form className="menu-form">
                   <InputGroup className="mb-3">
                     <Label htmlFor="offer" className="text-muted">
                       Check Loan offer

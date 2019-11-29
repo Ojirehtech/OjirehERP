@@ -24,6 +24,8 @@ const initialState = {
   otp: {},
   loading: false,
   success: false,
+  requestLoading: false,
+  requestSuccess: false,
   error: ""
 }
 
@@ -70,20 +72,20 @@ const loanReducer = ( state = initialState, action ) => {
     case LOAN_REQUEST_START:
       return {
         ...state,
-        loading: true
+        requestLoading: true
       }
     case LOAN_REQUEST_SUCCESS:
       return {
         ...state,
-        loading: false,
-        success: true,
+        requestLoading: false,
+        requestSuccess: true,
         loan: state.loans.concat(action.data),
       }
     case LOAN_REQUEST_FAILED:
       return {
         ...state,
-        loading: false,
-        success: false,
+        requestLoading: false,
+        requestSuccess: false,
         error: action.error
       }
     case FETCH_ALL_LOAN_START:

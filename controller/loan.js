@@ -6,12 +6,11 @@ const { User } = require( "../models/user" );
  */
 exports.loanRequest = ( req, res ) => {
   const { userId } = req.params;
-  const { _id } = req.user;
+  // const { _id } = req.user;
   const { requestedAmount } = req.body;
   if ( !userId ) return res.status( 400 ).json( { error: "" } );
-  if ( !_id ) return res.status( 400 ).json( { error: "You have to login to access this operation" } );
-  if ( !phone ) return res.status( 400 ).json( { error: "You are not a valid Ojirehprime card user" } );
-  if ( userId !== _id ) return res.status( 400 ).json( { error: "You cannot access this operation" } );
+  // if ( !_id ) return res.status( 400 ).json( { error: "You have to login to access this operation" } );
+  // if ( userId !== _id ) return res.status( 400 ).json( { error: "You cannot access this operation" } );
   let amount;
   User.findById( { _id: userId } )
     .then( resp => {
@@ -82,18 +81,17 @@ exports.allLoan = ( req, res ) => {
  */
 exports.loanByUser = ( req, res ) => {
   const { role, userId } = req.params;
-  const { _id } = req.user;
+  console.log(req.user)
   if ( !role || !userId ) return res.status( 400 ).json( { error: "Invalid parameters" } );
-  if ( !_id ) return res.status( 400 ).json( { error: "You're not properly logged in" } );
-  if ( role !== "admin" || role !== "agent" || role !== "support" ) return res.status( 400 ).json( { error: "Only admin, support and agents can access this operation" } );
+  // if ( !_id ) return res.status( 400 ).json( { error: "You're not properly logged in" } );
 
   Loan.find( { _id: userId } )
-    .sort( "-createdAt" )
     .then( loan => {
       if ( !loan ) return res.status( 400 ).json( { error: "Can not find loan for this agent" } );
       res.json( loan );
     } )
     .catch( err => {
+      console.log( err.message );
       res.status( 400 ).json( { error: err.message } );
     } );
 }

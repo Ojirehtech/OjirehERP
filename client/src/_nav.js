@@ -14,7 +14,7 @@ const navAdmin = [
     url: '/dashboard',
     icon: 'icon-speedometer',
     badge: {
-      variant: 'info',
+      variant: 'success',
       text: 'NEW',
     },
   },
@@ -61,6 +61,11 @@ const navAdmin = [
   {
     name: "Loan",
     url: "/loan",
+    icon: "icon-money"
+  },
+  {
+    name: "Loan Management",
+    url: "/loan_board",
     icon: "icon-money"
   },
   {
@@ -113,6 +118,7 @@ const navUser = [
     url: "/loan",
     icon: "icon-dollar-circle"
   },
+  
   {
     name: logout,
     icon: "icon-logout"

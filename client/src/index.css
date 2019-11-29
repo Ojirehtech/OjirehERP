@@ -32,6 +32,12 @@
   }
 }
 
+@media only screen and(max-width: 480px) {
+  .menu-form {
+    padding: 20px;
+  }
+}
+
 @media only screen and (max-width: 480px) {
   .loanCard {
     height: 500px;
