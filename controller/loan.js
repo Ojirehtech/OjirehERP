@@ -60,10 +60,9 @@ exports.loanRequest = ( req, res ) => {
 exports.allLoan = ( req, res ) => {
   const { userId, role } = req.params;
   const { _id } = req.user;
-
   if ( !userId || !role ) return res.status( 400 ).json( { error: "Invalid parameters" } );
   if ( userId !== _id ) return res.status( 400 ).json( { error: "You did not log in correctly" } );
-  if ( role !== "admin" || role !== "support" ) return res.status( 400 ).json( { error: "Only admin and support can see loan requrests" } );
+  if ( role !== "admin" && role !== "support" ) return res.status( 400 ).json( { error: "Only admin and support can see loan requrests" } );
   Loan.find( {} )
     .populate("userId", "name email phone _id")
     .then( loans => {

@@ -1,8 +1,22 @@
 import React, { useState } from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import {
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink, 
+  Table,
+  // Card, 
+  // Button,
+  // CardTitle,
+  // CardText,
+  Row, Col
+} from 'reactstrap';
 import classnames from 'classnames';
 
 const Content = ( props ) => {
+  const loans = props.loan && props.loan.loans;
+  console.log(loans, " all the loans")
   const [ activeTab, setActiveTab ] = useState( '1' );
 
   const toggle = tab => {
@@ -17,7 +31,7 @@ const Content = ( props ) => {
             className={classnames( { active: activeTab === '1' } )}
             onClick={() => { toggle( '1' ); }}
           >
-            Tab1
+            All Loan
           </NavLink>
         </NavItem>
         <NavItem>
@@ -25,7 +39,15 @@ const Content = ( props ) => {
             className={classnames( { active: activeTab === '2' } )}
             onClick={() => { toggle( '2' ); }}
           >
-            Moar Tabs
+            Paid
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            className={classnames( { active: activeTab === '3' } )}
+            onClick={() => { toggle( '3' ); }}
+          >
+            Pending Loans
           </NavLink>
         </NavItem>
       </Nav>
@@ -33,25 +55,41 @@ const Content = ( props ) => {
         <TabPane tabId="1">
           <Row>
             <Col sm="12">
-              <h4>Tab 1 Contents</h4>
+              <Table className="mt-5">
+                <thead>
+                  <tr style={{ color: '#20a8d8' }}>
+                    <th>S/N</th>
+                    <th>Sender</th>
+                    <th>Amount</th>
+                    <th>Reciever</th>
+                    <th>Reciever phone</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                      <Content
+                       
+                      />
+                   
+                </tbody>
+              </Table>
             </Col>
           </Row>
         </TabPane>
         <TabPane tabId="2">
           <Row>
-            <Col sm="6">
-              <Card body>
-                <CardTitle>Special Title Treatment</CardTitle>
-                <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                <Button>Go somewhere</Button>
-              </Card>
+            <Col sm="12">
+              <h3>Paid loans</h3>
             </Col>
-            <Col sm="6">
-              <Card body>
-                <CardTitle>Special Title Treatment</CardTitle>
-                <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                <Button>Go somewhere</Button>
-              </Card>
+          </Row>
+        </TabPane>
+        <TabPane tabId="3">
+          <Row>
+            <Col sm="12">
+              <h3>pending loans</h3>
             </Col>
           </Row>
         </TabPane>

@@ -194,12 +194,12 @@ export const fetchLoansFailed = ( error ) => {
   }
 }
 
-export const fetchLoans = ( amount ) => {
+export const fetchLoans = () => {
   const userId = isAuthenticated().user._id;
   const role = isAuthenticated().user.role;
   return dispatch => {
     dispatch( fetchLoansStart() );
-    fetch( `${ BASE_URL }/loan/${ userId }/${role}`, {
+    fetch( `${ BASE_URL }/loans/${ userId }/${role}`, {
       method: "GET",
       headers: {
         ACCEPT: "application/json",
