@@ -76,7 +76,8 @@ const Content = ( props ) => {
                       <td>{loan.userId && loan.userId.email}</td>
                       <td>{loan.userId && loan.userId.phone}</td>
                       <td>{loan.amount}</td>
-                      <td>{moment(loan.created).format("DD/MM/YYYY")}</td>
+                      <td>{moment( loan.created ).format( "DD/MM/YYYY" )}</td>
+                      <td>{loan.paid === true ? "Paid" : "Pending"}</td>
                     </tr>
                   )) : "List empty"}
                 </tbody>
