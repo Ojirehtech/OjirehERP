@@ -85,7 +85,7 @@ exports.generateOTP = ( req, res ) => {
 `
   User.findOne( { phone: phone } )
     .then( user => {
-      if ( !user ) return res.status( 400 ).json( { error: `You do not have Ojirehprime card ${ phone }. Click on Register to buy a card` } );
+      if ( !user ) return res.status( 400 ).json( { error: `${ phone } do not have Ojirehprime card. Click on Register below to buy a card` } );
       
       User.findByIdAndUpdate( { _id: user._id }, { $set: { otp: otpCode } }, { new: true } )
         .then( resp => {
