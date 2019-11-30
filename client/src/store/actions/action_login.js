@@ -54,12 +54,8 @@ export const onLogin = ( data ) => {
     } )
       .then( response => response.json() )
       .then( resp => {
-        if ( resp.error ) {
-          dispatch( loginFailed( resp.error ) );
-          return;
-        }
-        Auth.authenticateUser( JSON.stringify(resp ));
-        dispatch( loginSuccess( resp ) )
+        Auth.authenticateUser( JSON.stringify( resp ) );
+        dispatch( loginSuccess( resp ) );
       } )
       .catch( err => {
         dispatch( loginFailed( `Network Error. Refresh and try again` ) );
