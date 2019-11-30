@@ -79,21 +79,23 @@ class OfferPage extends Component {
                 </InputGroup>
                 {this.state.agree === true ? (
                   user.loanPaid === true && (
-                    <Form onSubmit={this.handleRequest}>
-                      {loan.requestSuccess === true ? <p style={{ color: "#00ff00" }}>Your loan request is successful</p> : null}
-                      <InputGroup className="mb-3">
-                        <Input
-                          type="text"
-                          placeholder="Enter amount"
-                          value={this.state.requestedAmount}
-                          onChange={( e ) => this.handleChange( e, "requestedAmount" )}
-                        />
-                      </InputGroup>
-                      {loan.requestLoading === true ? <Spinner color="primary" /> : (
-                        <Button disabled = {user.loanPaid === false} color="success">Make request</Button>
-                      )}
-                      
-                    </Form>
+                    network >= 70 && (
+                      <Form onSubmit={this.handleRequest}>
+                        {loan.requestSuccess === true ? <p style={{ color: "#00ff00" }}>Your loan request is successful</p> : null}
+                        <InputGroup className="mb-3">
+                          <Input
+                            type="text"
+                            placeholder="Enter amount"
+                            value={this.state.requestedAmount}
+                            onChange={( e ) => this.handleChange( e, "requestedAmount" )}
+                          />
+                        </InputGroup>
+                        {loan.requestLoading === true ? <Spinner color="primary" /> : (
+                          <Button disabled={user.loanPaid === false} color="success">Make request</Button>
+                        )}
+
+                      </Form>
+                    )
                   )
                 ) : null}
               </Col>
