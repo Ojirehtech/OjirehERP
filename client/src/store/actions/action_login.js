@@ -54,11 +54,15 @@ export const onLogin = ( data ) => {
     } )
       .then( response => response.json() )
       .then( resp => {
-        Auth.authenticateUser( JSON.stringify( resp ) );
-        dispatch( loginSuccess( resp ) );
+        if ( resp.error ) {
+          dispatch( loginFailed( resp.error ) );
+          return;
+        }
+        Auth.authenticateUser( JSON.stringify(resp ));
+        dispatch( loginSuccess( resp ) )
       } )
       .catch( err => {
-        dispatch( loginFailed( `Network Error. Refresh and try again` ) );
+        dispatch( loginFailed( `Something went wrong. Please try again` ) );
       } );
    }
 }
@@ -147,7 +151,7 @@ export const logout = () => {
     } )
       .then( response => response.json() )
       .then( resp => {
-        dispatch( loginSuccess( resp ) );
+        dispatch( logoutSuccess( resp ) );
       } )
       .catch( err => {
         dispatch( logoutFailed( err.message ) );
