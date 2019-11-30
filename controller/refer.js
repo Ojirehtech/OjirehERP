@@ -34,7 +34,7 @@ exports.refererSettlement = ( req, res ) => {
       if ( !user ) return;
       const phone = user.phone;
       const totalBal = user.balance;
-      creditSms( res, phone, 200, totalBal );
+      // creditSms( res, phone, 200, totalBal );
       const grandReferer = user.parentId;
       if ( !grandReferer ) return;
       const date0 = new Date().getDate();
@@ -46,7 +46,7 @@ exports.refererSettlement = ( req, res ) => {
           if ( !ancestralParentId ) return;
           const phone = resp.phone;
           const total = resp.balance;
-          creditSms( res, phone, 50, total );
+          // creditSms( res, phone, 50, total );
           const date = new Date().getDate();
           const earning = { amount: 15, date: date };
           User.findByIdAndUpdate( { _id: ancestralParentId }, { $inc: { balance: +15, networks: +1 }, $push: { earnings: earning } }, { new: true } )
@@ -55,7 +55,7 @@ exports.refererSettlement = ( req, res ) => {
               const forthParentId = response._id;
               const phone = response.phone;
               const balance = response.balance;
-              creditSms( res, phone, 15, balance );
+              // creditSms( res, phone, 15, balance );
               const date1 = new Date().getDate();
               const forthEarning = { amount: 8, date: date1 };
               User.findByIdAndUpdate( { _id: forthParentId }, { $inc: { balance: +8, networks: +1 }, $push: { earnings: forthEarning } }, { new: true } )
@@ -64,19 +64,18 @@ exports.refererSettlement = ( req, res ) => {
                   const id = result._id;
                   const contact = result.phone;
                   const bal = result.balance;
-                  creditSms( res, contact, 8, bal );
+                  // creditSms( res, contact, 8, bal );
                   const date2 = new Date().getDate();
-                  const fifthEarning = {amount: 4, date: date2 };
+                  const fifthEarning = { amount: 4, date: date2 };
                   User.findByIdAndUpdate( { _id: id }, { $inc: { balance: +4, networks: +1 }, $push: { earnings: fifthEarning } }, { new: true } )
                     .then( respo => {
                       if ( !respo ) return;
                       const ph = respo.phone;
                       const ba = respo.balance;
                       creditSms( res, ph, 4, ba );
-                  })
-              })
-            } )
-          // res.json( resp );
+                    } )
+                } )
+            } );
         } )
       res.json( resp );
     } )
