@@ -27,6 +27,7 @@ const initialState = {
   requests: [],
   loading: false,
   success: false,
+  withdrawSuccess: false,
   request: false,
   requestLoading: false,
   error: ""
@@ -62,14 +63,14 @@ const transactionReducer = ( state = initialState, action ) => {
       return {
         ...state,
         loading: false,
-        success: true,
+        withdrawSuccess: true,
         transaction: action.data,
       }
     case WITHDRAWAL_REQUEST_FAILED:
       return {
         ...state,
         loading: false,
-        success: false,
+        withdrawSuccess: false,
         error: action.error
       }
     case APPROVE_REQUEST_START:

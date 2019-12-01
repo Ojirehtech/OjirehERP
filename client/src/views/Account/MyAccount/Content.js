@@ -59,7 +59,7 @@ class Content extends Component {
         </Row>
         <Row className="justify-content-md-center">
           <Col xs="12" xl="5">
-            {transaction.success === true ? <p style={{ color: "#00ff00"}}>Your request has been recieved and will be processed within 3 hours</p> : null}
+            {transaction.withdrawSuccess === true ? <p style={{ color: "#00ff00"}}>Your request has been recieved and will be processed within 3 hours</p> : null}
           </Col>
         </Row>
         <Row className="justify-content-md-center mb-5">
