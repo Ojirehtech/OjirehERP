@@ -60,7 +60,7 @@ class Dashboard extends Component {
       <div className="card animated fadeIn">
         <div className="card-body">
           <Row>
-            <Col xs="12" sm="6" lg="3">
+            <Col xs="12" sm="6" lg="4">
               <Card className="text-white bg-success">
                 <CardBody className="pb-0">
                   <div><h3><strong>Bal</strong>: <strong>&#8358;{user.balance ? user.balance : 0}.00</strong></h3></div>
@@ -77,7 +77,7 @@ class Dashboard extends Component {
               </Card>
             </Col>
 
-            <Col xs="12" sm="6" lg="3">
+            <Col xs="12" sm="6" lg="4">
               <Card className="text-white bg-info">
                 <CardBody className="pb-0">
                    <div><h3><strong>Earning</strong>: <strong>&#8358;{sumEarning ? sumEarning : 0}.00</strong></h3></div>
@@ -88,22 +88,13 @@ class Dashboard extends Component {
                 
               </Card>
             </Col>
-            <Col xs="12" sm="6" lg="3">
+            <Col xs="12" sm="6" lg="4">
               <Card className="text-white bg-danger">
                 <CardBody className="pb-0">
                   <div><h3><strong>{networkCount ? networkCount : 0}</strong></h3></div>
                   <div className="mb-4">Total Network</div>
                 </CardBody>
                 
-              </Card>
-            </Col>
-            <Col xs="12" sm="6" lg="3">
-              <Card className="text-white bg-primary">
-                <CardBody className="pb-0">
-                  <div className="text-value">9.823</div>
-                  <div className="mb-4">Indirect Network</div>
-                </CardBody>
-
               </Card>
             </Col>
           </Row>
