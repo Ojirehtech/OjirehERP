@@ -30,7 +30,7 @@ exports.signup = ( req, res ) => {
       newUser.save();
       const token = newUser.generateToken();
       const { _id, email, name, phone, parentId, refererPhone, role, profileUpdated } = newUser;
-      const refererLink = `${process.env.API_URL}/ojirehprime/agent/${ _id }`;
+      const refererLink = `${process.env.API_URL}/api/v1/agent/${ _id }`;
       res.cookie( "token", token, { expire: new Date() + 9999 } );
       res.header( "x-auth-token", token ).json( {
         token,
@@ -125,7 +125,7 @@ exports.signIn = ( req, res ) => {
        */
       const token = user.generateToken();
       const { _id, email, name, cardBought, phone, parentId, refererPhone, role, profileUpdated } = user;
-      const refererLink = `${ process.env.API_URL }/ojirehprime/agent/${ _id }`;
+      const refererLink = `${ process.env.API_URL }/api/v1/agent/${ _id }`;
       res.cookie( "token", token, { expire: new Date() + 9999 } );
       res.json( {
         token,

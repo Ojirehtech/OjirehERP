@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import LoginForm from './LoginForm';
 import { onLogin, sendOTP } from "../../../store/actions/action_login";
 import Particles from "react-particles-js";

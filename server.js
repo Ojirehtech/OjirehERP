@@ -7,7 +7,7 @@ const path = require( "path" );
 const cookieParser = require( "cookie-parser" );
 const app = express();
 
-const port = process.env.PORT || 3031;
+const port = process.env.PORT || 3035;
 
 /**
  * Connection to the database
