@@ -40,7 +40,7 @@ const Header = ( props ) => {
         </NavbarBrand>
           <NavbarToggler onClick={toggle} className="menu" />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar  navbar-dark bg-dark>
+          <Nav className="mr-auto" navbar>
             <NavItem>
               <NavLink
                 href="https://ojirehprime.com"

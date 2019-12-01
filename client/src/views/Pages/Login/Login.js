@@ -111,7 +111,7 @@ class Login extends Component {
     const { login } = this.props;
 
     if (login.success === true) {
-      return <Redirect to="/" />
+      return window.location.href = "/";
     }
 
     return (

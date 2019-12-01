@@ -41,7 +41,7 @@ export const loginFailed = ( error ) => {
  * Action creator for agents login
  */
 
-export const onLogin = ( data ) => {
+export const onLogin = ( data ) =>{
   return dispatch => {
     dispatch( loginStart() );
     fetch( `${ BASE_URL }/login`, {
@@ -54,13 +54,17 @@ export const onLogin = ( data ) => {
     } )
       .then( response => response.json() )
       .then( resp => {
+        if ( resp.error ) {
+          dispatch( loginFailed( resp.error ) );
+          return;
+        }
         dispatch( loginSuccess( resp ) );
         Auth.authenticateUser( JSON.stringify( resp ) );
       } )
       .catch( err => {
-        dispatch( loginFailed( `Something went wrong. Please try again` ) );
+        dispatch( loginFailed( "Something went wrong. Please try again" ) );
       } );
-   }
+  }  
 }
 
 /**
