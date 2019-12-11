@@ -29,10 +29,9 @@ class Content extends Component {
   }
 
   displayStatement = () => {
-    const { users, transaction } = this.props;
+    const { transaction } = this.props;
     const request = transaction.requests && transaction.requests;
     
-    console.log(users.user, " current logged in user")
     const { showStatement } = this.state;
     if ( showStatement ) {
       return (
@@ -43,8 +42,14 @@ class Content extends Component {
   
   render() {
     const { showStatement } = this.state;
-    const { users, onRequestClick, onChange, transaction, amount } = this.props;
+    const { users, onRequestClick, onChange, transaction, amount, message } = this.props;
     const user = users.user ? users.user : null;
+    const today = new Date();
+    if (new Date().getDate() > 18) {
+      console.log( today.getDate() + 7, " greater than ", new Date().getDate())
+    } else {
+      console.log(" is less than " )
+    }
     return (
       <div className="animated fadeIn">
         <Row>
@@ -52,14 +57,19 @@ class Content extends Component {
             <Card className="text-white bg-success">
               <CardBody className="pb-0">
                 <h3 className="mb-3">Available Balance</h3>
-                <h2 className="mb-3"><strong>&#8358;{user && user.balance ? user.balance : 0}.00</strong></h2>
+                <h2 className="mb-3">
+                  <strong>
+                    &#8358;{new Date().getDate() < 18 ? 5000 + ".00" : ( user.balance && user.balance ) + ".00"}
+                  </strong>
+                </h2>
               </CardBody>
             </Card>
           </Col>
         </Row>
         <Row className="justify-content-md-center">
           <Col xs="12" xl="5">
-            {transaction.withdrawSuccess === true ? <p style={{ color: "#00ff00"}}>Your request has been recieved and will be processed within 3 hours</p> : null}
+            {transaction.withdrawSuccess === true ? <p style={{ color: "#00ff00" }}>Your request has been recieved and will be processed within 3 hours</p> : null}
+            {message.length > 0 ? <p style={{ color: "#ff0000" }}>{message}</p> : null}
           </Col>
         </Row>
         <Row className="justify-content-md-center mb-5">

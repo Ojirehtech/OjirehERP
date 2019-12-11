@@ -331,6 +331,31 @@ exports.cardBought = ( req, res ) => {
 }
 
 /**
+ * Updates the user information
+ */
+exports.updateUser = ( req, res ) => {
+  const { userId } = req.params;
+  if ( !userId ) return res.status( 400 ).json( { error: "Invalid parameter" } );
+
+  User.findByIdAndUpdate( { _id: userId } )
+    .then( user => {
+      if ( !user ) return res.status( 400 ).json( { error: "User not found" } );
+      if ( req.body.name ) user.name = req.body.name;
+      if ( req.body.email ) user.email = req.body.email;
+      if ( req.body.phone ) user.phone = req.body.phone;
+      if ( req.body.refererPhone ) user.refererPhone = req.body.refererPhone;
+      if ( req.body.address ) user.address = req.body.address;
+      user.save()
+        .then( result => {
+          res.json( result );
+        } );
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
+
+/**
  * Deletes user account
  */
 exports.deleteUser = ( req, res ) => {

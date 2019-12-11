@@ -63,7 +63,12 @@ class Dashboard extends Component {
             <Col xs="12" sm="6" lg="4">
               <Card className="text-white bg-success">
                 <CardBody className="pb-0">
-                  <div><h3><strong>Bal</strong>: <strong>&#8358;{user.balance ? user.balance : 0}.00</strong></h3></div>
+                  <div>
+                    <h3>
+                      <strong>Bal</strong>: <strong>
+                        &#8358;{new Date().getDate() < 18 ? 5000 + ".00" : ( user.balance && user.balance ) + ".00"}</strong>
+                    </h3>
+                  </div>
                   <div className="mb-4">
                     <p><Link
                       to="/account"

@@ -20,6 +20,7 @@ const {
   dataUpload,
   adminSignIn,
   adminsignup,
+  updateUser,
 } = require( "../controller/user" );
 const requireLogin = require( "../config/auth" );
 
@@ -32,6 +33,7 @@ router.get( "/users", fetchUsers );
 router.post("/admin/signup", adminsignup)
 router.post( "/admin/signin", adminSignIn );
 router.post( "/users/data_upload", dataUpload );
+router.put( "/user/userId", requireLogin, updateUser );
 router.get( "/user/:userId", requireLogin, fetchUser );
 router.put( "/user/card/:userId", requireLogin, cardBought );
 router.post( "/user/otp/:phone", generateOTP );

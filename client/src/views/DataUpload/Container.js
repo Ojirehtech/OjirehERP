@@ -78,7 +78,7 @@ class Container extends Component{
           className="particles"
         />
         <div className="reg-particles">
-          <Row className="justify-content-md-center">
+          <Row className="justify-content-md-center mt-5">
             <Col md="9" lg="7" xl="6">
               <Card>
                 <h3 className="ml-4 mt-5" style={{ color: "#4dbd74" }}>Upload user data</h3>

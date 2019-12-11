@@ -19,6 +19,10 @@ export const UPDATE_PARENTID_START = "UPDATE_PARENTID_START";
 export const UPDATE_PARENTID_SUCCESS = "UPDATE_PARENTID_SUCCESS";
 export const UPDATE_PARENTID_FAILED = "UPDATE_PARENTID_FAILED";
 
+export const UPDATE_USER_START = "UPDATE_USER_START";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
+
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const getUserStart = () => {
@@ -55,7 +59,6 @@ export const getUser = (userId) => {
     } )
       .then( response => response.json() )
       .then( resp => {
-        console.log(resp, " user from response")
         if ( resp.error ) {
           dispatch( getUserFailed( resp.error ) );
           return;
@@ -245,6 +248,54 @@ export const updateParentId = () => {
       } )
       .catch( err => {
         dispatch( updateParentIdFailed( err.message ) );
+      } );
+  }
+}
+
+export const updateUserStart = () => {
+  return {
+    type: UPDATE_USER_START
+  }
+}
+
+export const updateUserSuccess = (data) => {
+  return {
+    type: UPDATE_USER_SUCCESS,
+    data
+  }
+}
+
+export const updateUserFailed = (error) => {
+  return {
+    type: UPDATE_USER_FAILED,
+    error
+  }
+}
+
+export const updatedUser = ( data ) => {
+  const userId = isAuthenticated().user._id;
+
+  return dispatch => {
+    dispatch( updateUserStart() );
+    fetch( `${ BASE_URL }/${userId}`, {
+      method: "PUT",
+      headers: {
+        ACCEPT: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": isAuthenticated().token
+      },
+      body: JSON.stringify( data )
+    } )
+      .then( response => response.json() )
+      .then( resp => {
+        if ( resp.error ) {
+          dispatch( updateUserFailed( resp.error ) );
+          return;
+        }
+        dispatch( updateUserSuccess( resp ) );
+      } )
+      .catch( err => {
+        dispatch( updateUserFailed( "Network Error. Try again" ) );
       } );
   }
 }
