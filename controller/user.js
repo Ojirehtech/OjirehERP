@@ -336,7 +336,7 @@ exports.cardBought = ( req, res ) => {
 exports.updateUser = ( req, res ) => {
   const { userId } = req.params;
   if ( !userId ) return res.status( 400 ).json( { error: "Invalid parameter" } );
-
+console.log(req.body)
   User.findByIdAndUpdate( { _id: userId } )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: "User not found" } );

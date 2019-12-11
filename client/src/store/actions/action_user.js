@@ -277,7 +277,7 @@ export const updatedUser = ( data ) => {
 
   return dispatch => {
     dispatch( updateUserStart() );
-    fetch( `${ BASE_URL }/${userId}`, {
+    fetch( `${ BASE_URL }/user/${userId}`, {
       method: "PUT",
       headers: {
         ACCEPT: "application/json",

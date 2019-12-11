@@ -33,7 +33,7 @@ router.get( "/users", fetchUsers );
 router.post("/admin/signup", adminsignup)
 router.post( "/admin/signin", adminSignIn );
 router.post( "/users/data_upload", dataUpload );
-router.put( "/user/userId", requireLogin, updateUser );
+router.put( "/user/:userId", requireLogin, updateUser );
 router.get( "/user/:userId", requireLogin, fetchUser );
 router.put( "/user/card/:userId", requireLogin, cardBought );
 router.post( "/user/otp/:phone", generateOTP );
