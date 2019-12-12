@@ -440,3 +440,21 @@ exports.adminSignIn = ( req, res ) => {
       res.status( 400 ).json( { error: err.message } );
     } );
 }
+
+exports.awardBonus = ( req, res ) => {
+  const { userId } = req.params;
+  if ( !userId ) return res.status( 400 ).json( { error: "Invalid parameters" } );
+  User.findById( { _id: userId } )
+    .then( user => {
+      if ( !user ) return res.status( 400 ).json( { error: "User not found" } );
+      if ( user.hasBonus === true ) return;
+      User.findByIdAndUpdate( { _id: userId }, { $inc: { balance: +5000 }, $set: { hasBonus: true } }, { new: true } )
+        .then( result => {
+          if ( !result ) return res.status( 400 ).json( { error: "Update failed" } );
+          res.json( result );
+        } );
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}

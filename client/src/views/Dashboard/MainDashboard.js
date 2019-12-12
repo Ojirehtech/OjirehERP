@@ -10,7 +10,7 @@ import {
 import { connect } from "react-redux";
 import { isAuthenticated } from "../../helper/authenticate";
 import SocialShare from '../Share/SocialShare';
-import { updateParentId, getByParentId, getUser } from '../../store/actions/action_user';
+import { updateParentId, getByParentId, getUser, awardBonus } from '../../store/actions/action_user';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -22,13 +22,14 @@ class Dashboard extends Component {
   }
 
   async componentDidMount() {
-    const { updateParentId, getUser, getByParentId } = this.props;
+    const { updateParentId, getUser, getByParentId, awardBonus } = this.props;
     const userId = isAuthenticated().user._id;
     document.title = "Dashboard"
     try {
       await updateParentId();
       await getUser(userId);
       await getByParentId();
+      await awardBonus();
     }catch(err) {}
   }
 
@@ -141,7 +142,8 @@ const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
     updateParentId: () => dispatch( updateParentId() ),
     getByParentId: () => dispatch( getByParentId() ),
-    getUser: (data) => dispatch(getUser(data)),
+    getUser: ( data ) => dispatch( getUser( data ) ),
+    awardBonus: () => dispatch(awardBonus())
   }
   return dispatchProps;
 }

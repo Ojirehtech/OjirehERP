@@ -21,6 +21,7 @@ const userSchema = new Schema( {
     requestBy: { type: ObjectId },
     createdAt: { type: Date, default: Date().now }
   } ],
+  hasBonus: { type: Boolean, default: false},
   loanPaid: { type: Boolean, default: true },
   earnings: [ {
     amount: Number,

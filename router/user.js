@@ -21,6 +21,7 @@ const {
   adminSignIn,
   adminsignup,
   updateUser,
+  awardBonus,
 } = require( "../controller/user" );
 const requireLogin = require( "../config/auth" );
 
@@ -30,11 +31,12 @@ router.post( "/signup", signup );
 router.post( "/login", signIn );
 router.get( "/signout", signout );
 router.get( "/users", fetchUsers );
-router.post("/admin/signup", adminsignup)
+router.post( "/admin/signup", adminsignup );
 router.post( "/admin/signin", adminSignIn );
 router.post( "/users/data_upload", dataUpload );
 router.put( "/user/:userId", requireLogin, updateUser );
 router.get( "/user/:userId", requireLogin, fetchUser );
+router.put( "/user/bonus/:userId", requireLogin, awardBonus );
 router.put( "/user/card/:userId", requireLogin, cardBought );
 router.post( "/user/otp/:phone", generateOTP );
 router.post( "/user/generate/:userId/:phone", requireLogin, generateLoanOTP );
