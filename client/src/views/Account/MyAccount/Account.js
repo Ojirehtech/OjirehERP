@@ -36,7 +36,7 @@ class Carousels extends Component {
       if ( ( userLength >= 10 ) && new Date().getDate() <= 18 ) {
         await withdrawalRequest(data);
       } else {
-        await this.setState( { message: `Dear ${username} your referral is less than 10. Build it up so you can withdraw. We strongly believe that you are a champion and you have what it takes 💪🏿..so lets do this.` } );
+        await this.setState( { message: `Dear ${username} your referral is less than 10. Build it up so you can withdraw. We strongly believe that you are a champion and you have what it takes 💪🝿..so lets do this.` } );
       }
     }catch(err) {}
   }
@@ -46,6 +46,7 @@ class Carousels extends Component {
     fields[ name ] = e.target.value;
     this.setState( { fields } );
   }
+  
   render() {
     const { users, transaction } = this.props;
     const { amount } = this.state;

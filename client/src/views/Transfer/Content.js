@@ -15,6 +15,7 @@ import {
 const Content = ( {
   amount,
   phone,
+  message,
   transaction,
   onHandleChange,
   onSubmit,
@@ -28,6 +29,7 @@ const Content = ( {
             {transaction.error && transaction.error.length > 0 ? <p
               style={{ color: "#ff0000" }}
             >{transaction.error}</p> : null}
+            {message.length > 0 ? <p style={{ color: "#ff0000" }}>{message}</p> : null}
             <p className="text-muted">Transfer from your account</p>
 
             <InputGroup className="mb-3">

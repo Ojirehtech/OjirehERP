@@ -9,6 +9,7 @@ class Transfer extends Component {
   state = {
     phone: "",
     amount: "",
+    message: ""
   }
 
   componentDidMount() {
@@ -27,16 +28,23 @@ class Transfer extends Component {
     const { phone, amount } = this.state;
     const sender = isAuthenticated().user.name;
     const userId = isAuthenticated().user._id;
+    const network = isAuthenticated().user.networks;
+    console.log(network, " networks")
     const data = {
       phone, amount, sender, userId
     }
     try {
-      await fundTransfer(data)
+      if ( network >= 10 ) {
+        await fundTransfer( data )
+      } else {
+        this.setState( { message: `Dear ${ sender } your referral is less than 10. Build it up so you can withdraw. We strongly believe that you are a champion and you have what it takes ...so lets do this.`})
+      }
+      
     } catch(err) {}
   }
 
   render() {
-    const { phone, amount } = this.state;
+    const { phone, amount, message } = this.state;
     const { transaction } = this.props;
     return (
       <div className="card">
@@ -47,6 +55,7 @@ class Transfer extends Component {
                 <Col xs="12" xl="6">
                   <Content
                     phone={phone}
+                    message={message}
                     amount={amount}
                     onHandleChange={this.onHandleChange}
                     onSubmit={this.onSubmit}
