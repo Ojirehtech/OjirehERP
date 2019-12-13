@@ -46,7 +46,7 @@ userSchema.index( { otp: 1 }, { expireAfterSeconds: 300 } );
  * We generate a token for the user
  */
 userSchema.methods.generateToken = function() {
-  const token = jwt.sign( { _id: this._id, email: this.email, role: this.role }, process.env.JWT_SECRET_KEY );
+  const token = jwt.sign( { _id: this._id, phone: this.phone, email: this.email, role: this.role }, process.env.JWT_SECRET_KEY );
   return token;
 }
 

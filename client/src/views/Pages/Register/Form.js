@@ -1,14 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  // Button,
   Card,
   CardBody,
   Alert,
   Col,
   Container,
   Form,
-  // Spinner,
   Input,
   InputGroup,
   InputGroupAddon,

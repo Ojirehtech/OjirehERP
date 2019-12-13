@@ -23,13 +23,12 @@ class Ravepay extends Component {
     }
   }
 
-  close = () => {
-    console.log( "Payment closed" );
+  close() {
+    console.log("Close rave")
   }
 
   render() {
-    const { phone, email, amount, pubKey,  } = this.props;
-    
+    const { phone, email, amount, pubKey } = this.props;
     return (
       <Row className="justify-content-md-center mt-5">
         <Col xs="12" xl="10">

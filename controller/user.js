@@ -9,35 +9,33 @@ require( "dotenv" ).config();
  * User account signup
  */
 exports.signup = ( req, res ) => {
-  const {
-    email,
-    phone,
-    name,
-    refererPhone,
-    address
-  } = req.body;
+  const name = req.body.name;
+  const phone = req.body.phone;
+  const refererPhone = req.body.refererPhone;
+  const address = req.body.address;
+  const email = req.body.email;
+  
   if ( !email ) return res.status( 400 ).json( { error: "Enter your email address" } );
   if ( !phone ) return res.status( 400 ).json( { error: "Phone number is missing" } );
   if ( !name ) return res.status( 400 ).json( { error: "Your first name is required" } );
   if ( !address ) return res.status( 400 ).json( { error: "Your last name is required" } );
   // if (refererPhone) return res.status(400).json({ error: "Your referer phone number is required"});
-
+  
   User.findOne( { phone: phone } )
     .then( user => {
-      if ( user ) return res.status( 400 ).json( { error: `The phone number ${ phone } has been used by another user` } );
-      let newUser = new User( req.body )
+      if ( user ) return res.status( 400 ).json( { error: `The phone number ${req.body.phone} has been used by another user` } );
+      let newUser = new User( req.body );
 
       newUser.save();
       const token = newUser.generateToken();
-      const { _id, email, name, phone, parentId, refererPhone, role, profileUpdated } = newUser;
+      const { _id, email, name, phone, parentId, refererPhone, role } = newUser;
       const refererLink = `${process.env.API_URL}/api/v1/agent/${ _id }`;
       res.cookie( "token", token, { expire: new Date() + 9999 } );
       res.header( "x-auth-token", token ).json( {
         token,
-        user: { _id, email, phone, refererPhone, parentId, role, name, refererLink, profileUpdated }});
+        user: { _id, email, phone, refererPhone, parentId, role, name, refererLink }});
     } )
     .catch( err => {
-      console.log(err.message)
       res.status( 400 ).json( { error: err.message } );
     } );
 }
