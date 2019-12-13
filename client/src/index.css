@@ -26,6 +26,10 @@
    padding-top: 50px
 }
 
+.edit-button Button {
+  color: #fff;
+}
+
 @media only screen and (max-width: 480px) {
   .menu {
     background: white !important;
@@ -47,6 +51,13 @@
 @media only screen and (max-width: 480px) {
   .reg-particles {
     margin-top: -250px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .edit-button {
+    margin-top: 15px;
+    color: #fff;
   }
 }
 

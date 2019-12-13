@@ -84,7 +84,7 @@ class Profile extends Component{
                 <Form onSubmit={this.handleProfileSubmit}>
                   <h3 style={{ color: "#4dbd74"}}>Update Your Profile</h3>
                   <Row>
-                    <Col xs="6">
+                    <Col xs="12" xl="6">
                       <label>Name</label>
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
@@ -100,7 +100,7 @@ class Profile extends Component{
                         />
                       </InputGroup>
                     </Col>
-                    <Col xs="6" className="text-right">
+                    <Col xs="12" xl="6" className="text-right">
                       <label>Email</label>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -118,7 +118,7 @@ class Profile extends Component{
                     </Col>
                   </Row>
                   <Row>
-                    <Col xs="6">
+                    <Col xs="12" xl="6">
                       <label>Phone</label>
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
@@ -134,7 +134,7 @@ class Profile extends Component{
                         />
                       </InputGroup>
                     </Col>
-                    <Col xs="6" className="text-right">
+                    <Col xs="12" xl="6" className="text-right">
                       <label>Referer phone</label>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -152,7 +152,7 @@ class Profile extends Component{
                     </Col>
                   </Row>
                   <Row>
-                    <Col xs="12">
+                    <Col xs="12" xl="6">
                       <label>Address</label>
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
@@ -169,7 +169,7 @@ class Profile extends Component{
                       </InputGroup>
                     </Col>
                     <Col xs="12">
-                      <Button color="success">Submit</Button>
+                      {users.updateLoading === true ? <Spinner color="primary" /> : <Button color="success">Submit</Button>}
                     </Col>
                   </Row>
                 </Form>
@@ -186,9 +186,11 @@ class Profile extends Component{
             <Card className="p-4">
               <CardBody>
                 <Form>
-                  <h3 style={{ color: "#4dbd74" }}>{user.name} profile</h3>
+                  {users.loading === true ? <Spinner color="primary" /> : (
+                    <h3 style={{ color: "#4dbd74" }}>{user.name} profile</h3>
+                  )}
                   <Row>
-                    <Col xs="6">
+                    <Col xs="12" xl="6">
                       <label>Name</label>
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
@@ -203,7 +205,7 @@ class Profile extends Component{
                         />
                       </InputGroup>
                     </Col>
-                    <Col xs="6" className="text-right">
+                    <Col xs="12" xl className="text-right">
                       <label>Email</label>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -277,7 +279,7 @@ class Profile extends Component{
   }
   
   render() {
-    const { users } = this.props;
+    const { users, edit } = this.props;
     const user = users.user && users.user;
     return (
       <div className="card app flex-row">
@@ -314,7 +316,7 @@ class Profile extends Component{
                 </Form>
                 <Row>
                   <Col md="6">
-                    {user.loading === true ? <Spinner color="primary" /> : (
+                    {edit.loading === true ? <Spinner color="primary" /> : (
                     <Button 
                         color='success' 
                       onClick={( e ) => this.handleSubmit( e )}
@@ -324,12 +326,12 @@ class Profile extends Component{
                     )}
                     
                   </Col>
-                  <Col md="6">
+                  <Col md="6" className="edit-button">
                     <Button 
-                        color='success' 
+                      color='info' 
                       onClick={this.toggleView}
                       >
-                      Upload photo
+                      Edit profile
                     </Button>
                   </Col>
                 </Row>
@@ -346,7 +348,8 @@ class Profile extends Component{
 
 const mapStateToProps = ( state ) => {
   return {
-    users: state.users
+    users: state.users,
+    edit: state.edit,
   }
 }
 
