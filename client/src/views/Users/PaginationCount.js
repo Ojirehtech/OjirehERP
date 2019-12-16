@@ -6,7 +6,12 @@ const PaginationCount = ( {
   total_users,
   current_page,
   per_page,
+  handlePagination,
 } ) => {
+  const pageNumbers = [];
+  for ( let i = 1; i <= Math.ceil( total_users/per_page ); i++ ) {
+    pageNumbers.push( i );
+  }
   return (
     <Pagination aria-label="Page navigation example">
       <PaginationItem>
@@ -15,16 +20,13 @@ const PaginationCount = ( {
       <PaginationItem>
         <PaginationLink previous href="#" />
       </PaginationItem>
-      <PaginationItem>
-        <PaginationLink href="#">
-          1
-        </PaginationLink>
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationLink href="#">
-          2
-        </PaginationLink>
-      </PaginationItem>
+      {pageNumbers.map( number => (
+        <PaginationItem key={number} onClick={() => handlePagination(number)}>
+          <PaginationLink >
+            {number}
+          </PaginationLink>
+        </PaginationItem>
+      ))}
       <PaginationItem>
         <PaginationLink next href="#" />
       </PaginationItem>

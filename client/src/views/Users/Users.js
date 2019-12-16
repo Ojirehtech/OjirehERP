@@ -26,37 +26,35 @@ function UserRow(props) {
 
 class Users extends Component {
   state = {
-    users: null,
-    perPage: null,
-    currentPage: null,
-    total: null,
+    userData: null,
+    current_page: null,
+    total_pages: null,
+    total_users: null,
+    per_page: null
   }
+
   async componentDidMount() {
     const { getUsers } = this.props;
+    const page = 1
     try {
-      await getUsers();
-      // await this.setState( {
-      //   users: users.data,
-      // })
+      await getUsers(page);
     } catch(err) {}
   }
 
-  handlePagination = async (page) => {
+  handlePagination = async ( page ) => {
+    const { getUsers } = this.props;
     try {
-      await getUsers();
+      await getUsers(page);
     } catch ( err ) { }
   }
 
   render() {
     const { users } = this.props;
-    console.log(users, "users and itme")
     const userData = users.users.users && users.users.users;
-    // const page
     const current_page = users.users && users.users.current_page;
     const total_pages = users.users && users.users.totalUser;
     const total_users = users.users && users.users.totalUsers;
     const per_page = users.users && users.users.per_page;
-    // const  = users.users && users.users.current_page;
     return (
       <div className="animated fadeIn">
         <Row>
@@ -67,7 +65,6 @@ class Users extends Component {
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
-
                   <thead>
                     <tr>
                       <th scope="col">S/N</th>
@@ -85,12 +82,15 @@ class Users extends Component {
                     ) : "Loading..."}
                   </tbody>
                 </Table>
-                <PaginationCount
-                  total_pages={total_pages}
-                  total_users={total_users}
-                  current_page={current_page}
-                  per_page={per_page}
-                />
+                {userData && userData.length > 0 ? (
+                  <PaginationCount
+                    total_pages={total_pages}
+                    total_users={total_users}
+                    current_page={current_page}
+                    per_page={per_page}
+                    handlePagination={this.handlePagination}
+                  />
+                ) : null}
               </CardBody>
             </Card>
           </Col>
@@ -108,7 +108,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
-    getUsers: () => dispatch(getUsers()),
+    getUsers: ( data ) => dispatch( getUsers( data ) ),
   }
 
   return dispatchProps;

@@ -98,7 +98,7 @@ export const getUsersFailed = ( error ) => {
 export const getUsers = (pageNumber) => {
   return dispatch => {
     dispatch( getUsersStart() );
-    fetch( `${ BASE_URL }/users?page=${pageNumber}`, {
+    fetch( `${ BASE_URL }/users/${pageNumber}`, {
       method: "GET",
       headers: {
         ACCEPT: "application/json",
@@ -115,7 +115,7 @@ export const getUsers = (pageNumber) => {
         dispatch( getUsersSuccess( resp ) );
       } )
       .catch( err => {
-        dispatch( getUsersFailed( "We could not process your request. Check your network and try again" ) )
+        dispatch( getUsersFailed( "Request failed. Check your network and try again" ) )
       } );
   }
 }

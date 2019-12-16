@@ -19,7 +19,7 @@ import {
   UPDATE_USER_FAILED,
   AWARD_BONUS_START,
   AWARD_BONUS_SUCCESS,
-  AWARD_BONUS_FAILED,
+  AWARD_BONUS_FAILED
 } from "../actions/action_user";
 
 const initialState = {
