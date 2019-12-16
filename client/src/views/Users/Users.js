@@ -5,6 +5,7 @@ import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import moment from "moment";
 
 import { getUsers } from '../../store/actions/action_user';
+import PaginationCount from './PaginationCount';
 
 function UserRow(props) {
   const user = props.user
@@ -24,17 +25,38 @@ function UserRow(props) {
 }
 
 class Users extends Component {
+  state = {
+    users: null,
+    perPage: null,
+    currentPage: null,
+    total: null,
+  }
   async componentDidMount() {
     const { getUsers } = this.props;
     try {
       await getUsers();
+      // await this.setState( {
+      //   users: users.data,
+      // })
     } catch(err) {}
+  }
+
+  handlePagination = async (page) => {
+    try {
+      await getUsers();
+    } catch ( err ) { }
   }
 
   render() {
     const { users } = this.props;
-    const userData = users.users && users.users;
-
+    console.log(users, "users and itme")
+    const userData = users.users.users && users.users.users;
+    // const page
+    const current_page = users.users && users.users.current_page;
+    const total_pages = users.users && users.users.totalUser;
+    const total_users = users.users && users.users.totalUsers;
+    const per_page = users.users && users.users.per_page;
+    // const  = users.users && users.users.current_page;
     return (
       <div className="animated fadeIn">
         <Row>
@@ -45,6 +67,7 @@ class Users extends Component {
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
+
                   <thead>
                     <tr>
                       <th scope="col">S/N</th>
@@ -57,11 +80,17 @@ class Users extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {userData.map( ( user, index ) =>
+                    {userData ? userData.map( ( user, index ) =>
                       <UserRow users={users} key={index} ind={index} user={user} />
-                    )}
+                    ) : "Loading..."}
                   </tbody>
                 </Table>
+                <PaginationCount
+                  total_pages={total_pages}
+                  total_users={total_users}
+                  current_page={current_page}
+                  per_page={per_page}
+                />
               </CardBody>
             </Card>
           </Col>
