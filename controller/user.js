@@ -209,7 +209,7 @@ exports.signout = ( req, res ) => {
  */
 exports.fetchUsers = ( req, res ) => {
   const page = req.params.pageNumber;
-  const per_page = 10;
+  const per_page = 15;
   User.find( {} )
     .skip( ( per_page * page ) - per_page )
     .limit(per_page)
