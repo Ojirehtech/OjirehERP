@@ -3,7 +3,6 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
-  InputGroupText,
   Button,
 } from "reactstrap";
 

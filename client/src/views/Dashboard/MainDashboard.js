@@ -37,6 +37,7 @@ class Dashboard extends Component {
 
   render() {
     const { users } = this.props;
+    const role = isAuthenticated().user.role;
     const user = users.user && users.user;
     const networkCount = users.user && users.user.networks;
     const refererLink = isAuthenticated().user ? isAuthenticated().user.refererLink : null;
@@ -56,7 +57,10 @@ class Dashboard extends Component {
       }
       sumEarning = allEarnings.reduce( ( a, b ) => a + b, 0 );
     }
-
+    const button = <Link
+      className="btn btn-success"
+      to="/data_upload"
+    >Upload data</Link>
     return (
       <div className="card animated fadeIn">
         <div className="card-body">
@@ -124,6 +128,15 @@ class Dashboard extends Component {
                   <p>Share to your social Networks</p>
                 </Col>
               </Row>
+              
+            </Col>
+          </Row>
+          <Row>
+            <Col xs="12" xl="9">
+              
+            </Col>
+            <Col xs="12" xl="3">
+              {role === "support" ? button : role === "admin" ? button : null}
             </Col>
           </Row>
         </div>
