@@ -219,7 +219,7 @@ exports.fetchUsers = ( req, res ) => {
       const total_pages = Math.ceil(totalUsers / per_page);
       const current_page = page;
       if ( !users ) return res.status( 400 ).json( { error: "User record is empty" } );
-      res.json( { current_page, totalUsers, total_pages, per_page, users} )
+      res.json( { current_page, totalUsers, total_pages, per_page, users } );
     } )
     .catch( err => {
       res.status( 400 ).json( { error: err.message } );
@@ -318,6 +318,19 @@ exports.uploadPhoto = ( req, res ) => {
     } );
 }
 
+/**
+ * Searches api
+ */
+exports.searchUser = ( req, res, next ) => {
+  const q = req.query.q.charAt( 0 ).toUpperCase();
+  User.find( { name: { $regex: new RegExp( q ) } } )
+    .then( result => {
+      res.json( result );
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
 
 /**
  * This api confirms that the user has bought a card

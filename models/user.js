@@ -40,7 +40,9 @@ const userSchema = new Schema( {
 /**
  * Expires the otp after 5 minutes
  */
-userSchema.index( { otp: 1 }, { expireAfterSeconds: 300 } );
+userSchema.index( {
+  otp: 1,
+},{ expireAfterSeconds: 300 } );
 
 /**
  * We generate a token for the user

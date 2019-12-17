@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import {
+  Badge,
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Row,
+  Table,
+} from 'reactstrap';
 import moment from "moment";
 
-import { getUsers } from '../../store/actions/action_user';
+import { getUsers, searchUser } from '../../store/actions/action_user';
 import PaginationCount from './PaginationCount';
+import Search from './Search';
 
 function UserRow(props) {
   const user = props.user
@@ -26,11 +35,7 @@ function UserRow(props) {
 
 class Users extends Component {
   state = {
-    userData: null,
-    current_page: null,
-    total_pages: null,
-    total_users: null,
-    per_page: null
+    searchTerm: ""
   }
 
   async componentDidMount() {
@@ -48,6 +53,36 @@ class Users extends Component {
     } catch ( err ) { }
   }
 
+  handleInputChange = ( e, name ) => {
+    let fields = this.state;
+    fields[ name ] = e.target.value;
+    this.setState( { fields } );
+  }
+
+  handleSearch = async (e) => {
+    const { searchUser } = this.props;
+    const { searchTerm } = this.state;
+    try {
+      if ( e.key === "Enter" ) {
+        await searchUser(searchTerm)
+      }
+      await searchUser( searchTerm );
+    } 
+    catch(err) {}
+  }
+
+  handleKeyPress = async ( e ) => {
+    const { searchTerm } = this.state;
+    const { searchUser } = this.props;
+    console.log(searchTerm, " on enter key press")
+    try {
+      if ( e.key === "Enter" ) {
+        await searchUser( searchTerm );
+      }
+    }
+    catch(err) {}
+  }
+
   render() {
     const { users } = this.props;
     const userData = users.users.users && users.users.users;
@@ -57,6 +92,16 @@ class Users extends Component {
     const per_page = users.users && users.users.per_page;
     return (
       <div className="animated fadeIn">
+        <Row className="justify-content-center mb-5">
+          <Col xs="10" xl="10">
+            <Search
+              handleInputChange={this.handleInputChange}
+              handleSearch={this.handleSearch}
+              searchTerm={this.state.searchTerm}
+              handleKeyPress={this.handleKeyPress}
+            />
+          </Col>
+        </Row>
         <Row>
           <Col xl={12}>
             <Card>
@@ -109,6 +154,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
     getUsers: ( data ) => dispatch( getUsers( data ) ),
+    searchUser: (searchTerm) => dispatch(searchUser(searchTerm)),
   }
 
   return dispatchProps;

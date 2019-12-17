@@ -22,6 +22,7 @@ const {
   adminsignup,
   updateUser,
   awardBonus,
+  searchUser,
 } = require( "../controller/user" );
 const requireLogin = require( "../config/auth" );
 
@@ -30,6 +31,7 @@ const router = express.Router();
 router.post( "/signup", signup );
 router.post( "/login", signIn );
 router.get( "/signout", signout );
+router.get( "/users/search", requireLogin, searchUser );
 router.get( "/users/:pageNumber", fetchUsers );
 router.post( "/admin/signup", adminsignup );
 router.post( "/admin/signin", adminSignIn );

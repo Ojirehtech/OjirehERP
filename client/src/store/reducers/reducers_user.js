@@ -19,7 +19,10 @@ import {
   UPDATE_USER_FAILED,
   AWARD_BONUS_START,
   AWARD_BONUS_SUCCESS,
-  AWARD_BONUS_FAILED
+  AWARD_BONUS_FAILED,
+  SEARCH_START,
+  SEARCH_SUCCESS,
+  SEARCH_FAILED,
 } from "../actions/action_user";
 
 const initialState = {
@@ -74,6 +77,25 @@ const userReducers = ( state = initialState, action ) => {
         users: action.data
       }
     case GET_USERS_FAILED:
+      return {
+        ...state,
+        usersLoading: false,
+        usersSuccess: false,
+        error: action.error
+      }
+    case SEARCH_START:
+      return {
+        ...state,
+        usersLoading: true
+      }
+    case SEARCH_SUCCESS:
+      return {
+        ...state,
+        usersLoading: false,
+        usersSuccess: true,
+        users: action.data,
+      }
+    case SEARCH_FAILED:
       return {
         ...state,
         usersLoading: false,

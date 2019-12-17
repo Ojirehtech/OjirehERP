@@ -27,6 +27,10 @@ export const AWARD_BONUS_START = "AWARD_BONUS_START";
 export const AWARD_BONUS_SUCCESS = "AWARD_BONUS_SUCCESS";
 export const AWARD_BONUS_FAILED = "AWARD_BONUS_FAILED";
 
+export const SEARCH_START = "SEARCH_START";
+export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
+export const SEARCH_FAILED = "SEARCH_FAILED";
+
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const getUserStart = () => {
@@ -346,6 +350,48 @@ export const awardBonus = () => {
       } )
       .catch( err => {
         dispatch( awardBonusFailed( "Network Error. Please try again" ) );
+      } );
+  }
+}
+
+export const searchStart = () => {
+  return {
+    type: SEARCH_START
+  }
+}
+
+export const searchSuccess = ( data ) => {
+  return {
+    type: SEARCH_SUCCESS,
+    data
+  }
+}
+
+export const searchFailed = ( error ) => {
+  return {
+    type: SEARCH_FAILED,
+    error
+  }
+}
+
+export const searchUser = ( searchTerm ) => {
+  console.log(searchTerm, " action search term")
+  return dispatch => {
+    dispatch( searchStart() );
+    fetch( `${ BASE_URL }/users/search?q=${ searchTerm }`, {
+      method: "GET",
+      headers: {
+        ACCEPT: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": isAuthenticated().token
+      }
+    } )
+      .then( response => response.json() )
+      .then( resp => {
+        dispatch( searchSuccess( resp ) );
+      } )
+      .catch( err => {
+        dispatch( searchFailed( "Search failed. Check your network connection" ) );
       } );
   }
 }
