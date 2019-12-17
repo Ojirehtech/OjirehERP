@@ -324,8 +324,8 @@ exports.uploadPhoto = ( req, res ) => {
 exports.searchUser = ( req, res, next ) => {
   const q = req.query.q.charAt( 0 ).toUpperCase();
   User.find( { name: { $regex: new RegExp( q ) } } )
-    .then( result => {
-      res.json( result );
+    .then( users => {
+      res.json( { users } );
     } )
     .catch( err => {
       res.status( 400 ).json( { error: err.message } );

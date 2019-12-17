@@ -11,10 +11,10 @@ class Search extends Component{
   render() {
     const { handleSearch, handleKeyPress, handleInputChange, searchTerm } = this.props;
     return (
-      <div>
+      <div className="search">
         <InputGroup>
           <Input
-            placeholder="Type full name to search"
+            placeholder="Search by name"
             value={searchTerm}
             onChange={( e ) => handleInputChange( e, "searchTerm" )}
             onKeyPress={(e) => handleKeyPress(e)}
@@ -37,10 +37,10 @@ class Search extends Component{
                 width: "80px",
                 borderBottomRightRadius: 26,
                 borderTopRightRadius: 26,
-                background: "blue"
+                background: "#20a8d8"
               }}
             >
-              <i className="cil-zoom"></i>
+              <i className="cil-zoom search-icon"></i>
             </Button>
           </InputGroupAddon>
         </InputGroup>

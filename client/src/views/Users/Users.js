@@ -59,13 +59,10 @@ class Users extends Component {
     this.setState( { fields } );
   }
 
-  handleSearch = async (e) => {
+  handleSearch = async () => {
     const { searchUser } = this.props;
     const { searchTerm } = this.state;
     try {
-      if ( e.key === "Enter" ) {
-        await searchUser(searchTerm)
-      }
       await searchUser( searchTerm );
     } 
     catch(err) {}
@@ -84,7 +81,6 @@ class Users extends Component {
 
   render() {
     const { users } = this.props;
-    console.log(users.users, "user list")
     const userData = users.users.users && users.users.users;
     const current_page = users.users && users.users.current_page;
     const total_pages = users.users && users.users.totalUser;
