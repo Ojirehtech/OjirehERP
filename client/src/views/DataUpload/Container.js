@@ -67,7 +67,7 @@ class Container extends Component{
     const { registration } = this.props;
     console.log( registration, " this is registration" );
     const userRole = isAuthenticated().user && isAuthenticated().user.role;
-    if ( userRole !== "support" ) {
+    if ( userRole !== "support" && userRole !== "admin" ) {
       return <Redirect to="/" />
     }
     return (
