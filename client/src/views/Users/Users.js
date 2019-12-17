@@ -74,7 +74,6 @@ class Users extends Component {
   handleKeyPress = async ( e ) => {
     const { searchTerm } = this.state;
     const { searchUser } = this.props;
-    console.log(searchTerm, " on enter key press")
     try {
       if ( e.key === "Enter" ) {
         await searchUser( searchTerm );
@@ -85,6 +84,7 @@ class Users extends Component {
 
   render() {
     const { users } = this.props;
+    console.log(users.users, "user list")
     const userData = users.users.users && users.users.users;
     const current_page = users.users && users.users.current_page;
     const total_pages = users.users && users.users.totalUser;
