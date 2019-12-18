@@ -62,7 +62,7 @@ const DataTab = ( { transaction, request, transfer } ) => {
                         <td>{req.createdAt && req.createdAt.slice( 0, 10 )}</td>
                         <td>{req.createdAt.slice( 11, 16 )}</td>
                         <td>Withdraw</td>
-                        <td>{req.status === false ? "False" : "Complete"}</td>
+                        <td>{req.status === false ? "Pending" : "Approved"}</td>
                       </tr>
                     ) ) : "Request list is empty"
                   )}
@@ -78,7 +78,8 @@ const DataTab = ( { transaction, request, transfer } ) => {
                 <thead>
                   <tr style={{ color: '#20a8d8' }}>
                     <th>S/N</th>
-                    <th>Name</th>
+                    <th>Sender</th>
+                    <th>Receiver</th>
                     <th>Amount transfered</th>
                     <th>Date</th>
                     <th>Time</th>
@@ -91,13 +92,13 @@ const DataTab = ( { transaction, request, transfer } ) => {
                     transfer.length > 0 ? transfer.map( ( req, i ) => (
                       <tr key={req._id}>
                         <th scope="row" key={transaction._id}>{i + 1}</th>
-                        <td>{req.userId && req.userId.name}</td>
-                        <td>{req.balance}</td>
+                        <td>{req.sender && req.sender.name}</td>
+                        <td>{req.receiver}</td>
                         <td>{req.amount}</td>
                         <td>{req.createdAt && req.createdAt.slice( 0, 10 )}</td>
                         <td>{req.createdAt.slice( 11, 16 )}</td>
                         <td>Fund transfer</td>
-                        <td>{req.status === false ? "False" : "Complete"}</td>
+                        <td>{req.status === false ? "Pending" : "Complete"}</td>
                       </tr>
                     ) ) : "Request list is empty"
                   )}

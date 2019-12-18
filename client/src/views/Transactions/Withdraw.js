@@ -28,7 +28,7 @@ class Withdraw extends Component {
   render() {
     const { transaction } = this.props;
   
-    const pendingTransactions = transaction.withdraw && transaction.withdraw;
+    const pendingTransactions = transaction.requests && transaction.requests;
     let newArr = [];
     for ( let i = 0; i < pendingTransactions.length; i++ ) {
       let trans = pendingTransactions[ i ];
@@ -36,6 +36,7 @@ class Withdraw extends Component {
         newArr.push( trans );
       }
     }
+    console.log(pendingTransactions, " pending withdrawal transaction")
     return (
       <div className="card">
         <CardHeader>

@@ -14,10 +14,12 @@ class Transactions extends Component {
     } catch(err) {}
   }
 
-  onCompleteTransaction = async (data) => {
+  onCompleteTransaction = async (transferId, amount, receiverPhone, senderId) => {
     const { approveTransfer } = this.props;
+    const data = { amount, receiverPhone, senderId }
+    console.log(data)
     try {
-      await approveTransfer(data)
+      await approveTransfer(transferId,data)
     } catch(err) {}
   }
   render() {
@@ -76,7 +78,7 @@ const mapStateToProps = ( state ) => {
 
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
-    approveTransfer: ( data ) => dispatch( approveTransfer( data ) ),
+    approveTransfer: ( transferId, data ) => dispatch( approveTransfer( transferId, data ) ),
     getAllTransfer: () => dispatch(getAllTransfer())
   }
   return dispatchProps

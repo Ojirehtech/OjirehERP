@@ -29,7 +29,6 @@ class Transfer extends Component {
     const sender = isAuthenticated().user.name;
     const userId = isAuthenticated().user._id;
     const network = isAuthenticated().user.networks;
-    console.log(network, " networks")
     const data = {
       phone, amount, sender, userId
     }

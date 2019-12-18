@@ -24,12 +24,17 @@ class Dashboard extends Component {
   async componentDidMount() {
     const { updateParentId, getUser, getByParentId, awardBonus } = this.props;
     const userId = isAuthenticated().user._id;
-    document.title = "Dashboard"
+    document.title = "Dashboard";
     try {
       await updateParentId();
       await getUser(userId);
       await getByParentId();
-      await awardBonus();
+      if ( new Date().getDate() > 31 ) {
+        return;
+      } else {
+        await awardBonus();
+      }
+      
     }catch(err) {}
   }
 
@@ -71,7 +76,7 @@ class Dashboard extends Component {
                   <div>
                     <h3>
                       <strong>Bal</strong>: <strong>
-                        &#8358;{new Date().getDate() < 18 ? 5000 + ".00" : ( user.balance && user.balance ) + ".00"}</strong>
+                        &#8358; {user.balance ? user.balance + ".00" : 0.00}</strong>
                     </h3>
                   </div>
                   <div className="mb-4">

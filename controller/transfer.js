@@ -1,29 +1,39 @@
 const { Transfer } = require( "../models/transfer" );
+const { User } = require( "../models/user" );
+const { debitSms, creditSms } = require( "../service/sms" );
 
 /**
  * Creating a transfer transaction.
  * This api must not be called by any route
  */
 exports.makeTransfer = ( req, res ) => {
-  const { reciever, recieverPhone, sender, amount,} = req.body;
-  console.log( reciever, recieverPhone, sender, amount, " from transfer controller" );  
-  if ( !reciever ) return res.status( 400 ).json( { error: "Reciever name is not provided" } );
+  const { phone, userId, sender, amount} = req.body;
+  console.log( phone, userId, sender, amount, " from transfer controller" );  
+  if ( !sender ) return res.status( 400 ).json( { error: "Reciever name is not provided" } );
   if ( !amount ) return res.status( 400 ).json( { error: "Amount is missing" } );
-  if ( !recieverPhone ) return res.status( 400 ).json( { error: "Reciever phone number is required" } );
-  let transfer = new Transfer( {
-    sender,
-    reciever,
-    recieverPhone,
-    amount
-  } );
+  if ( !phone ) return res.status( 400 ).json( { error: "Reciever phone number is required" } );
+  User.findOne( { phone: phone } )
+    .then( user => {
+      if ( !user ) return res.status( 400 ).json( { error: `User with phone number ${ phone } does not have OjirehPrime card` } );
+      let transfer = new Transfer( {
+        sender: userId,
+        receiver: user.name,
+        receiverPhone: phone,
+        amount
+      } );
 
-  transfer.save()
-    .then( response => {
-      res.json( response );
+      transfer.save()
+        .then( response => {
+          res.json( response );
+        } )
+        .catch( err => {
+          console.log( err.message, " error from transfer controller" )
+          res.status( 400 ).json( { error: err.messageg } );
+        } );
     } )
     .catch( err => {
-      console.log(err.message, " error from transfer controller")
-      res.status( 400 ).json( { error: err.messageg } );
+      console.error(err, " last error")
+      res.status( 400 ).json( { error: err.message } );
     } );
 }
 
@@ -52,6 +62,7 @@ exports.getTransferByUser = ( req, res ) => {
   if ( !_id ) return res.status( 400 ).json( { error: "Unauthorized access" } );
   if ( userId !== _id ) return res.status( 400 ).json( { error: "Unknown user" } );
   Transfer.find( { sender: userId } )
+    .populate("sender", "name")
     .then( result => {
       if ( !result ) return res.status( 400 ).json( { error: "No transfer request found for you" } );
       res.json( result );
@@ -70,27 +81,27 @@ exports.approveTransfer = ( req, res ) => {
   
   if ( !role ) return res.status( 400 ).json( { error: "Invalid parameter" } );
   if ( role !== "admin" && role !== "support" ) return res.status( 400 ).json( { error: "Only admin and support persons can approve transfer request" } );
-  const { amount, phone, userId, sender } = req.body;
+  const { amount, receiverPhone, senderId } = req.body;
 
   if ( !amount ) return res.status( 400 ).json( { error: "Amount to transfer is not specified" } );
-  if ( !phone ) return res.status( 400 ).json( { error: "Enter the phone number of the reciever" } );
-  if ( !userId ) return res.status( 400 ).json( { error: "invalid request parameters" } );
-  User.findById( { _id: userId } )
+  if ( !receiverPhone ) return res.status( 400 ).json( { error: "Enter the phone number of the reciever" } );
+  if ( !senderId ) return res.status( 400 ).json( { error: "invalid request parameters" } );
+  User.findById( { _id: senderId } )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: "You do not have Ojirehprime card" } );
       if ( amount > user.balance ) return res.status( 400 ).json( { error: "Request failed. Insufficient balance" } );
-      User.findOne( { phone: phone } )
+      User.findOne( { phone: receiverPhone } )
         .then( reciever => {
           if ( !reciever ) return res.status( 400 ).json( {
-            error: `The user with the phone number ${ phone } does not have Ojirehprime card`
+            error: `The user with the phone number ${ receiverPhone } does not have Ojirehprime card`
           } );
           const recieverName = reciever.name;
-          User.findByIdAndUpdate( { _id: userId }, { $inc: { balance: -amount } }, { new: true } )
+          User.findByIdAndUpdate( { _id: senderId }, { $inc: { balance: -amount } }, { new: true } )
             .then( response => {
               const alertNum = response.phone;
               const bal = response.balance;
               debitSms( res, alertNum, amount, bal );
-              User.findOneAndUpdate( { phone: phone }, { $inc: { balance: +amount } }, { new: true } )
+              User.findOneAndUpdate( { phone: receiverPhone }, { $inc: { balance: +amount } }, { new: true } )
                 .then( credit => {
                   const creditNum = credit.phone;
                   const balance = credit.balance;
@@ -98,7 +109,7 @@ exports.approveTransfer = ( req, res ) => {
                   Transfer.findByIdAndUpdate( { _id: transferId }, { $set: { status: true } }, { new: true } )
                     .then( trans => {
                       if ( !trans ) return res.status( 400 ).json( { error: "Could not finalize this transaction. Please try again" } );
-                      // res.json( trans );
+                      res.json( {message: "Transfer success"} );
                     } )
                 } )
             } );

@@ -1,19 +1,10 @@
 import {
-  FUND_TRANSFER_START,
-  FUND_TRANSFER_SUCCESS,
-  FUND_TRANSFER_FAILED,
   WITHDRAWAL_REQUEST_START,
   WITHDRAWAL_REQUEST_SUCCESS,
   WITHDRAWAL_REQUEST_FAILED,
   APPROVE_REQUEST_START,
   APPROVE_REQUEST_SUCCESS,
   APPROVE_REQUEST_FAILED,
-  GET_TRANSFERS_START,
-  GET_TRANSFERS_SUCCESS,
-  GET_TRANSFERS_FAILED,
-  FINALIZE_TRANSFER_START,
-  FINALIZE_TRANSFER_SUCCESS,
-  FINALIZE_TRANSFER_FAILED,
   GET_REQUEST_START,
   GET_REQUEST_SUCCESS,
   GET_REQUEST_FAILED,
@@ -36,25 +27,6 @@ const initialState = {
 
 const transactionReducer = ( state = initialState, action ) => {
   switch ( action.type ) {
-    // case FUND_TRANSFER_START:
-    //   return {
-    //     ...state,
-    //     loading: true
-    //   }
-    // case FUND_TRANSFER_SUCCESS:
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     success: true,
-    //     transaction: action.data,
-    //   }
-    // case FUND_TRANSFER_FAILED:
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     success: false,
-    //     error: action.error
-      // }
     case WITHDRAWAL_REQUEST_START:
       return {
         ...state,

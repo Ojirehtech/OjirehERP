@@ -127,12 +127,14 @@ export const approveTransferFailed = ( error ) => {
   }
 }
 
-export const approveTransfer = (requestId, data) => {
+export const approveTransfer = ( transferId, data) => {
   const role = isAuthenticated().user.role;
+  console.log(data, " data from action")
   return dispatch => {
+    console.log("right inside dispatch")
     dispatch( approveTransferStart() );
-    fetch( `${ BASE_URL }/transfer/${ requestId }/${ role }`, {
-      method: "GET",
+    fetch( `${ BASE_URL }/transfer/${ transferId }/${ role }`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         ACCEPT: "application/json",
@@ -174,10 +176,9 @@ export const getTransferByUserFailed = ( error ) => {
 }
 
 export const getTransferByUser = () => {
-  console.log("hey from get transfer by user")
   const userId = isAuthenticated().user._id;
   return dispatch => {
-    dispatchEvent( getTransferByUserStart() );
+    dispatch( getTransferByUserStart() );
     fetch( `${ BASE_URL }/transfer/all/${ userId }`, {
       method: "GET",
       headers: {
