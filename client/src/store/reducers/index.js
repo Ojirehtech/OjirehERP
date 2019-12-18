@@ -8,6 +8,7 @@ import transaction from "./reducers_transaction";
 import role from "./reducers_roles";
 import loan from "./reducers_loan";
 import admin from "./reducers_admin";
+import transfer from "reducers_transfer";
 
 const rootReducer = combineReducers( {
   register,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers( {
   role,
   loan,
   admin,
+  transfer,
 } );
 
 export default rootReducer;

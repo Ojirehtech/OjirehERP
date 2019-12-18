@@ -31,11 +31,16 @@ class Content extends Component {
   displayStatement = () => {
     const { transaction } = this.props;
     const request = transaction.requests && transaction.requests;
+    const withdrawRequest = transaction.withdraw && transaction.withdraw;
     
     const { showStatement } = this.state;
     if ( showStatement ) {
       return (
-        <DataTab transaction={transaction} request={request} />
+        <DataTab
+          transaction={transaction}
+          request={request}
+          withdrawRequest={withdrawRequest}
+        />
       )
     }
   }

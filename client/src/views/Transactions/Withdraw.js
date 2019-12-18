@@ -28,7 +28,7 @@ class Withdraw extends Component {
   render() {
     const { transaction } = this.props;
   
-    const pendingTransactions = transaction.requests && transaction.requests;
+    const pendingTransactions = transaction.withdraw && transaction.withdraw;
     let newArr = [];
     for ( let i = 0; i < pendingTransactions.length; i++ ) {
       let trans = pendingTransactions[ i ];

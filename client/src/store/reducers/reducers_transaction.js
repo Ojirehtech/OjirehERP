@@ -25,6 +25,7 @@ import {
 const initialState = {
   transaction: {},
   requests: [],
+  withdraw: [],
   loading: false,
   success: false,
   withdrawSuccess: false,
@@ -64,7 +65,7 @@ const transactionReducer = ( state = initialState, action ) => {
         ...state,
         loading: false,
         withdrawSuccess: true,
-        transaction: action.data,
+        withdraw: action.data,
       }
     case WITHDRAWAL_REQUEST_FAILED:
       return {

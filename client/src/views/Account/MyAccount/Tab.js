@@ -7,7 +7,7 @@ import {
 } from 'reactstrap';
 import classnames from 'classnames';
 
-const DataTab = ( {transaction, request} ) => {
+const DataTab = ( { transaction, request, withdrawRequest} ) => {
   const [ activeTab, setActiveTab ] = useState( '1' );
 
   const toggle = tab => {
@@ -89,7 +89,7 @@ const DataTab = ( {transaction, request} ) => {
                 </thead>
                 <tbody>
                   {transaction.requestLoading === true ? <Spinner color="primary" /> : (
-                    request.length > 0 ? request.map( ( req, i ) => (
+                    withdrawRequest.length > 0 ? withdrawRequest.map( ( req, i ) => (
                       <tr key={req._id}>
                         <th scope="row" key={transaction._id}>{i + 1}</th>
                         <td>{req.userId && req.userId.name}</td>

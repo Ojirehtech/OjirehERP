@@ -1,7 +1,7 @@
 const mongoose = require( "mongoose" );
 const { Schema, ObjectId } = mongoose;
 
-const requestSchema = new Schema( {
+const withdrawSchema = new Schema( {
   userId: { type: ObjectId, ref: "User", required: [ true, "User Id is not supplied" ] },
   amount: { type: Number, required: [ true, "How much do you want to withdraw" ] },
   balance: { type: Number },
@@ -9,6 +9,6 @@ const requestSchema = new Schema( {
   createdAt: { type: Date, default: Date.now }
 } );
 
-const Request = mongoose.model( "Request", requestSchema );
+const Withdraw = mongoose.model( "Withdraw", withdrawSchema );
 
-exports.Request = Request;
+exports.Withdraw = Withdraw;

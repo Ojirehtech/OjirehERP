@@ -1,7 +1,7 @@
 const { User } = require( "../models/user" );
 const { debitSms, creditSms } = require( "../service/sms" );
 const { makeTransfer } = require( "./transfer" );
-const { Request } = require( "../models/request" );
+const { Withdraw } = require( "../models/withdraw" );
 
 /**
  * Handles withdrawal requests from agent
@@ -22,13 +22,13 @@ exports.withdrawalRequest = ( req, res ) => {
       if ( agent.balance < amount ) return res.status( 400 ).json( { error: `${ amount } is greater than your available balance of ${ agent.balance }. Please consider withdrawing a lower amount or an equivalent of your balance.` } );
       if ( amount < 2000 ) return res.status( 400 ).json( { error: `The amount NGN${ amount } you request is too low` } );
       const balance = agent.balance;
-      let newRequest = new Request( {
+      let newWithdraw = new Withdraw( {
         userId,
         amount,
         balance
       } )
-      newRequest.save();
-      res.json( newRequest );
+      newWithdraw.save();
+      res.json( newWithdraw );
     } )
     .catch( err => {
       res.json( { error: err.message } );
@@ -38,14 +38,17 @@ exports.withdrawalRequest = ( req, res ) => {
 /**
  * Gets all list of requests
 */
-exports.getRequests = ( req, res ) => {
+exports.getWithdrawalRequests = ( req, res ) => {
   const { userId, role } = req.params;
-
-  Request.find( {} )
+  if ( !userId ) return res.status( 400 ).json( { error: "Invalid parameter" } );
+  if ( !role ) return res.status( 400 ).json( { error: "User role is not known" } );
+  if ( role !== "admin" ) return res.status( 400 ).json( { error: "Only admin can access this information" } );
+  console.log( "this is the request with modification" );
+  Withdraw.find( {} )
     .populate("userId", "name")
-    .then( request => {
-      if ( !request ) return res.status( 400 ).json( { error: "Request list is empty" } );
-      res.json( request );
+    .then( withdraw => {
+      if ( !withdraw ) return res.status( 400 ).json( { error: "Request list is empty" } );
+      res.json( withdraw );
     } )
     .catch( err => {
       res.status( 400 ).json( { error: err.message } );
@@ -56,14 +59,14 @@ exports.getRequests = ( req, res ) => {
 /**
  * Gets request for a user with the user ID
 */
-exports.getRequest = ( req, res ) => {
+exports.getWithdrawalRequest = ( req, res ) => {
   const { userId, } = req.params;
 
-  Request.find( { userId: userId} )
+  Withdraw.find( { userId: userId} )
     .populate( "userId", "name" )
-    .then( request => {
-      if ( !request ) return res.status( 400 ).json( { error: "Request list is empty" } );
-      res.json( request );
+    .then( withdraw => {
+      if ( !withdraw ) return res.status( 400 ).json( { error: "Request list is empty" } );
+      res.json( withdraw );
     } )
     .catch( err => {
       res.status( 400 ).json( { error: err.message } );
@@ -85,9 +88,9 @@ exports.requestApproval = ( req, res ) => {
   User.findByIdAndUpdate( { _id: agentId }, {$inc: { balance: -amt}}, { new: true} )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: "Failed to debit user" } );
-      Request.findByIdAndUpdate( { _id: requestId }, { $set: { status: true } }, { new: true } )
-        .then( request => {
-          if ( !request ) return res.status( 400 ).json( { error: "Request approval failed. Try again" } );
+      Withdraw.findByIdAndUpdate( { _id: requestId }, { $set: { status: true } }, { new: true } )
+        .then( withdraw => {
+          if ( !withdraw ) return res.status( 400 ).json( { error: "Request approval failed. Try again" } );
           debitSms(res,)
         } );
       
@@ -98,44 +101,4 @@ exports.requestApproval = ( req, res ) => {
     } );
 }
 
-/**
- * handles fund transfer
- */
-exports.transferFund = ( req, res ) => {
-  const { amount, phone, userId, sender } = req.body;
-
-  if ( !amount ) return res.status( 400 ).json( { error: "Amount to transfer is not specified" } );
-  if ( !phone ) return res.status( 400 ).json( { error: "Enter the phone number of the reciever" } );
-  if ( !userId ) return res.status( 400 ).json( { error: "invalid request parameters" } );
-  User.findById( { _id: userId } )
-    .then( user => {
-      if ( !user ) return res.status( 400 ).json( { error: "You do not have Ojirehprime card" } );
-      if ( amount > user.balance ) return res.status( 400 ).json( { error: "Request failed. Insufficient balance" } );
-      User.findOne( { phone: phone } )
-        .then( reciever => {
-          if ( !reciever ) return res.status( 400 ).json( {
-            error: `The user with the phone number ${ phone } does not have Ojirehprime card`
-          } );
-          console.log(reciever.name, " this is the reciever of the fund")
-          const recieverName = reciever.name;
-          User.findByIdAndUpdate( { _id: userId }, { $inc: { balance: -amount } }, { new: true } )
-            .then( response => {
-              const alertNum = response.phone;
-              const bal = response.balance;
-              debitSms( res, alertNum, amount, bal );
-              User.findOneAndUpdate( { phone: phone }, { $inc: { balance: +amount } }, { new: true } )
-                .then( credit => {
-                  const creditNum = credit.phone;
-                  const balance = credit.balance;
-                  creditSms( res, creditNum, amount, balance );
-                } )
-            } );
-          return makeTransfer( req, res, userId, recieverName, amount, phone );
-        } );
-    } )
-    .catch( err => {
-      console.log(err.message, "error from transaction ")
-      res.status( 400 ).json( { error: err.message } );
-    } );
-}
 
