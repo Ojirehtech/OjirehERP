@@ -1,8 +1,8 @@
 import { isAuthenticated } from "../../helper/authenticate";
 
-export const FUND_TRANSFER_START = "FUND_TRANSFER_START";
-export const FUND_TRANSFER_SUCCESS = "FUND_TRANSFER_SUCCESS";
-export const FUND_TRANSFER_FAILED = "FUND_TRANSFER_FAILED";
+// export const FUND_TRANSFER_START = "FUND_TRANSFER_START";
+// export const FUND_TRANSFER_SUCCESS = "FUND_TRANSFER_SUCCESS";
+// export const FUND_TRANSFER_FAILED = "FUND_TRANSFER_FAILED";
 
 export const WITHDRAWAL_REQUEST_START = "WITHDRAWAL_REQUEST_START";
 export const WITHDRAWAL_REQUEST_SUCCESS = "WITHDRAWAL_REQUEST_SUCCESS";
@@ -20,61 +20,61 @@ export const FETCH_REQUEST_START = "FETCH_REQUEST_START";
 export const FETCH_REQUEST_SUCCESS = "FETCH_REQUEST_SUCCESS";
 export const FETCH_REQUEST_FAILED = "FETCH_REQUEST_FAILED";
 
-export const GET_TRANSFERS_START = "GET_TRANSFERS_START";
-export const GET_TRANSFERS_SUCCESS = "GET_TRANSFERS_SUCCESS";
-export const GET_TRANSFERS_FAILED = "GET_TRANSFERS_FAILED";
+// export const GET_TRANSFERS_START = "GET_TRANSFERS_START";
+// export const GET_TRANSFERS_SUCCESS = "GET_TRANSFERS_SUCCESS";
+// export const GET_TRANSFERS_FAILED = "GET_TRANSFERS_FAILED";
 
-export const FINALIZE_TRANSFER_START = "FINALIZE_TRANSFER_START";
-export const FINALIZE_TRANSFER_SUCCESS = "FINALIZE_TRANSFER_SUCCESS";
-export const FINALIZE_TRANSFER_FAILED = "FINALIZE_TRANSFER_FAILED";
+// export const FINALIZE_TRANSFER_START = "FINALIZE_TRANSFER_START";
+// export const FINALIZE_TRANSFER_SUCCESS = "FINALIZE_TRANSFER_SUCCESS";
+// export const FINALIZE_TRANSFER_FAILED = "FINALIZE_TRANSFER_FAILED";
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
-export const fundTransferStart = () => {
-  return {
-    type: FUND_TRANSFER_START
-  }
-}
+// export const fundTransferStart = () => {
+//   return {
+//     type: FUND_TRANSFER_START
+//   }
+// }
 
-export const fundTransferSuccess = ( data ) => {
-  return {
-    type: FUND_TRANSFER_SUCCESS,
-    data
-  }
-}
+// export const fundTransferSuccess = ( data ) => {
+//   return {
+//     type: FUND_TRANSFER_SUCCESS,
+//     data
+//   }
+// }
 
-export const fundTransferFailed = ( error ) => {
-  return {
-    type: FUND_TRANSFER_FAILED,
-    error
-  }
-}
+// export const fundTransferFailed = ( error ) => {
+//   return {
+//     type: FUND_TRANSFER_FAILED,
+//     error
+//   }
+// }
 
-export const fundTransfer = ( data ) => {
-  return dispatch => {
-    dispatch( fundTransferStart() );
-    fetch( `${ BASE_URL }/request/transfer`, {
-      method: "PUT",
-      headers: {
-        ACCEPT: "application/json",
-        "Content-Type": "application/json",
-        "x-auth-token": isAuthenticated().token
-      },
-      body: JSON.stringify(data)
-    } )
-      .then( response => response.json() )
-      .then( resp => {
-        if ( resp.error ) {
-          dispatch( fundTransferFailed( resp.error ) );
-          return;
-        }
-        dispatch( fundTransferSuccess( resp ) );
-      } )
-      .catch( err => {
-        dispatch( fundTransferFailed( "Network Error. Try again" ) );
-      } );
-  }
-}
+// export const fundTransfer = ( data ) => {
+//   return dispatch => {
+//     dispatch( fundTransferStart() );
+//     fetch( `${ BASE_URL }/request/transfer`, {
+//       method: "PUT",
+//       headers: {
+//         ACCEPT: "application/json",
+//         "Content-Type": "application/json",
+//         "x-auth-token": isAuthenticated().token
+//       },
+//       body: JSON.stringify(data)
+//     } )
+//       .then( response => response.json() )
+//       .then( resp => {
+//         if ( resp.error ) {
+//           dispatch( fundTransferFailed( resp.error ) );
+//           return;
+//         }
+//         dispatch( fundTransferSuccess( resp ) );
+//       } )
+//       .catch( err => {
+//         dispatch( fundTransferFailed( "Network Error. Try again" ) );
+//       } );
+//   }
+// }
 
 /**
  * Handles withdrawal requests
@@ -180,101 +180,101 @@ export const approveRequest = (data, agentId, requestId ) => {
   }
 }
 
-/**
- * Gets all deposits
- */
-export const getTransferStart = () => {
-  return {
-    type: GET_TRANSFERS_START
-  }
-}
+// /**
+//  * Gets all deposits
+//  */
+// export const getTransferStart = () => {
+//   return {
+//     type: GET_TRANSFERS_START
+//   }
+// }
 
-export const getTransferSuccess = ( data ) => {
-  return {
-    type: GET_TRANSFERS_SUCCESS,
-    data
-  }
-}
+// export const getTransferSuccess = ( data ) => {
+//   return {
+//     type: GET_TRANSFERS_SUCCESS,
+//     data
+//   }
+// }
 
-export const getTransferFailed = ( error ) => {
-  return {
-    type: GET_TRANSFERS_FAILED,
-    error
-  }
-}
+// export const getTransferFailed = ( error ) => {
+//   return {
+//     type: GET_TRANSFERS_FAILED,
+//     error
+//   }
+// }
 
-export const getTransfer = () => {
-  return dispatch => {
-    dispatch( getTransferStart() );
-    fetch( `${ BASE_URL }/transfer`, {
-      method: "GET",
-      headers: {
-        ACCEPT: "application/json",
-        "Content-Type": "application/json",
-        "x-auth-token": isAuthenticated().token
-      }
-    } )
-      .then( response => response.json() )
-      .then( resp => {
-        if ( resp.error ) {
-          dispatch( getTransferFailed( resp.error ) );
-          return;
-        }
-        dispatch( getTransferSuccess( resp ) )
-      } )
-      .catch( err => {
-        dispatch( getTransferFailed( "Some thing went wrong. Try again" ) );
-      } );
-  }
-}
+// export const getTransfer = () => {
+//   return dispatch => {
+//     dispatch( getTransferStart() );
+//     fetch( `${ BASE_URL }/transfer`, {
+//       method: "GET",
+//       headers: {
+//         ACCEPT: "application/json",
+//         "Content-Type": "application/json",
+//         "x-auth-token": isAuthenticated().token
+//       }
+//     } )
+//       .then( response => response.json() )
+//       .then( resp => {
+//         if ( resp.error ) {
+//           dispatch( getTransferFailed( resp.error ) );
+//           return;
+//         }
+//         dispatch( getTransferSuccess( resp ) )
+//       } )
+//       .catch( err => {
+//         dispatch( getTransferFailed( "Some thing went wrong. Try again" ) );
+//       } );
+//   }
+// }
 
-export const finalizeTransferStart = () => {
-  return {
-    type: FINALIZE_TRANSFER_START
-  }
-}
+// export const finalizeTransferStart = () => {
+//   return {
+//     type: FINALIZE_TRANSFER_START
+//   }
+// }
 
-export const finalizeTransferSuccess = (data) => {
-  return {
-    type: FINALIZE_TRANSFER_SUCCESS,
-    data
-  }
-}
+// export const finalizeTransferSuccess = (data) => {
+//   return {
+//     type: FINALIZE_TRANSFER_SUCCESS,
+//     data
+//   }
+// }
 
-export const finalizeTransferFailed = (error) => {
-  return {
-    type: FINALIZE_TRANSFER_FAILED,
-    error
-  }
-}
+// export const finalizeTransferFailed = (error) => {
+//   return {
+//     type: FINALIZE_TRANSFER_FAILED,
+//     error
+//   }
+// }
 
-export const finalizeTransfer = ( transferId ) => {
-  return dispatch => {
-    dispatch( finalizeTransferStart() );
-    fetch( `${ BASE_URL }/transfer/${ transferId }`, {
-      method: "PUT",
-      headers: {
-        ACCEPT: "application/json",
-        "Content-Type": "application/json",
-        "x-auth-token": isAuthenticated().token
-      }
-    } )
-      .then( response => response.json() )
-      .then( resp => {
-        if ( resp.error ) {
-          dispatch( finalizeTransferFailed( resp.error ) );
-          return;
-        }
-        dispatch( finalizeTransferSuccess( resp ) );
-      } )
-      .then( () => {
-        dispatch( getTransfer() );
-      })
-      .catch( err => {
-        dispatch( finalizeTransferFailed( "Could not complete request. Try again" ) );
-      } );
-  }
-}
+// export const finalizeTransfer = ( transferId ) => {
+//   return dispatch => {
+//     dispatch( finalizeTransferStart() );
+//     fetch( `${ BASE_URL }/transfer/${ transferId }`, {
+//       method: "PUT",
+//       headers: {
+//         ACCEPT: "application/json",
+//         "Content-Type": "application/json",
+//         "x-auth-token": isAuthenticated().token
+//       }
+//     } )
+//       .then( response => response.json() )
+//       .then( resp => {
+//         if ( resp.error ) {
+//           dispatch( finalizeTransferFailed( resp.error ) );
+//           return;
+//         }
+//         dispatch( finalizeTransferSuccess( resp ) );
+//       } )
+//       .then( () => {
+//         dispatch( getTransfer() );
+//       })
+//       .catch( err => {
+//         dispatch( finalizeTransferFailed( "Could not complete request. Try again" ) );
+//       } );
+//   }
+// }
 
 /**
  * Get all requests

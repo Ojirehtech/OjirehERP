@@ -43,6 +43,25 @@ exports.getTransfers = ( req, res ) => {
 }
 
 /**
+ * GET ALL TRANSFER REQUEST BY A USER
+ */
+exports.getTransferByUser = ( req, res ) => {
+  const { userId } = req.params;
+  const { _id } = req.user;
+  if ( !userId ) return res.status( 400 ).json( { error: "Invalid parameters" } );
+  if ( !_id ) return res.status( 400 ).json( { error: "Unauthorized access" } );
+  if ( userId !== _id ) return res.status( 400 ).json( { error: "Unknown user" } );
+  Transfer.find( { sender: userId } )
+    .then( result => {
+      if ( !result ) return res.status( 400 ).json( { error: "No transfer request found for you" } );
+      res.json( result );
+    } )
+    .catch( err => {
+      res.status( 400 ).json( { error: err.message } );
+    } );
+}
+
+/**
  * Finalize pending transfer transactions
  */
 exports.approveTransfer = ( req, res ) => {

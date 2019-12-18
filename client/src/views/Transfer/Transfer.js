@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fundTransfer } from "../../store/actions/actions_transaction";
 import { Row, Col } from "reactstrap";
 import { isAuthenticated } from "../../helper/authenticate";
 import Content from "./Content";
+import { makeTransfer } from "../../store/actions/action_transfer";
  
 class Transfer extends Component {
   state = {
@@ -24,7 +24,7 @@ class Transfer extends Component {
 
   onSubmit = async (e) => {
     e.preventDefault();
-    const { fundTransfer } = this.props;
+    const { makeTransfer } = this.props;
     const { phone, amount } = this.state;
     const sender = isAuthenticated().user.name;
     const userId = isAuthenticated().user._id;
@@ -35,7 +35,7 @@ class Transfer extends Component {
     }
     try {
       if ( network >= 10 ) {
-        await fundTransfer( data )
+        await makeTransfer( data )
       } else {
         this.setState( { message: `Dear ${ sender } your referral is less than 10. Build it up so you can withdraw. We strongly believe that you are a champion and you have what it takes ...so lets do this.`})
       }
@@ -45,7 +45,7 @@ class Transfer extends Component {
 
   render() {
     const { phone, amount, message } = this.state;
-    const { transaction } = this.props;
+    const { transfer } = this.props;
     return (
       <div className="card">
         <div className="card-body">
@@ -59,7 +59,7 @@ class Transfer extends Component {
                     amount={amount}
                     onHandleChange={this.onHandleChange}
                     onSubmit={this.onSubmit}
-                    transaction={transaction}
+                    transaction={transfer}
                   />
                 </Col>
               </Row>
@@ -73,13 +73,13 @@ class Transfer extends Component {
 
 const mapStateToProps = ( state ) => {
   return {
-    transaction: state.transaction
+    transfer: state.transfer
   }
 }
 
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
-    fundTransfer: (data) => dispatch(fundTransfer(data))
+    makeTransfer: (data) => dispatch(makeTransfer(data))
   }
 
   return dispatchProps;

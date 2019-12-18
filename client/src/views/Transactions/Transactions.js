@@ -1,31 +1,31 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Table, Spinner, CardHeader } from "reactstrap";
-import { getTransfer, finalizeTransfer } from "../../store/actions/actions_transaction";
 import Content from "./Content";
+import { approveTransfer, getAllTransfer } from "../../store/actions/action_transfer";
 
 
 class Transactions extends Component {
   async componentDidMount() {
     document.title = "Transfer";
-    const { getTransfer } = this.props;
+    const { getAllTransfer } = this.props;
     try {
-      await getTransfer();
+      await getAllTransfer();
     } catch(err) {}
   }
 
   onCompleteTransaction = async (data) => {
-    const { finalizeTransfer } = this.props;
+    const { approveTransfer } = this.props;
     try {
-      await finalizeTransfer(data)
+      await approveTransfer(data)
     } catch(err) {}
   }
   render() {
-    const { transaction } = this.props;
-    const pendingTransactions = transaction.transaction && transaction.transaction;
+    const { transfer } = this.props;
+    const pendingTransfer = transfer.transfer && transfer.transfer;
     let newArr = [];
-    for ( let i = 0; i < pendingTransactions.length; i++ ) {
-      let trans = pendingTransactions[ i ];
+    for ( let i = 0; i < pendingTransfer.length; i++ ) {
+      let trans = pendingTransfer[ i ];
       if ( trans.status === false ) {
         newArr.push( trans );
       }
@@ -50,19 +50,19 @@ class Transactions extends Component {
               </tr>
             </thead>
             <tbody>
-              {transaction.loading === true ? <Spinner color="primary" /> :
-                newArr.length > 0 ? newArr.map( ( transact, index ) => (
+              {transfer.loading === true ? <Spinner color="primary" /> :
+                newArr.length > 0 ? newArr.map( ( trans, index ) => (
                   <Content
-                    key={transact._id}
+                    key={trans._id}
                     index={index}
-                    transact={transact}
-                    transaction={transaction}
+                    transact={trans}
+                    transaction={transfer}
                     onCompleteTransaction={this.onCompleteTransaction}
                   />
                 ) ) : "List is empty"}
             </tbody>
           </Table>
-         </div> 
+         </div>
       </div>
     );
   }
@@ -70,14 +70,14 @@ class Transactions extends Component {
 
 const mapStateToProps = ( state ) => {
   return {
-    transaction: state.transaction
+    transfer: state.transfer
   }
 }
 
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
-    getTransfer: () => dispatch( getTransfer() ),
-    finalizeTransfer: (data) => dispatch(finalizeTransfer(data))
+    approveTransfer: ( data ) => dispatch( approveTransfer( data ) ),
+    getAllTransfer: () => dispatch(getAllTransfer())
   }
   return dispatchProps
 }

@@ -36,25 +36,25 @@ const initialState = {
 
 const transactionReducer = ( state = initialState, action ) => {
   switch ( action.type ) {
-    case FUND_TRANSFER_START:
-      return {
-        ...state,
-        loading: true
-      }
-    case FUND_TRANSFER_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        success: true,
-        transaction: action.data,
-      }
-    case FUND_TRANSFER_FAILED:
-      return {
-        ...state,
-        loading: false,
-        success: false,
-        error: action.error
-      }
+    // case FUND_TRANSFER_START:
+    //   return {
+    //     ...state,
+    //     loading: true
+    //   }
+    // case FUND_TRANSFER_SUCCESS:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     success: true,
+    //     transaction: action.data,
+    //   }
+    // case FUND_TRANSFER_FAILED:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     success: false,
+    //     error: action.error
+      // }
     case WITHDRAWAL_REQUEST_START:
       return {
         ...state,
@@ -87,45 +87,6 @@ const transactionReducer = ( state = initialState, action ) => {
         transaction: action.data,
       }
     case APPROVE_REQUEST_FAILED:
-      return {
-        ...state,
-        loading: false,
-        success: false,
-        error: action.error
-      }
-    case GET_TRANSFERS_START:
-      return {
-        ...state,
-        loading: true
-      }
-    case GET_TRANSFERS_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        success: true,
-        transaction: action.data
-      }
-    case GET_TRANSFERS_FAILED:
-      return {
-        ...state,
-        loading: false,
-        success: false,
-        error: action.error
-      }
-    case FINALIZE_TRANSFER_START:
-      return {
-        ...state,
-        loading: true,
-        
-      }
-    case FINALIZE_TRANSFER_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        success: true,
-        transaction: action.data,
-      }
-    case FINALIZE_TRANSFER_FAILED:
       return {
         ...state,
         loading: false,

@@ -29,9 +29,9 @@ class Content extends Component {
   }
 
   displayStatement = () => {
-    const { transaction } = this.props;
+    const { transaction, transfer } = this.props;
     const request = transaction.requests && transaction.requests;
-    const withdrawRequest = transaction.withdraw && transaction.withdraw;
+    const transferRequest = transfer.transfer && transfer.transfer;
     
     const { showStatement } = this.state;
     if ( showStatement ) {
@@ -39,7 +39,7 @@ class Content extends Component {
         <DataTab
           transaction={transaction}
           request={request}
-          withdrawRequest={withdrawRequest}
+          transfer={transferRequest}
         />
       )
     }

@@ -4,6 +4,7 @@ import { getUser, getByParentId } from '../../../store/actions/action_user';
 import Content from './Content';
 import { withdrawalRequest, fetchRequest } from '../../../store/actions/actions_transaction';
 import { isAuthenticated } from '../../../helper/authenticate';
+import { getTransferByUser } from '../../../store/actions/action_transfer';
 
 
 class Carousels extends Component {
@@ -20,7 +21,16 @@ class Carousels extends Component {
       await getUser(userId);
       await fetchRequest();
       await getByParentId();
+      await this.handleApiCall();
     } catch(err) {}
+  }
+
+  handleApiCall = async () => {
+    const { getTransferByUser } = this.props;
+    try {
+      await getTransferByUser();
+    }
+    catch(err) {}
   }
   
   onRequestClick = async ( e ) => {
@@ -48,7 +58,7 @@ class Carousels extends Component {
   }
   
   render() {
-    const { users, transaction } = this.props;
+    const { users, transaction, transfer } = this.props;
     const { amount } = this.state;
     return (
       <div className="card">
@@ -57,9 +67,10 @@ class Carousels extends Component {
           users={users}
             amount={amount}
             message={this.state.message}
-          onRequestClick={this.onRequestClick}
-          onChange={this.onChange}
-          transaction={transaction}
+            onRequestClick={this.onRequestClick}
+            onChange={this.onChange}
+            transaction={transaction}
+            transfer={transfer}
           />
         </div>
       </div>
@@ -71,6 +82,7 @@ const mapStateToProps = ( state ) => {
   return {
     users: state.users,
     transaction: state.transaction,
+    transfer: state.transfer,
   }
 }
 
@@ -79,6 +91,7 @@ const mapDispatchToProps = ( dispatch ) => {
     getUser: (data) => dispatch( getUser(data) ),
     fetchRequest: () => dispatch(fetchRequest()),
     withdrawalRequest: ( data ) => dispatch( withdrawalRequest( data ) ),
+    getTransferByUser: () => dispatch(getTransferByUser()),
     getByParentId: () => dispatch(getByParentId())
   }
 

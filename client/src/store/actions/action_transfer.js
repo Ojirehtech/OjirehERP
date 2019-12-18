@@ -10,7 +10,11 @@ export const APPROVE_TRANSFER_REQUEST_START = "APPROVE_TRANSFER_REQUEST_START";
 export const APPROVE_TRANSFER_REQUEST_SUCCESS = "APPROVE_TRANSGER_REQUEST_SUCCESS";
 export const APPROVE_TRANSFER_REQUEST_FAILED = "APPROVE_TRANSFER_REQUEST_FAILED";
 
-const BASE_URL = process.env.REACT_APP_API_RUL;
+export const GET_TRANSFER_BY_USER_START = "GET_TRANSFER_BY_USER_START";
+export const GET_TRANSFER_BY_USER_SUCCESS = "GET_TRANSFER_BY_USER_SUCCESS";
+export const GET_TRANSFER_BY_USER_FAILED = "GET_TRANSFER_BY_USER_FAILED";
+
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const makeTransferStart = () => {
   return {
@@ -79,10 +83,9 @@ export const getAllFailed = ( error ) => {
 }
 
 export const getAllTransfer = () => {
-  const userId = isAuthenticated().user._id;
   return dispatch => {
     dispatch( getAllStart() );
-    fetch( `${ BASE_URL }/transfer/all/${ userId }`, {
+    fetch( `${ BASE_URL }/transfer/all`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -128,7 +131,7 @@ export const approveTransfer = (requestId, data) => {
   const role = isAuthenticated().user.role;
   return dispatch => {
     dispatch( approveTransferStart() );
-    fetch( `${ BASE_URL }/${ requestId }/${ role }`, {
+    fetch( `${ BASE_URL }/transfer/${ requestId }/${ role }`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -143,6 +146,52 @@ export const approveTransfer = (requestId, data) => {
       } )
       .catch( err => {
         dispatch( approveTransferFailed( "Request failed. Check your network and try again" ) );
+      } );
+  }
+}
+
+/**
+ * GET ALL TRANSFERS MADE BY A USER
+ */
+export const getTransferByUserStart = () => {
+  return {
+    type: GET_TRANSFER_BY_USER_START
+  }
+}
+
+export const getTransferByUserSuccess = ( data ) => {
+  return {
+    type: GET_TRANSFER_BY_USER_SUCCESS,
+    data
+  }
+}
+
+export const getTransferByUserFailed = ( error ) => {
+  return {
+    type: GET_TRANSFER_BY_USER_FAILED,
+    error
+  }
+}
+
+export const getTransferByUser = () => {
+  console.log("hey from get transfer by user")
+  const userId = isAuthenticated().user._id;
+  return dispatch => {
+    dispatchEvent( getTransferByUserStart() );
+    fetch( `${ BASE_URL }/transfer/all/${ userId }`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ACCEPT: "application/json",
+        "x-auth-token": isAuthenticated().token
+      }
+    } )
+      .then( response => response.json() )
+      .then( resp => {
+        dispatch( getTransferByUserSuccess( resp ) );
+      } )
+      .catch( err => {
+        dispatch( getTransferByUserFailed( "Request faild due to network failure" ) );
       } );
   }
 }

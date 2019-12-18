@@ -1,13 +1,16 @@
 import {
   MAKE_TRANSFER_START,
-MAKE_TRANSFER_SUCCESS,
-MAKE_TRANSFER_FAILED,
-GET_ALL_START,
-GET_ALL_SUCCESS,
-GET_ALL_FAILED,
-APPROVE_TRANSFER_REQUEST_START,
-APPROVE_TRANSFER_REQUEST_SUCCESS,
-APPROVE_TRANSFER_REQUEST_FAILED,
+  MAKE_TRANSFER_SUCCESS,
+  MAKE_TRANSFER_FAILED,
+  GET_ALL_START,
+  GET_ALL_SUCCESS,
+  GET_ALL_FAILED,
+  APPROVE_TRANSFER_REQUEST_START,
+  APPROVE_TRANSFER_REQUEST_SUCCESS,
+  APPROVE_TRANSFER_REQUEST_FAILED,
+  GET_TRANSFER_BY_USER_START,
+  GET_TRANSFER_BY_USER_SUCCESS,
+  GET_TRANSFER_BY_USER_FAILED,
 } from "../actions/action_transfer";
 
 const initialState = {
@@ -71,6 +74,25 @@ const transferReducers = ( state = initialState, action ) => {
         transfer: action.data,
       }
     case APPROVE_TRANSFER_REQUEST_FAILED:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: action.error
+      }
+    case GET_TRANSFER_BY_USER_START:
+      return {
+        ...state,
+        loading: true,
+      }
+    case GET_TRANSFER_BY_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        transfer: action.data,
+      }
+    case GET_TRANSFER_BY_USER_FAILED:
       return {
         ...state,
         loading: false,
