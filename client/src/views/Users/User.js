@@ -52,7 +52,7 @@ class User extends Component {
     if ( users.deleteSuccess === true ) {
       return window.location.href = "/users";
     }
-    
+
     return (
       <div className="card app flex-row">
         <div className="card-body">
@@ -70,6 +70,18 @@ class User extends Component {
                       }}
                       onError={i => i.target.src = `${ avatar }`}
                       alt="profile" />
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md="3">
+                <Card>
+                  <CardBody>
+                    <p><span style={{
+                      color: "#4dbd74",
+                      fontWeight: "bolder",
+                      fontSize: "28px"
+                    }}>Bal: &#8358; {user.balance ? user.balance + ".00": 0.00}</span></p>
+                   
                   </CardBody>
                 </Card>
               </Col>
@@ -107,7 +119,7 @@ class User extends Component {
                               </InputGroupAddon>
                               <Input
                                 type="text"
-                                placeholder="Last name"
+                                placeholder="Email"
                                 value={user.email}
                               />
                             </InputGroup>
@@ -124,7 +136,7 @@ class User extends Component {
                               </InputGroupAddon>
                               <Input
                                 type="text"
-                                placeholder="Email"
+                                placeholder="Phone"
                                 value={user.phone}
                               />
                             </InputGroup>
@@ -139,7 +151,7 @@ class User extends Component {
                               </InputGroupAddon>
                               <Input
                                 type="text"
-
+                                placeholder="Referer phone"
                                 value={user.refererPhone}
                               />
                             </InputGroup>
@@ -156,7 +168,7 @@ class User extends Component {
                               </InputGroupAddon>
                               <Input
                                 type="text"
-                                placeholder="Referer phone"
+                                placeholder="Address"
                                 value={user.address}
                               />
                             </InputGroup>

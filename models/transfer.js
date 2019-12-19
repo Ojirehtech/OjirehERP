@@ -6,6 +6,7 @@ const transferSchema = new Schema( {
   receiver: { type: String, required: [ true, "Reciever name is required" ] },
   receiverPhone: {  type: String, required: [ true, "Reciever's phone number is required"]},
   amount: { type: Number, required: [ true, "You haven't specified the amount" ] },
+  cardNo: { type: Number, required: [true, "The receiver's card no is not provided"]},
   status: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
 } )

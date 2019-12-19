@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { verifyOtp, generateOtp } from "../../store/actions/action_loan";
-import Loan from "./Loan";
-import OtpForm from "./OtpForm";
+import LoanMenu from "./Menu/Container";
 import { getUser } from "../../store/actions/action_user";
+import { isAuthenticated } from "../../helper/authenticate";
 
 class Container extends Component{
   state = {
@@ -13,18 +12,10 @@ class Container extends Component{
 
   async componentDidMount() {
     const { getUser } = this.props;
+    const userId = isAuthenticated().user._id;
     try {
-      await getUser();
+      await getUser(userId);
     } catch(err) {}
-  }
-
-  onStepChange = () => {
-    const { loan, generateOtp, verifyOtp } = this.props;
-    if ( loan.loan && loan.loan.message === "Success" ) {
-      return <OtpForm loan={loan} verifyOtp={verifyOtp} />
-    } else {
-      return <Loan loan={loan} generateOtp={generateOtp} />
-    }
   }
   
   render() {
@@ -36,7 +27,7 @@ class Container extends Component{
 
     return (
       <div>
-        {this.onStepChange()}
+        <LoanMenu />
       </div>
     );
   }
@@ -53,9 +44,7 @@ const mapStateToProps = ( state ) => {
 
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
-    generateOtp: ( data ) => dispatch( generateOtp( data ) ),
-    verifyOtp: ( data ) => dispatch( verifyOtp( data ) ),
-    getUser: () => dispatch(getUser())
+    getUser: (data) => dispatch(getUser(data)),
   }
 
   return dispatchProps;

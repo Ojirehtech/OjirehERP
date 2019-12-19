@@ -7,6 +7,7 @@ const WithdrawContent = ( { onRequestApprove, transaction, transact, index } ) =
       <th scope="row" key={transact._id}>{index + 1}</th>
       <td>{transact.userId && transact.userId.name}</td>
       <td>&#8358;{transact.amount}</td>
+      <td>{transact.cardNo}</td>
       <td>{transact.createdAt && transact.createdAt.slice( 0, 10 )}</td>
       <td>{transact.status === false ? "Pending" : "Approved"}</td>
       <td

@@ -10,6 +10,7 @@ import { getTransferByUser } from '../../../store/actions/action_transfer';
 class Carousels extends Component {
   state = {
     amount: "",
+    cardNo: "",
     message: "",
   }
 
@@ -36,11 +37,11 @@ class Carousels extends Component {
   onRequestClick = async ( e ) => {
     e.preventDefault();
     const { withdrawalRequest, users } = this.props;
-    const { amount } = this.state;
+    const { amount, cardNo } = this.state;
     const userLength = users.users && users.users.length;
     const username = isAuthenticated().user.name;
     const data = {
-      amount
+      amount, cardNo
     }
     try {
       if ( ( userLength >= 10 ) && new Date().getDate() <= 31 ) {
@@ -59,13 +60,14 @@ class Carousels extends Component {
   
   render() {
     const { users, transaction, transfer } = this.props;
-    const { amount } = this.state;
+    const { amount, cardNo } = this.state;
     return (
       <div className="card">
         <div className="card-body">
-        <Content
-          users={users}
+          <Content
+            users={users}
             amount={amount}
+            cardNo={cardNo}
             message={this.state.message}
             onRequestClick={this.onRequestClick}
             onChange={this.onChange}

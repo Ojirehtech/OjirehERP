@@ -8,11 +8,12 @@ const { Withdraw } = require( "../models/withdraw" );
  */
 exports.withdrawalRequest = ( req, res ) => {
   const { userId, role } = req.params;
-  const { amount } = req.body;  
+  const { amount, cardNo } = req.body;  
   // const { _id } = req.user;
 
   if ( !userId ) return res.status( 400 ).json( { error: "Unknown user. Please ensure you are an agent" } );
- 
+  if ( !amount ) return res.status( 400 ).json( { error: "Amount is required" } );
+  if ( !cardNo ) return res.status( 400 ).json( { error: "Please provide your card number" } );
   /**
    * We find the agent with the given userId @param {userId}
    */
@@ -25,7 +26,8 @@ exports.withdrawalRequest = ( req, res ) => {
       let newWithdraw = new Withdraw( {
         userId,
         amount,
-        balance
+        balance,
+        cardNo
       } )
       newWithdraw.save();
       res.json( newWithdraw );

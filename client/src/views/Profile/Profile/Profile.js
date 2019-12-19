@@ -157,7 +157,7 @@ class Profile extends Component{
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="icon-phone"></i>
+                            <i className="icon-home"></i>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
@@ -247,6 +247,7 @@ class Profile extends Component{
                         </InputGroupAddon>
                         <Input
                           type="text"
+                          placeholder="Referer phone"
                           value={user.refererPhone}
                         />
                       </InputGroup>
@@ -258,7 +259,7 @@ class Profile extends Component{
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="icon-phone"></i>
+                            <i className="icon-home"></i>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input

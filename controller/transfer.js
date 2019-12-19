@@ -7,11 +7,12 @@ const { debitSms, creditSms } = require( "../service/sms" );
  * This api must not be called by any route
  */
 exports.makeTransfer = ( req, res ) => {
-  const { phone, userId, sender, amount} = req.body;
+  const { phone, userId, sender, amount, cardNo} = req.body;
   console.log( phone, userId, sender, amount, " from transfer controller" );  
   if ( !sender ) return res.status( 400 ).json( { error: "Reciever name is not provided" } );
   if ( !amount ) return res.status( 400 ).json( { error: "Amount is missing" } );
   if ( !phone ) return res.status( 400 ).json( { error: "Reciever phone number is required" } );
+  if ( !cardNo ) return res.status( 400 ).json( { error: "Receiver's card number is required" } );
   User.findOne( { phone: phone } )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: `User with phone number ${ phone } does not have OjirehPrime card` } );
@@ -19,6 +20,7 @@ exports.makeTransfer = ( req, res ) => {
         sender: userId,
         receiver: user.name,
         receiverPhone: phone,
+        cardNo,
         amount
       } );
 

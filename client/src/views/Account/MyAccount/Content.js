@@ -47,14 +47,9 @@ class Content extends Component {
   
   render() {
     const { showStatement } = this.state;
-    const { users, onRequestClick, onChange, transaction, amount, message } = this.props;
+    const { users, onRequestClick, onChange, transaction, cardNo, amount, message } = this.props;
     const user = users.user ? users.user : null;
-    const today = new Date();
-    if (new Date().getDate() > 18) {
-      console.log( today.getDate() + 7, " greater than ", new Date().getDate())
-    } else {
-      console.log(" is less than " )
-    }
+    
     return (
       <div className="animated fadeIn">
         <Row>
@@ -97,6 +92,19 @@ class Content extends Component {
                         placeholder="Amount"
                         value={amount}
                         onChange={( e ) => onChange( e, "amount" )}
+                      />
+                    </InputGroup>
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="icon-credit-card"></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        type="text"
+                        placeholder="Your card number"
+                        value={cardNo}
+                        onChange={( e ) => onChange( e, "cardNo" )}
                       />
                     </InputGroup>
                     <Row>

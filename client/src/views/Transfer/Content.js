@@ -15,6 +15,7 @@ import {
 const Content = ( {
   amount,
   phone,
+  cardNo,
   message,
   transaction,
   onHandleChange,
@@ -56,6 +57,19 @@ const Content = ( {
                 placeholder="Reciever's Phone"
                 value={phone}
                 onChange={( e ) => onHandleChange( e, "phone" )}
+              />
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <b className="icon-credit-card"></b>
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="text"
+                placeholder="Receiver card number"
+                value={cardNo}
+                onChange={( e ) => onHandleChange( e, "cardNo" )}
               />
             </InputGroup>
             {transaction.loading === true ? <Spinner color="" /> : (

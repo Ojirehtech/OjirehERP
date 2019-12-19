@@ -7,6 +7,7 @@ const Content = ( { onCompleteTransaction, transaction, transact, index } ) => {
       <th scope="row" key={transact._id}>{index + 1}</th>
       <td>{transact.sender && transact.sender.name}</td>
       <td>&#8358;{transact.amount}</td>
+      <td>{transact.cardNo}</td>
       <td>{transact.receiver}</td>
       <td>{transact.receiverPhone}</td>
       <td>{transact.createdAt && transact.createdAt.slice(0,10)}</td>

@@ -44,7 +44,7 @@ class Withdraw extends Component {
             <p
             style={{ color: "#ff0000", paddinLeft: 10 }}
             >{transaction.error}</p> : null}
-          <h3>Pending Withdrawal Requests</h3>
+          <h3 style={{ color: "#20a8d8"}}>Pending Withdrawal Requests</h3>
         </CardHeader>
         <div className="card-body">
           <Table className="mt-5">
@@ -53,6 +53,7 @@ class Withdraw extends Component {
                 <th>S/N</th>
                 <th>Account name</th>
                 <th>Amount</th>
+                <th>Card number</th>
                 <th>Time</th>
                 <th>Status</th>
                 <th>Action</th>

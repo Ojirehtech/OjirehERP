@@ -6,10 +6,6 @@ import {
   NavItem,
   NavLink, 
   Table,
-  // Card, 
-  // Button,
-  // CardTitle,
-  // CardText,
   Row, Col
 } from 'reactstrap';
 import moment from "moment"
@@ -17,13 +13,22 @@ import classnames from 'classnames';
 
 const Content = ( props ) => {
   const loans = props.loan && props.loan.loans;
-  console.log(loans, " all the loans")
   const [ activeTab, setActiveTab ] = useState( '1' );
-
+  const pendingLoan = [];
+  const paidLoan = [];
+  if ( loans && loans.length > 0 ) {
+    for ( let i = 0; i < loans.length; i++ ) {
+      if ( loans[ i ].paid === true ) {
+        paidLoan.push( loans[ i ] );
+      } else {
+        pendingLoan.push( loans[ i ] );
+      }
+    }
+  }
+  
   const toggle = tab => {
     if ( activeTab !== tab ) setActiveTab( tab );
   }
-
   return (
     <div>
       <Nav tabs>
@@ -105,7 +110,7 @@ const Content = ( props ) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {loans && loans.length > 0 ? loans.map( ( loan, i ) => (
+                  {paidLoan && paidLoan.length > 0 ? paidLoan.map( ( loan, i ) => (
                     <tr key={i}>
                       <th>{i + 1}</th>
                       <td>{loan.userId && loan.userId.name}</td>
@@ -138,7 +143,7 @@ const Content = ( props ) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {loans && loans.length > 0 ? loans.map( ( loan, i ) => (
+                  {pendingLoan && pendingLoan.length > 0 ? pendingLoan.map( ( loan, i ) => (
                     <tr key={i}>
                       <th>{i + 1}</th>
                       <td>{loan.userId && loan.userId.name}</td>

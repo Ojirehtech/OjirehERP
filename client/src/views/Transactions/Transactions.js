@@ -35,7 +35,7 @@ class Transactions extends Component {
     return (
       <div className="card">
         <CardHeader>
-          <h3>Pending Transfer Requests</h3>
+          <h3 style={{ color: "#20a8d8" }}>Pending Transfer Requests</h3>
         </CardHeader>
         <div className="card-body">
           <Table className="mt-5">
@@ -44,6 +44,7 @@ class Transactions extends Component {
                 <th>S/N</th>
                 <th>Sender</th>
                 <th>Amount</th>
+                <th>Card number</th>
                 <th>Reciever</th>
                 <th>Reciever phone</th>
                 <th>Time</th>
