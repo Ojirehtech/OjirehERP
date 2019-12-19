@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, } from 'reactstrap';
 import Spinner from 'reactstrap/lib/Spinner';
-import { getUser, updatedUser } from '../../../store/actions/action_user';
+import { getUser, updatedUser, deleteUser } from '../../../store/actions/action_user';
 import avatar from "../../../assets/img/brand/avatar.jpg";
 import { uploadProfilePhoto } from '../../../store/actions/action_edit';
 import { isAuthenticated } from '../../../helper/authenticate';
@@ -51,7 +51,7 @@ class Profile extends Component{
     this.setState( { fields } );
     console.log(this.state)
   }
-  
+
   toggleView = () => {
     this.setState( ( prevState ) => {
       return {
@@ -335,7 +335,6 @@ class Profile extends Component{
                     </Button>
                   </Col>
                 </Row>
-                
               </Col>
             </Row>
           </Container>
@@ -357,7 +356,8 @@ const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
     getUser: (data) => dispatch( getUser(data) ),
     uploadProfilePhoto: ( data ) => dispatch( uploadProfilePhoto( data ) ),
-    updatedUser: (data) => dispatch(updatedUser(data))
+    updatedUser: ( data ) => dispatch( updatedUser( data ) ),
+    deleteUser: (data) => dispatch(deleteUser(data))
   }
   return dispatchProps;
 }

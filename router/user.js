@@ -47,6 +47,6 @@ router.put( "/user/parentId/:userId/:refererPhone", requireLogin, setParentId );
 router.get( "/user/network/:userId", requireLogin, userByParentId );
 router.get( "/profile/photo/:userId", photo );
 router.put( "/profile/upload/:userId", upload.single("photo"), uploadPhoto );
-router.delete( "/user/:userId", requireLogin, deleteUser );
+router.delete( "/user/delete/:userId", requireLogin, deleteUser );
 
 module.exports = router;

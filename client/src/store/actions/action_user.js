@@ -144,10 +144,10 @@ export const delelteUserFailed = ( error ) => {
   }
 }
 
-export const deleteUser = ( agentId ) => {
+export const deleteUser = ( userId ) => {
   return dispatch => {
     dispatch( deleteUserStart() );
-    fetch( `${ BASE_URL }`, {
+    fetch( `${ BASE_URL }/user/delete/${userId}`, {
       method: "DELETE",
       headers: {
         ACCEPT: "application/json",

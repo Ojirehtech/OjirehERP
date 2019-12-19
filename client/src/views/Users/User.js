@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row} from 'reactstrap';
 import Spinner from 'reactstrap/lib/Spinner';
-import { getUser } from '../../store/actions/action_user';
+import { getUser, deleteUser } from '../../store/actions/action_user';
 import avatar from "../../assets/img/brand/avatar.jpg";
 import { assignRole } from '../../store/actions/action.role';
+import { isAuthenticated } from '../../helper/authenticate';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -36,9 +38,21 @@ class User extends Component {
     } catch ( err ) { }
   }
 
+  onDelete = async ( userId ) => {
+    const { deleteUser } = this.props;
+    try {
+      await deleteUser(userId)
+    } catch(err) {}
+  }
+
   render() {
     const { users, role } = this.props;
     const user = users.user && users.user;
+    const userRole = isAuthenticated().user.role;
+    if ( users.deleteSuccess === true ) {
+      return window.location.href = "/users";
+    }
+    
     return (
       <div className="card app flex-row">
         <div className="card-body">
@@ -196,9 +210,20 @@ class User extends Component {
                       <Col xs="12" xl="12">
                         <Button
                           onClick={( e ) => this.handleSubmit( e, "agent", user._id )}
-                          color="danger"
+                          color="info"
+                          style={{ color: "#fff"}}
                         >Agent role</Button>
                       </Col>
+                    </Row>
+                    <Row className="mt-3">
+                      {userRole === "admin" ? (
+                        <Col xs="12" xl="12">
+                          <Button
+                            onClick={() => this.onDelete( user._id )}
+                            color="danger"
+                          >Delete user</Button>
+                        </Col>
+                      ) : null}
                     </Row>
                   </Col>
                 </Row>
@@ -209,7 +234,6 @@ class User extends Component {
       </div>
     );
   }
-
 }
 
 const mapStateToProps = ( state ) => {
@@ -222,7 +246,8 @@ const mapStateToProps = ( state ) => {
 const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
     getUser: (data) => dispatch( getUser(data) ),
-    assignRole: (role, userId) => dispatch(assignRole(role, userId))
+    assignRole: ( role, userId ) => dispatch( assignRole( role, userId ) ),
+    deleteUser: (data) => dispatch(deleteUser(data))
   }
   return dispatchProps;
 }
