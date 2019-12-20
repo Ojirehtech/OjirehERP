@@ -42,6 +42,7 @@ class Dashboard extends Component {
   render() {
     const { users } = this.props;
     const role = isAuthenticated().user.role;
+    const username = isAuthenticated().user.name;
     const user = users.user && users.user;
     const networkCount = users.user && users.user.networks;
     const refererLink = isAuthenticated().user ? isAuthenticated().user.refererLink : null;
@@ -65,6 +66,18 @@ class Dashboard extends Component {
       className="btn btn-success"
       to="/data_upload"
     >Upload data</Link>
+    const time = new Date().getHours();
+    console.log( time, " this is time" )
+    let greeting = ""
+    if ( time < 12 ) {
+      greeting = "Good morning";
+    } else if (time < 16) {
+      greeting = "Good afternoon";
+    } else {
+      greeting = "Good evening";
+    }
+
+    console.log(greeting, "this is greeting")
     return (
       <div className="card animated fadeIn">
         <div className="card-body">
@@ -110,6 +123,15 @@ class Dashboard extends Component {
                 </CardBody>
                 
               </Card>
+            </Col>
+          </Row>
+          <Row className="justify-content-center">
+            <Col xl="6">
+              <p style={{
+                fontSize: "18px"
+              }}>{greeting} <span style={{
+                color: "#4dbd74"
+              }}>{username}</span> find your link below</p>
             </Col>
           </Row>
           <Row className="justify-content-md-center mt-5">
