@@ -15,14 +15,22 @@ class LoanContainer extends Component{
     } catch ( err ) { };
   }
 
+  onPayLoan = async ( userId, loanId, amount ) => {
+    const { payLoan } = this.props;
+    const data = {amount}
+    try {
+      await payLoan( userId, loanId, data );
+    }
+    catch ( err ) { }
+  }
+
   render() {
-    const { loan, payLoan } = this.props;
-    console.log(loan, " this is the loan")
+    const { loan } = this.props;
     return (
       <div>
         <Content
           loan={loan}
-          payLoan={payLoan}
+          onPayLoan={this.onPayLoan}
         />
       </div>
     );
@@ -39,7 +47,7 @@ const mapDispatchToProps = ( dispatch ) => {
   const dispatchProps = {
     fetchLoans: () => dispatch( fetchLoans() ),
     fetchLoan: ( data ) => dispatch( fetchLoan( data ) ),
-    payLoan: () => dispatch(payLoan())
+    payLoan: (userId,loanId, amount) => dispatch(payLoan(userId, loanId, amount))
   };
   return dispatchProps;
 }

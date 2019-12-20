@@ -298,8 +298,7 @@ export const payLoanFailed = ( error ) => {
   }
 }
 
-export const payLoan = ( loanId, amount ) => {
-  const userId = isAuthenticated().user._id;
+export const payLoan = ( userId, loanId, amount ) => {
   return dispatch => {
     dispatch( payLoanStart() );
     fetch( `${ BASE_URL }/loan/${ userId }/${ loanId }`, {
@@ -309,7 +308,7 @@ export const payLoan = ( loanId, amount ) => {
         "Content-Type": "application/json",
         "x-auth-token": isAuthenticated().token
       },
-      body: amount
+      body: JSON.stringify(amount)
     } )
       .then( response => response.json() )
       .then( resp => {

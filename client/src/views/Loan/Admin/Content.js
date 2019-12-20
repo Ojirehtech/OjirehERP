@@ -152,6 +152,9 @@ const Content = ( props ) => {
                       <td>{loan.amount}</td>
                       <td>{moment( loan.created ).format( "DD/MM/YYYY" )}</td>
                       <td>{loan.paid === true ? "Paid" : "Pending"}</td>
+                      <td><span 
+                        className="btn btn-success"
+                        onClick={() => props.onPayLoan( loan.userId._id,loan._id, loan.amount )}>Reclaim loan</span></td>
                     </tr>
                   ) ) : "List empty"}
                 </tbody>

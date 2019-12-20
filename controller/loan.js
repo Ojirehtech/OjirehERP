@@ -80,7 +80,6 @@ exports.allLoan = ( req, res ) => {
  */
 exports.loanByUser = ( req, res ) => {
   const { role, userId } = req.params;
-  console.log(req.user)
   if ( !role || !userId ) return res.status( 400 ).json( { error: "Invalid parameters" } );
   // if ( !_id ) return res.status( 400 ).json( { error: "You're not properly logged in" } );
 
@@ -90,7 +89,6 @@ exports.loanByUser = ( req, res ) => {
       res.json( loan );
     } )
     .catch( err => {
-      console.log( err.message );
       res.status( 400 ).json( { error: err.message } );
     } );
 }
@@ -102,6 +100,7 @@ exports.repayLoan = ( req, res ) => {
   const { userId, loanId } = req.params;
   const { _id } = req.user;
   const { amount } = req.body;
+  
   const accountId = process.env.ACCOUNT_ID;
   const intAmount = Number( amount );
   if ( !userId ) return res.status( 400 ).json( { error: "Unknown user" } );

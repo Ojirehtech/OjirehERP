@@ -9,6 +9,7 @@ import {
   Form,
   Label,
 } from "reactstrap"
+import { isAuthenticated } from "../../../helper/authenticate";
 
 
 class ActionForm extends Component {
@@ -23,8 +24,8 @@ class ActionForm extends Component {
         <Card style={{ height: "500px" }}>
           <CardBody>
             <Row className="justify-content-md-center">
-              <Col xs="10" xl="3" className="mt-5">
-                <h3>Hello from Menu</h3>
+              <Col xs="10" xl="4" className="mt-5">
+                <h3>Hello {isAuthenticated().user.name}</h3>
                 <p className="text-muted">Please select an option to continue</p>
               </Col>
             </Row>
