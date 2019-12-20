@@ -13,7 +13,7 @@ class Search extends Component{
       <div className="search">
         <InputGroup>
           <Input
-            placeholder="Search by name"
+            placeholder="Search by phone number"
             value={searchTerm}
             onChange={( e ) => handleInputChange( e, "searchTerm" )}
             onKeyPress={(e) => handleKeyPress(e)}

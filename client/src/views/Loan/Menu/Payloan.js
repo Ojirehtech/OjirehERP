@@ -22,7 +22,7 @@ class Payloan extends Component{
   render() {
     const { loan } = this.props;
     const lo = loan.loan && loan.loan;
-    let pendingLoan = new Object();
+    let pendingLoan = {};
     if ( lo && lo.length > 0 ) {
       for ( let i = 0; i < lo.length; i++ ) {
         if ( lo[i].paid === false ) {

@@ -212,6 +212,7 @@ exports.fetchUsers = ( req, res ) => {
   const per_page = 15;
   User.find( {} )
     .skip( ( per_page * page ) - per_page )
+    .sort("name -1")
     .limit(per_page)
     .then( async (users) => {
       const allUser = await User.find( {} ).then( result => result );
@@ -322,8 +323,9 @@ exports.uploadPhoto = ( req, res ) => {
  * Searches api
  */
 exports.searchUser = ( req, res, next ) => {
-  const q = req.query.q.charAt( 0 ).toUpperCase();
-  User.find( { name: { $regex: new RegExp( q ) } } )
+  const q = req.query.q;
+  if ( !q ) return res.status( 400 ).json( { error: "Search text is required" } );
+  User.find( { phone: { $regex: new RegExp( q ) } } )
     .then( users => {
       res.json( { users } );
     } )
