@@ -106,7 +106,6 @@ const Content = ( props ) => {
                     <th>Amount</th>
                     <th>Date</th>
                     <th>Status</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
