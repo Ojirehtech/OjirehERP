@@ -81,9 +81,8 @@ exports.allLoan = ( req, res ) => {
 exports.loanByUser = ( req, res ) => {
   const { role, userId } = req.params;
   if ( !role || !userId ) return res.status( 400 ).json( { error: "Invalid parameters" } );
-  // if ( !_id ) return res.status( 400 ).json( { error: "You're not properly logged in" } );
-
-  Loan.find( { _id: userId } )
+  if ( role !== "admin" && role !== "agent" && role !== "support" ) return res.status( 400 ).json( { error: "Unauthorized access" } );
+  Loan.find( { userId: userId } )
     .then( loan => {
       if ( !loan ) return res.status( 400 ).json( { error: "Can not find loan for this agent" } );
       res.json( loan );

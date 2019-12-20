@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row} from 'reactstrap';
 import Spinner from 'reactstrap/lib/Spinner';
 import { getUser, deleteUser } from '../../store/actions/action_user';

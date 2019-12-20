@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchLoan, payLoan } from "../../../store/actions/action_loan";
-import { Row, Col, Card, CardBody } from "reactstrap";
+import { Spinner, Row, Col, Card, CardBody, Button } from "reactstrap";
 
 class Payloan extends Component{
   async componentDidMount() {
@@ -22,28 +22,71 @@ class Payloan extends Component{
   render() {
     const { loan } = this.props;
     const lo = loan.loan && loan.loan;
-    const pendingLoan = {}
+    let pendingLoan = new Object();
     if ( lo && lo.length > 0 ) {
       for ( let i = 0; i < lo.length; i++ ) {
-        if ( lo.paid === false ) {
-          pendingLoan[ loan ] = lo[ i ];
+        if ( lo[i].paid === false ) {
+          pendingLoan[loan] = lo[ i ];
         }
       }
     }
 
-    console.log( pendingLoan, " this is the pending loan" )
-    // 5dde243c6853f4024dd48849
     return (
       <div>
-        <h3>Pay back your loan</h3>
         <Row className="justify-content-center">
-          <Col xs="10" xl="5">
-            <Card>
+          <Col xs="10" xl="12">
+            <Card style={{height: "500px", width: "100%"}}>
               <CardBody>
+                
+                <Row className="justify-content-center">
+                  <Col xs="4" xl="5">
+                    {pendingLoan[loan] && pendingLoan[loan].amount > 0 ? (
+<>
+                      <Row className="justify-content-center">
+                        <h1
+                          style={{
+                            color: "#4dbd74",
+                            marginTop: "120px",
+                          }}
+                        >Loan Settlement</h1>
+                        <h3 style={{
+                          color: "#ff0000"
+                        }}>AMOUNT: &#8358; {pendingLoan[ loan ] && pendingLoan[ loan ].amount ? pendingLoan[ loan ].amount + ".00" : 0.00}</h3>
+                        <p>Click on the button below to settle your loan</p>
+                      </Row>
+                      {loan.loading === true ? <Spinner color="primary" /> : (
+                        <Button
+                          color="success"
+                          style={{
+                            padding: 10,
+                            width: "100%",
+                            marginTop: "1px"
+                          }}
+                          onClick={() => this.onPayLoan( pendingLoan[ loan ].userId, pendingLoan[ loan ]._id, pendingLoan[ loan ].amount )}
+                        >Pay Loan</Button>
+                      )}
+                    </>
+                    ) : <div style={{
+                        paddingTop: "100px",
+                        paddingLeft: "70px",
+                      }}>
+                        <h3>No outstanding loan</h3>
+                          <i
+                            className="icon-briefcase"
+                            style={{
+                              opacity: 0.4,
+                              fontSize: "200px",
+                            }}
+                          ></i>
+                      </div>
+                    }
+                  </Col>
+                </Row>
                 
               </CardBody>
             </Card>
           </Col>
+
         </Row>
       </div>
     )

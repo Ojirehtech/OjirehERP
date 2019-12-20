@@ -34,7 +34,6 @@ class Dashboard extends Component {
       } else {
         await awardBonus();
       }
-      
     }catch(err) {}
   }
 
