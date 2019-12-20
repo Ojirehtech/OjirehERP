@@ -14,7 +14,7 @@ const Register = React.lazy( () => import( './views/Pages/Register' ) );
 const Page404 = React.lazy( () => import( './views/Pages/Page404' ) );
 const AdminSignin = React.lazy( () => import( "./views/Pages/Admin/AdminSignin" ) );
 const EditPage = React.lazy( () => import( "./views/Pages/Edit/EditPage" ) );
-const UserData = React.lazy( () => import( "./views/DataUpload/Container" ) );
+// const UserData = React.lazy( () => import( "./views/DataUpload/Container" ) );
 const AdminSignup = React.lazy( () => import( "./views/Pages/Admin/AdminSignup" ) );
 
 class App extends Component {
@@ -27,7 +27,7 @@ class App extends Component {
             <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
             <Route exact path="/register" name="Register Page" render={props => <Register {...props} />} />
             <Route exact path="/editProfile" name="Edit Page" render={(props) => <EditPage {...props}/>} />
-            <Route exact path="/data_upload" name="Data Upload" render={props => <UserData {...props} />} />
+            {/* <Route exact path="/data_upload" name="Data Upload" render={props => <UserData {...props} />} /> */}
             <Route exact path="/signup" name="Sign up" render={props => <AdminSignup {...props} />} />
             <Route exact path="/signin" name="Sign up" render={props => <AdminSignin {...props} />} />
             {Auth.isUserAuthenticated() ? (

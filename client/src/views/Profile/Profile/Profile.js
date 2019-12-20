@@ -187,7 +187,7 @@ class Profile extends Component{
               <CardBody>
                 <Form>
                   {users.loading === true ? <Spinner color="primary" /> : (
-                    <h3 style={{ color: "#4dbd74" }}>{user.name} profile</h3>
+                    <h3 style={{ color: "#4dbd74" }}>Your profile</h3>
                   )}
                   <Row>
                     <Col xs="12" xl="6">

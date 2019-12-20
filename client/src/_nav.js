@@ -74,6 +74,12 @@ const navAdmin = [
     icon: "icon-user"
   },
   {
+    name: 'Data Upload',
+    url: "/data_upload",
+    icon: "icon-arrow-top",
+    class: ''
+  },
+  {
     name: logout,
     icon: "icon-logout"
   }, 

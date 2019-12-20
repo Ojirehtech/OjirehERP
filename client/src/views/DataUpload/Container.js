@@ -13,22 +13,9 @@ import {
   Row,
   CardBody
 } from "reactstrap";
-import Header from "../Pages/Header/Header";
-import Particles from "react-particles-js";
+
 import { dataUpload } from "../../store/actions/actions_signup";
 import { isAuthenticated } from "../../helper/authenticate";
-
-const particleOpt = {
-  particles: {
-    number: {
-      value: 150,
-      density: {
-        enable: true,
-        value_area: 1500
-      }
-    }
-  }
-}
 
 class Container extends Component{
   state = {
@@ -72,12 +59,7 @@ class Container extends Component{
     }
     return (
       <div className="flex-row align-items-center">
-        <Header />
-        <Particles
-          params={particleOpt}
-          className="particles"
-        />
-        <div className="reg-particles">
+        <div className="">
           <Row className="justify-content-md-center mt-5">
             <Col md="9" lg="7" xl="6">
               <Card>

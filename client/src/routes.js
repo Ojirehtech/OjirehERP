@@ -15,6 +15,7 @@ const User = React.lazy( () => import( './views/Users/User' ) );
 const Transfer = React.lazy( () => import( "./views/Transfer/Transfer" ) );
 const Transactions = React.lazy( () => import( "./views/Transactions/Transactions" ) );
 const LonContainer = React.lazy( () => import( "./views/Loan/Admin/LoanContainer" ) );
+const DataUpload = React.lazy(() => import("./views/DataUpload/Container"))
 
 const routes = [
   { path: '/', name: 'Home' },
@@ -25,6 +26,7 @@ const routes = [
   { path: '/icons', exact: true, name: 'Icons', component: CoreUIIcons },
   { path: '/icons/coreui-icons', name: 'CoreUI Icons', component: CoreUIIcons },
   { path: '/menu', name: 'Container', component: Container },
+  { path: '/data_upload', name: 'Data Upload', component: DataUpload },
   { path: "/loan", name: "Loan", component: Loan},
   { path: "/transaction/transfer", name: "Transaction", component: Transactions },
   { path: "/transaction/withdraw", name: "Transaction", component: Withdraw },
