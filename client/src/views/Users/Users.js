@@ -19,10 +19,10 @@ import Paginations from './Paginations';
 function UserRow(props) {
   const user = props.user
   const userLink = `/users/${user._id}`
-  const ind = props.ind;
+  // const ind = props.ind;
   return (
     <tr key={user._id}>
-      <th scope="row"><Link to={userLink}>{ind + 1}</Link></th>
+      {/* <th scope="row"><Link to={userLink}>{ind + 1}</Link></th> */}
       <td><Link to={userLink}>{user.name}</Link></td>
       <td>{user.email}</td>
       <td>{user.phone}</td>
@@ -37,7 +37,8 @@ class Users extends Component {
   state = {
     searchTerm: "",
     pageOfItems: [],
-    data: []
+    data: [],
+    pager: {},
   }
 
   async componentDidMount() {
@@ -47,15 +48,25 @@ class Users extends Component {
       await getUsers(page);
     } catch(err) {}
   }
+
   componentDidUpdate( prevProps, nextProps ) {
     const { users } = this.props;
     if ( users && users !== prevProps.users ) {
       this.setState( { data: users.users.users } );
     }
   }
-  onChangePage = (pageOfItems) => {
+
+  onChangePage = (pageOfItems, pager) => {
     // update state with new page of items
-    this.setState({ pageOfItems: pageOfItems });
+    this.setState( {
+      pageOfItems: pageOfItems,
+      pager: pager
+    } );
+  }
+
+  handlePageNumber = ( pager ) => {
+    console.log(pager, "from the pager function")
+    this.setState({})
   }
 
   handleInputChange = ( e, name ) => {
@@ -86,7 +97,8 @@ class Users extends Component {
 
   render() {
     const { users } = this.props;
-    console.log(this.state.data, "this is the data state")
+    // const { pager } = this.state;
+    console.log(this.state.pager, "this is the data state")
     const userData = users.users.users && users.users.users;
     return (
       <div className="animated fadeIn">
@@ -110,7 +122,7 @@ class Users extends Component {
                 <Table responsive hover>
                   <thead>
                     <tr>
-                      <th scope="col">S/N</th>
+                      {/* <th scope="col">S/N</th> */}
                       <th scope="col">name</th>
                       <th scope="col">Email</th>
                       <th scope="col">Phone</th>
