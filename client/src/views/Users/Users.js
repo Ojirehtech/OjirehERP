@@ -13,8 +13,8 @@ import {
 import moment from "moment";
 
 import { getUsers, searchUser } from '../../store/actions/action_user';
-import PaginationCount from './PaginationCount';
 import Search from './Search';
+import Paginations from './Paginations';
 
 function UserRow(props) {
   const user = props.user
@@ -124,11 +124,13 @@ class Users extends Component {
                   </tbody>
                 </Table>
                 {userData && userData.length > 0 ? (
-                  <PaginationCount
+                  <Paginations
+                    items={userData}
                     total_pages={total_pages}
                     total_users={total_users}
                     current_page={current_page}
                     per_page={per_page}
+                    onChangePage={this.handlePagination}
                     handlePagination={this.handlePagination}
                   />
                 ) : null}
