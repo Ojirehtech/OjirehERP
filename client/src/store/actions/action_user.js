@@ -99,10 +99,10 @@ export const getUsersFailed = ( error ) => {
   }
 }
 
-export const getUsers = (pageNumber) => {
+export const getUsers = () => {
   return dispatch => {
     dispatch( getUsersStart() );
-    fetch( `${ BASE_URL }/users/${pageNumber}`, {
+    fetch( `${ BASE_URL }/users`, {
       method: "GET",
       headers: {
         ACCEPT: "application/json",

@@ -12,7 +12,7 @@ class Paginations extends React.Component {
     this.state = { pager: {} };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // set page if items array isn't empty
     if ( this.props.items && this.props.items.length ) {
       this.setPage( this.props.initialPage );
@@ -134,41 +134,3 @@ class Paginations extends React.Component {
 // Pagination.propTypes = propTypes;
 Paginations.defaultProps = defaultProps;
 export default Paginations;
-
-// const PaginationCount = ( {
-//   total_pages,
-//   total_users,
-//   current_page,
-//   per_page,
-//   handlePagination,
-// } ) => {
-//   const pageNumbers = [];
-//   for ( let i = 1; i <= Math.ceil( total_users/per_page ); i++ ) {
-//     pageNumbers.push( i );
-//   }
-//   return (
-//     <Pagination aria-label="Page navigation example">
-      // <PaginationItem>
-      //   <PaginationLink first href="#" />
-      // </PaginationItem>
-//       <PaginationItem>
-//         <PaginationLink previous href="#" />
-//       </PaginationItem>
-//       {pageNumbers.map( number => (
-//         <PaginationItem key={number} onClick={() => handlePagination(number)}>
-//           <PaginationLink >
-//             {number}
-//           </PaginationLink>
-//         </PaginationItem>
-//       ))}
-      // <PaginationItem>
-      //   <PaginationLink next href="#" />
-      // </PaginationItem>
-      // <PaginationItem>
-      //   <PaginationLink last href="#" />
-      // </PaginationItem>
-//     </Pagination>
-//   );
-// }
-
-// export default PaginationCount;

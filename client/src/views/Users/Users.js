@@ -35,7 +35,9 @@ function UserRow(props) {
 
 class Users extends Component {
   state = {
-    searchTerm: ""
+    searchTerm: "",
+    pageOfItems: [],
+    data: []
   }
 
   async componentDidMount() {
@@ -45,12 +47,15 @@ class Users extends Component {
       await getUsers(page);
     } catch(err) {}
   }
-
-  handlePagination = async ( page ) => {
-    const { getUsers } = this.props;
-    try {
-      await getUsers(page);
-    } catch ( err ) { }
+  componentDidUpdate( prevProps, nextProps ) {
+    const { users } = this.props;
+    if ( users && users !== prevProps.users ) {
+      this.setState( { data: users.users.users } );
+    }
+  }
+  onChangePage = (pageOfItems) => {
+    // update state with new page of items
+    this.setState({ pageOfItems: pageOfItems });
   }
 
   handleInputChange = ( e, name ) => {
@@ -81,11 +86,8 @@ class Users extends Component {
 
   render() {
     const { users } = this.props;
+    console.log(this.state.data, "this is the data state")
     const userData = users.users.users && users.users.users;
-    const current_page = users.users && users.users.current_page;
-    const total_pages = users.users && users.users.totalUser;
-    const total_users = users.users && users.users.totalUsers;
-    const per_page = users.users && users.users.per_page;
     return (
       <div className="animated fadeIn">
         <Row className="justify-content-center mb-5">
@@ -118,20 +120,15 @@ class Users extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {userData ? userData.map( ( user, index ) =>
+                    {this.state.pageOfItems ? this.state.pageOfItems.map( ( user, index ) =>
                       <UserRow users={users} key={index} ind={index} user={user} />
                     ) : "Loading..."}
                   </tbody>
                 </Table>
                 {userData && userData.length > 0 ? (
                   <Paginations
-                    items={userData}
-                    total_pages={total_pages}
-                    total_users={total_users}
-                    current_page={current_page}
-                    per_page={per_page}
-                    onChangePage={this.handlePagination}
-                    handlePagination={this.handlePagination}
+                    items={this.state.data}
+                    onChangePage={this.onChangePage}
                   />
                 ) : null}
               </CardBody>

@@ -32,7 +32,7 @@ router.post( "/signup", signup );
 router.post( "/login", signIn );
 router.get( "/signout", signout );
 router.get( "/users/search", requireLogin, searchUser );
-router.get( "/users/:pageNumber", fetchUsers );
+router.get( "/users", fetchUsers );
 router.post( "/admin/signup", adminsignup );
 router.post( "/admin/signin", adminSignIn );
 router.post( "/users/data_upload", dataUpload );

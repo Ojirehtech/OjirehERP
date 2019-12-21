@@ -208,19 +208,10 @@ exports.signout = ( req, res ) => {
  * gets all users
  */
 exports.fetchUsers = ( req, res ) => {
-  const page = req.params.pageNumber;
-  const per_page = 15;
   User.find( {} )
-    .skip( ( per_page * page ) - per_page )
-    .sort("name -1")
-    .limit(per_page)
-    .then( async (users) => {
-      const allUser = await User.find( {} ).then( result => result );
-      const totalUsers = allUser.length;
-      const total_pages = Math.ceil(totalUsers / per_page);
-      const current_page = page;
+    .then( (users) => {
       if ( !users ) return res.status( 400 ).json( { error: "User record is empty" } );
-      res.json( { current_page, totalUsers, total_pages, per_page, users } );
+      res.json( { users } );
     } )
     .catch( err => {
       res.status( 400 ).json( { error: err.message } );
