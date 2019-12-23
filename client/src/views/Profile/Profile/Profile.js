@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, } from 'reactstrap';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardGroup,
+  Col,
+  Container,
+  Form, Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Row,
+} from 'reactstrap';
 import Spinner from 'reactstrap/lib/Spinner';
 import { getUser, updatedUser, deleteUser } from '../../../store/actions/action_user';
 import avatar from "../../../assets/img/brand/avatar.jpg";
@@ -280,8 +292,9 @@ class Profile extends Component{
   }
   
   render() {
-    const { users, edit } = this.props;
-    const user = users.user && users.user;
+    const { edit } = this.props;
+    // const user = users.user && users.user;
+    const userId = isAuthenticated().user._id
     return (
       <div className="card app flex-row">
         <div className="card-body">
@@ -291,7 +304,7 @@ class Profile extends Component{
                 <Card>
                   <CardBody>
                     <img
-                      src={`${ BASE_URL }/profile/photo/${ user._id }`}
+                      src={`${ BASE_URL }/profile/photo/${ userId }`}
                       style={{
                         width: "100%",
                         height: "200px",

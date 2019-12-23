@@ -108,10 +108,10 @@ class Paginations extends React.Component {
     return (
       <Pagination aria-label="Page navigation example">
         <PaginationItem className={pager.currentPage === 1 ? 'disabled' : ''}>
-          <PaginationLink first href="#" onClick={() => this.setPage( 1 )} />
+          <PaginationLink first href="#" onClick={() => this.setPage( 1 )}>First</PaginationLink>
         </PaginationItem>
         <PaginationItem className={pager.currentPage === 1 ? 'disabled' : ''}>
-          <PaginationLink previous onClick={() => this.setPage( pager.currentPage - 1 )} />
+          <PaginationLink previous onClick={() => this.setPage( pager.currentPage - 1 )}>Previous</PaginationLink>
         </PaginationItem>
         {pager.pages.map( ( page, index ) =>
           <PaginationItem key= { index } className = { pager.currentPage === page ? 'active' : '' }>
@@ -121,10 +121,10 @@ class Paginations extends React.Component {
           </PaginationItem>
         )}
         <PaginationItem className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-          <PaginationLink next onClick={() => this.setPage( pager.currentPage + 1 )} />
+          <PaginationLink next onClick={() => this.setPage( pager.currentPage + 1 )}>Next</PaginationLink>
         </PaginationItem>
         <PaginationItem className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-          <PaginationLink last onClick={() => this.setPage( pager.totalPages )} />
+          <PaginationLink last onClick={() => this.setPage( pager.totalPages )}>Last</PaginationLink>
         </PaginationItem>
       </Pagination>
     );
