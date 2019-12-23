@@ -16,6 +16,7 @@ const Content = ( props ) => {
   const [ activeTab, setActiveTab ] = useState( '1' );
   const pendingLoan = [];
   const paidLoan = [];
+  
   if ( loans && loans.length > 0 ) {
     for ( let i = 0; i < loans.length; i++ ) {
       if ( loans[ i ].paid === true ) {
@@ -151,6 +152,8 @@ const Content = ( props ) => {
                       <td>{loan.amount}</td>
                       <td>{moment( loan.created ).format( "DD/MM/YYYY" )}</td>
                       <td>{loan.paid === true ? "Paid" : "Pending"}</td>
+                      {/* <td>{loan.createdAt && loan.createdAt.toISOString().split( "T" )[ 0 ] - loan.expiryDate.toISOString().split( "T" )[ 0 ] < 0 ? loan.createdAt.toISOString().split( "T" )[ 0 ] - loan.expiryDate.split( "T" )[ 0 ] + "day(s) left" : "Due"}</td> */}
+                      {console.log( loan.expiryDate && loan.expiryDate, loan, "hey there")}
                       <td><span 
                         className="btn btn-success"
                         onClick={() => props.onPayLoan( loan.userId._id,loan._id, loan.amount )}>Reclaim loan</span></td>

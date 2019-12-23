@@ -293,8 +293,8 @@ class Profile extends Component{
   
   render() {
     const { edit } = this.props;
-    // const user = users.user && users.user;
-    const userId = isAuthenticated().user._id
+    const userId = isAuthenticated().user._id;
+    
     return (
       <div className="card app flex-row">
         <div className="card-body">

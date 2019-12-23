@@ -1,5 +1,6 @@
 const { Loan } = require( "../models/loan" );
 const { User } = require( "../models/user" );
+const moment = require( "moment" );
 
 /**
  * Handles money rain request
@@ -29,22 +30,23 @@ exports.loanRequest = ( req, res ) => {
       } else {
         return res.status(400).json({ error: `NGN${requestedAmount} is more than your accessible loan`})
       }
-      console.log(amount)
       if ( Number(requestedAmount) > amount ) return res.status( 400 ).json( { error: `You don't have access to NGN${ requestedAmount } yet.` } );
       
+      const future = moment().add( 14, "days" );
+      const formattedExp = future.toISOString().split( "T" )[ 0 ];
       let newLoan = new Loan( {
         userId: userId,
-        amount: requestedAmount
+        amount: requestedAmount,
+        expiryDate: formattedExp
       } )
       return newLoan.save()
         .then( loan => {
           if ( !loan ) return res.status( 400 ).json( { error: "Request failed. Refresh the page and try again." } );
-          console.log( resp.loanRequestCount, " loanRequestCount")
+          const toNumber = Number( requestedAmount );
           User.findByIdAndUpdate( { _id: userId }, { $inc: { loanRequestCount: +1 }, $set: { loanPaid: false} }, { new: true } )
             .then( result => {
               if ( !result ) return res.status( 400 ).json( { error: "Request failed due to unknown error" } );
-              // res.json( result );
-              console.log( result )
+              res.json( result );
             } );
           res.json( loan );
         } );
@@ -64,7 +66,8 @@ exports.allLoan = ( req, res ) => {
   if ( userId !== _id ) return res.status( 400 ).json( { error: "You did not log in correctly" } );
   if ( role !== "admin" && role !== "support" ) return res.status( 400 ).json( { error: "Only admin and support can see loan requrests" } );
   Loan.find( {} )
-    .populate("userId", "name email phone _id")
+    .populate( "userId", "name email phone _id" )
+    .select()
     .then( loans => {
       if ( !loans ) return res.status( 400 ).json( { error: "Loan record is empty" } );
       res.json( loans );

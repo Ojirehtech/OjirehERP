@@ -15,12 +15,6 @@ const userSchema = new Schema( {
   address: { type: String },
   balance: { type: Number, default: 0 },
   loanRequestCount: { type: Number, default: 0 },
-  loan: [ {
-    amount: { type: Number, default: 0 },
-    status: { type: Boolean, default: false },
-    requestBy: { type: ObjectId },
-    createdAt: { type: Date, default: Date().now }
-  } ],
   hasBonus: { type: Boolean, default: false},
   loanPaid: { type: Boolean, default: true },
   earnings: [ {

@@ -35,7 +35,7 @@ class OfferPage extends Component {
     let message;
     const network = users.user && users.user.networks;
     const user = users.user && users.user;
-    if ( network >= 70 && network < 5111 ) {
+    if ( network >= 1 && network < 5111 ) {
       message = <h4>You can access up to <span style={{ fontSize: "20px", color: "#ff0000"}}>NGN5,000</span> loan.</h4>
     } else if (network >= 5111 && network < 31000) {
       message = <h4>You can access up to <span style={{ fontSize: "20px", color: "#ff0000" }}>NGN100,000</span> loan.</h4>
@@ -79,7 +79,7 @@ class OfferPage extends Component {
                 </InputGroup>
                 {this.state.agree === true ? (
                   user.loanPaid === true && (
-                    network >= 70 && (
+                    network >= 1 && (
                       <Form onSubmit={this.handleRequest}>
                         {loan.requestSuccess === true ? <p style={{ color: "#00ff00" }}>Your loan request is successful</p> : null}
                         <InputGroup className="mb-3">
