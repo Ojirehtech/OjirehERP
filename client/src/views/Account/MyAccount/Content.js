@@ -59,7 +59,7 @@ class Content extends Component {
                 <h3 className="mb-3">Available Balance</h3>
                 <h2 className="mb-3">
                   <strong>
-                    &#8358;{new Date().getDate() < 18 ? 5000 + ".00" : ( user.balance && user.balance ) + ".00"}
+                    &#8358; { user.balance && user.balance + ".00" }
                   </strong>
                 </h2>
               </CardBody>

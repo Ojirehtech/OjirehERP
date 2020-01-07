@@ -36,7 +36,7 @@ router.post( "/admin/signin", adminSignIn );
 router.post( "/users/data_upload", dataUpload );
 router.put( "/user/:userId", requireLogin, updateUser );
 router.get( "/user/:userId", requireLogin, fetchUser );
-router.put( "/user/bonus/:userId", requireLogin, awardBonus );
+// router.put( "/user/bonus/:userId", requireLogin, awardBonus );
 router.put( "/user/card/:userId", requireLogin, cardBought );
 router.post( "/user/otp/:phone", generateOTP );
 // router.post( "/user/generate/:userId/:phone", requireLogin, generateLoanOTP );
