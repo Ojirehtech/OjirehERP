@@ -52,7 +52,6 @@ class Container extends Component{
 
   render() {
     const { registration } = this.props;
-    console.log( registration, " this is registration" );
     const userRole = isAuthenticated().user && isAuthenticated().user.role;
     if ( userRole !== "support" && userRole !== "admin" ) {
       return <Redirect to="/" />
@@ -65,7 +64,7 @@ class Container extends Component{
               <Card>
                 <h3 className="ml-4 mt-5" style={{ color: "#4dbd74" }}>Upload user data</h3>
                 {registration.dataSuccess === true ? <p className="ml-4" style={{ color: "#00ff00" }}>Data uploaded successfully</p> : null}
-                {registration.error && registration.error.length > 0 ? <p style={{ color: "#00ff00" }}>{registration.error}</p> : null}
+                {registration.error && registration.error.length > 0 ? <p className="ml-4" style={{ color: "#ff0000" }}>{registration.error}</p> : null}
                 <CardBody>
                   {this.state.userData.map( ( userData, index ) => (
                     <div className="" key={index + 1}>
