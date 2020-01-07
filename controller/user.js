@@ -50,10 +50,9 @@ exports.dataUpload = ( req, res ) => {
     if ( !data[i].email ) return res.status( 400 ).json( { error: "User email is required" } );
     if ( !data[i].phone ) return res.status( 400 ).json( { error: "Phone number is required" } );
     if ( !data[ i ].address ) return res.status( 400 ).json( { error: "You must provide user address to continue" } );
-    
-    User.findOne( { phone: data[i].phone, email: data[i].email } )
+    User.findOne( { phone: data[i].phone } )
       .then( result => {
-        if ( result ) return res.status( 400 ).json( { error: `User with the phone number ${ data[i].phone } already exists` } );
+        if ( result.phone === data[i].phone ) return res.status( 400 ).json( { error: `User with the phone number ${ data[i].phone } already exists` } );
         let newUser = new User( {
           name:  data[i].name,
           email: data[i].email,
@@ -75,7 +74,7 @@ exports.dataUpload = ( req, res ) => {
 exports.generateOTP = ( req, res ) => {
   const otpCode = Math.floor( 1000 + Math.random() * 9000 );
   const { phone } = req.params;
-
+  console.log("inside generate otp controller")
   if ( !phone ) return res.status( 400 ).json( { error: "Your phone number is required" } );
   const sender = "OjirehPrime";
   const message = `Your verification pass code is ${ otpCode }`;
@@ -348,7 +347,6 @@ exports.cardBought = ( req, res ) => {
 exports.updateUser = ( req, res ) => {
   const { userId } = req.params;
   if ( !userId ) return res.status( 400 ).json( { error: "Invalid parameter" } );
-console.log(req.body)
   User.findByIdAndUpdate( { _id: userId } )
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: "User not found" } );
@@ -434,7 +432,7 @@ exports.adminSignIn = ( req, res ) => {
   if ( !password ) return res.status( 400 ).json( { error: "Password is required" } );
   User.findOne( { email: email } )
     .then( user => {
-      console.log( user.password );
+      // console.log( user.password );
       if ( !user ) return res.status( 400 ).json( { error: `User does not exist` } );
       return bcrypt.compare( password, user.password )
         .then( passwordMatched => {

@@ -3,9 +3,7 @@ const upload = require( "../middleware/fileupload" );
 const {
   signIn,
   signup,
-  Signout,
   deleteUser,
-  updateUserInfo,
   fetchUser,
   fetchUsers,
   uploadPhoto,
@@ -41,8 +39,8 @@ router.get( "/user/:userId", requireLogin, fetchUser );
 router.put( "/user/bonus/:userId", requireLogin, awardBonus );
 router.put( "/user/card/:userId", requireLogin, cardBought );
 router.post( "/user/otp/:phone", generateOTP );
-router.post( "/user/generate/:userId/:phone", requireLogin, generateLoanOTP );
-router.post( "/user/verifyotp/:otp", requireLogin, otpVerification );
+// router.post( "/user/generate/:userId/:phone", requireLogin, generateLoanOTP );
+// router.post( "/user/verifyotp/:otp", requireLogin, otpVerification );
 router.put( "/user/parentId/:userId/:refererPhone", requireLogin, setParentId );
 router.get( "/user/network/:userId", requireLogin, userByParentId );
 router.get( "/profile/photo/:userId", photo );

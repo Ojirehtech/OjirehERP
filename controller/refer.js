@@ -13,7 +13,7 @@ exports.refer = ( req, res ) => {
     .then( user => {
       if ( !user ) return res.status( 400 ).json( { error: `Referer with the ID ${ userId } not found` } )
       res.cookie( "refererId", userId, { expires: date } );
-      res.redirect( process.env.FRONTEND_APP_URL )
+      res.redirect( process.env.FRONTEND_APP_URL );
     } )
     .catch( err => {
       res.status( 400 ).json( { error: err.message } );

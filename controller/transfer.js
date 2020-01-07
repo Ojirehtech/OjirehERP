@@ -29,12 +29,10 @@ exports.makeTransfer = ( req, res ) => {
           res.json( response );
         } )
         .catch( err => {
-          console.log( err.message, " error from transfer controller" )
           res.status( 400 ).json( { error: err.messageg } );
         } );
     } )
     .catch( err => {
-      console.error(err, " last error")
       res.status( 400 ).json( { error: err.message } );
     } );
 }
