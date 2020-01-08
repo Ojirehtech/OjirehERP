@@ -52,7 +52,7 @@ exports.dataUpload = ( req, res ) => {
     if ( !data[ i ].address ) return res.status( 400 ).json( { error: "You must provide user address to continue" } );
     User.findOne( { phone: data[i].phone } )
       .then( result => {
-        if ( result.phone === data[i].phone ) return res.status( 400 ).json( { error: `User with the phone number ${ data[i].phone } already exists` } );
+        if (result) return res.status(400).json({ error: `User with the phone number ${data[i].phone} already exists` });
         let newUser = new User( {
           name:  data[i].name,
           email: data[i].email,
@@ -64,6 +64,7 @@ exports.dataUpload = ( req, res ) => {
       } )
       .catch( err => {
         console.log( err.message );
+        return res.status(400).json({ error: err.message });
       } );
   }
 }
