@@ -20,6 +20,9 @@
 .particle-page {
   margin-top: -700px;
 }
+.reg-particle {
+  margin-top: -650px;
+}
 /* .search {
   background: #fff;
 } */
@@ -35,6 +38,12 @@
 @media only screen and (max-width: 480px) {
   .menu {
     background: white !important;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .reg-particle {
+    margin-top: -100px !important;
   }
 }
 

@@ -21,7 +21,7 @@ const userSchema = new Schema( {
     amount: Number,
     date: { type: Date, default: Date().now }
   }],
-  otp: { type: String, expires: "3m"},
+  otp: { type: String, expires: "5m"},
   networks: { type: Number, default: 0 },
   cardBought: { type: Boolean, default: false },
   photo: { data: Buffer, ContentType: String },

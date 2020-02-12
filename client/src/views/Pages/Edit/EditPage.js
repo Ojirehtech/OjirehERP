@@ -49,19 +49,7 @@ class EditPage extends Component {
 
     return (
       <div>
-        {/* <EditForm
-          firstName={firstName}
-          lastName={lastName}
-          incentives={incentives}
-          edit={edit}
-          phone={phone}
-          refererPhone={refererPhone}
-          city={city}
-          state={state}
-          street={street}
-          handleChange={this.handleChange}
-          onEdit={this.onEdit}
-        /> */}
+        
         <Row className="justify-content-md-center">
           <Col xs="12" xl="3">
             <div style={{ display: cardBought === true ? 'none' : "block",}}>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.scss';
 import Auth from "./helper/Auth";
+import Cobrandfile from './containers/components/CobrandContainer';
 
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 
@@ -27,7 +28,7 @@ class App extends Component {
             <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
             <Route exact path="/register" name="Register Page" render={props => <Register {...props} />} />
             <Route exact path="/editProfile" name="Edit Page" render={(props) => <EditPage {...props}/>} />
-            {/* <Route exact path="/data_upload" name="Data Upload" render={props => <UserData {...props} />} /> */}
+            <Route exact path="/user_data" name="Data Upload" render={props => <Cobrandfile {...props} />} />
             <Route exact path="/signup" name="Sign up" render={props => <AdminSignup {...props} />} />
             <Route exact path="/signin" name="Sign up" render={props => <AdminSignin {...props} />} />
             {Auth.isUserAuthenticated() ? (
