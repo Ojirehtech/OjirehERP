@@ -89,7 +89,7 @@ export const brandedCardFailed = (error) => {
 export const registerBrandedCard = ( data ) => {
   return dispatch => {
     dispatch( brandedCardStart() );
-    fetch( `${ BASE_URL }/signup`, {
+    fetch( `${ BASE_URL }/branded/card`, {
       method: "POST",
       headers: {
         ACCEPT: "application/json",

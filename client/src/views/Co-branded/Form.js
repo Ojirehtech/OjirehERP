@@ -1,16 +1,12 @@
 import React from "react";
 import { 
-  Row, 
   Button, 
   Col, 
   Input, 
   InputGroup, 
   InputGroupAddon, 
   InputGroupText, 
-  Spinner, 
-  Card, 
-  CardGroup, 
-  CardBody 
+  Spinner
 } from "reactstrap";
 
 const CobrandForm = ({ 
@@ -18,7 +14,6 @@ const CobrandForm = ({
   handleChange, 
   handleSubmit,
   name,
-  brand,
   brandlist,
   email,
   phone,

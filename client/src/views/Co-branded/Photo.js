@@ -1,19 +1,12 @@
 import React from "react";
 import { 
-  Row, 
   Button, 
-  Col, 
-  Input, 
+  Col,
   InputGroup, 
-  InputGroupAddon, 
-  InputGroupText, 
   Spinner, 
-  Card, 
-  CardGroup, 
-  CardBody 
 } from "reactstrap";
 
-const PhotoUpload = ({isPhoto, handleChange, handleUpload, uploadPhoto }) => {
+const PhotoUpload = ({ isPhoto, handleChange, handleUpload, photo, edit }) => {
   return (
     <Col xs="12" sm="10" xl="12">
       <InputGroup className="mb-3">
@@ -30,8 +23,10 @@ const PhotoUpload = ({isPhoto, handleChange, handleUpload, uploadPhoto }) => {
       </InputGroup>
       { isPhoto === true ? 
       ( <>
-        <p style={{ background: "lightgreen", padding: 5 }}>{this.state.photo.name}</p>
-        <Button color="success" onClick={() => handleUpload() } style={{ marginBottom: 10 }}>Upload photo</Button>
+          {edit.success === true ? null :  <p style={{ background: "lightgreen", padding: 5 }}>{photo.name}</p>}
+          {edit.loading === true ? <Spinner color="primary" /> : (
+            <Button color="success" onClick={() => handleUpload() } style={{ marginBottom: 10 }}>Upload photo</Button>
+          )}
         </>
         ) : null
       }

@@ -4,7 +4,10 @@ import {
   REGISTRATION_FAILED,
   DATA_UPLOAD_START,
   DATA_UPLOAD_SUCCESS,
-  DATA_UPLOAD_FAILED
+  DATA_UPLOAD_FAILED,
+  BRANDED_CARD_START,
+  BRANDED_CARD_SUCCESS,
+  BRANDED_CARD_FAILED
 } from "../actions/actions_signup";
 
 const initialState = {
@@ -59,6 +62,25 @@ const registrationReducer = ( state = initialState, action ) => {
         ...state,
         dataLoading: false,
         dataSuccess: false,
+        error: action.error
+      }
+    case BRANDED_CARD_START:
+      return {
+        ...state,
+        loading: true
+      }
+    case BRANDED_CARD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        agents: state.agents.concat(action.data)
+      }
+    case BRANDED_CARD_FAILED:
+      return {
+        ...state,
+        loading: false,
+        success: false,
         error: action.error
       }
     default:

@@ -35,6 +35,8 @@ export default class Cobrand extends Component{
     brand: "",
     isPhoto: false,
     errMessage: "",
+    successMsg: "",
+    sucMessage: "",
     step: 0,
     brandlist: [
       "PowerPorte",
@@ -61,14 +63,17 @@ export default class Cobrand extends Component{
           email: "",
           phone: "",
           address: "",
-          successMsg: "Upload success! Please click next to upload your picture"
+          successMsg: "Upload success! Please select a picture to upload"
         });
       }
       if (registration.error && registration.error.length > 0) {
         this.setState({ errMessage: registration.error });
       }
       if (edit.success === true) {
-        this.setState({ successMsg: "Photo uploaded successfully!" });
+        this.setState({ 
+          sucMessage: "Photo uploaded successfully!",
+          successMsg: ""
+        });
       }
       if (edit.error && edit.error.length > 0) {
         this.setState({ errMessage: edit.error });
@@ -91,24 +96,36 @@ export default class Cobrand extends Component{
   }
 
   handleUpload = async () => {
-    const { uploadProfileUpload } = this.props;
+    const { uploadProfilePhoto } = this.props;
     let formData = new FormData();
-    formData.append("file", this.state.photo);
+    formData.append("photo", this.state.photo);
     
-    await uploadProfileUpload(formData);
+    await uploadProfilePhoto(formData);
   }
 
   handleSubmit = async () => {
     const { registerBrandedCard } = this.props;
-    const { name, email, phone, address } = this.state;
-    const data = { name, email, phone, address };
+    const { name, email, phone, address, brand } = this.state;
+    const data = { name, email, phone, address, brand };
     await registerBrandedCard(data);
   }
 
   render() {
-    const { name, email, phone, address, brand, brandlist, step, isPhoto } = this.state;
-    const { registration } = this.props;
-    
+    const { 
+      name, 
+      email,
+      phone, 
+      address, 
+      brand, 
+      brandlist, 
+      photo, 
+      step, 
+      isPhoto, 
+      errMessage, 
+      successMsg,
+      sucMessage
+    } = this.state;
+    const { registration, edit } = this.props;
     return(
       <div>
         <Header />
@@ -120,9 +137,13 @@ export default class Cobrand extends Component{
           <Col xs="10" xl="6">
             <CardGroup className="reg-particle">
               <Card>
-                <h4 className="text-center" style={{ marginTop: 30 }}>Upload your information</h4>
-                <p style={{ paddingLeft: 30, color: "green" }}>You must upload your photo first before you can continue</p>
+                {step === 0 ? <h4 className="text-center" style={{ marginTop: 30 }}>Upload your information</h4> :
+                  <h4 className="text-center" style={{ marginTop: 30 }}>Upload your picture</h4>
+                }
                 <CardBody>
+                  {errMessage.length > 0 ? <p style={{ color: "#ff0000" }}>{errMessage}</p> : null}
+                  {successMsg.length > 0 ? <p style={{ color: "#00ff00" }}>{successMsg}</p> : null}
+                  {sucMessage.length > 0 ? <p style={{ color: "#00ff00" }}>{sucMessage}</p> : null}
                   {step === 0 ? 
                   <CobrandForm
                     registration={registration}
@@ -139,8 +160,9 @@ export default class Cobrand extends Component{
                     isPhoto={isPhoto}
                     handleChange={this.handleChange}
                     handleUpload={this.handleUpload}
+                    photo={photo}
+                    edit={edit}
                   /> : null}
-                  {registration.success === true ? <Button color="success">CLICK TO CONTINUE TO NEXT</Button> : null}
                 </CardBody>
               </Card>
             </CardGroup>
