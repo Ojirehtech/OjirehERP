@@ -65,16 +65,11 @@ export default class Cobrand extends Component{
           address: "",
           successMsg: "Upload success! Please select a picture to upload"
         });
-      }
+      } 
       if (registration.error && registration.error.length > 0) {
         this.setState({ errMessage: registration.error });
       }
-      if (edit.success === true) {
-        this.setState({ 
-          sucMessage: "Photo uploaded successfully!",
-          successMsg: ""
-        });
-      }
+      
       if (edit.error && edit.error.length > 0) {
         this.setState({ errMessage: edit.error });
       }
@@ -142,8 +137,8 @@ export default class Cobrand extends Component{
                 }
                 <CardBody>
                   {errMessage.length > 0 ? <p style={{ color: "#ff0000" }}>{errMessage}</p> : null}
-                  {successMsg.length > 0 ? <p style={{ color: "#00ff00" }}>{successMsg}</p> : null}
-                  {sucMessage.length > 0 ? <p style={{ color: "#00ff00" }}>{sucMessage}</p> : null}
+                  {!edit.success && successMsg.length > 0 ? <p style={{ color: "#00ff00" }}>{successMsg}</p> : null}
+                  {edit.success === true ? <p style={{ color: "#00ff00" }}>Photo successfully uploaded. Cheers!!!</p> : null}
                   {step === 0 ? 
                   <CobrandForm
                     registration={registration}

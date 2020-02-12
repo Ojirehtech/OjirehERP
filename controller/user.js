@@ -82,7 +82,7 @@ exports.dataUpload = ( req, res ) => {
     if ( !data[i].name ) return res.status( 400 ).json( { error: "Name is required" } );
     if ( !data[i].email ) return res.status( 400 ).json( { error: "User email is required" } );
     if ( !data[i].phone ) return res.status( 400 ).json( { error: "Phone number is required" } );
-    if ( !data[ i ].address ) return res.status( 400 ).json( { error: "You must provide user address to continue" } );
+    if ( !data[i].address ) return res.status( 400 ).json( { error: "You must provide user address to continue" } );
     User.findOne( { phone: data[i].phone } )
       .then( result => {
         if (result) return res.status(400).json({ error: `User with the phone number ${data[i].phone} already exists` });
