@@ -87,7 +87,7 @@ export default class Cobrand extends Component{
     }
 
     field[name] = e.target.value;
-    this.setState({ [e.target.name]: e.target.files[0] });
+    this.setState({ field });
   }
 
   handleUpload = async () => {
@@ -99,10 +99,10 @@ export default class Cobrand extends Component{
   }
 
   handleSubmit = async () => {
-    const { register } = this.props;
+    const { registerBrandedCard } = this.props;
     const { name, email, phone, address } = this.state;
     const data = { name, email, phone, address };
-    await register(data);
+    await registerBrandedCard(data);
   }
 
   render() {

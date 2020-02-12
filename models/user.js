@@ -11,6 +11,7 @@ const userSchema = new Schema( {
   parentId: { type: String },
   phone: { type: String },
   password: { type: String },
+  brand: { type: String },
   refererPhone: { type: String },
   address: { type: String },
   balance: { type: Number, default: 0 },

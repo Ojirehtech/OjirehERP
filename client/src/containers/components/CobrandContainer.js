@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Cobrand from "../../views/Co-branded/Cobrand";
-import { register } from "../../store/actions/actions_signup";
+import { register, registerBrandedCard } from "../../store/actions/actions_signup";
 import { uploadProfilePhoto } from "../../store/actions/action_edit";
 
 const mapStateToProps = (state) => {
@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   const dispatchProps = {
-    register: (data) => dispatch(register(data)),
+    registerBrandedCard: (data) => dispatch(registerBrandedCard(data)),
     uploadProfilePhoto: (data) => dispatch(uploadProfilePhoto(data)),
   }
 

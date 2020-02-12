@@ -88,15 +88,14 @@ const CobrandForm = ({
       </Col>
       <Col xs="12" sm="10" xl="12">
         <InputGroup className="mb-3">
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>
-              <i className="icon-home"></i>
-            </InputGroupText>
-          </InputGroupAddon>
           <select
-            onChange={(e) => handleSelect(e, "address)}
+            onChange={(e) => handleChange(e, "brand")}
+            className="form-control"
           >
-            <option value=""></option>
+            <option value="">Select a brand</option>
+            {brandlist.map(brand => (
+              <option value={brand}>{brand}</option>
+            ))}
           </select>
         </InputGroup>
       </Col>

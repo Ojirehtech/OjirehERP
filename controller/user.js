@@ -39,6 +39,37 @@ exports.signup = ( req, res ) => {
     } );
 }
 
+exports.createBrandedCard = (req, res) => {
+  const { name, phone, brand } = req.body;
+
+  if (!name) return res.status(400).json({ error: "Your name is required" });
+  if (!phone) return res.status(400).json({error: "Your phone number is required" });
+  if (!brand) return res.status(400).json({ error: "Tell us the brand you want for you card" });
+  User.findOne({ phone })
+    .then(user => {
+      if (user) return res.status(400).json({ error: `User with phone number ${req.body.phone} already exists`});
+      let newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        address: req.body.address,
+        brand: req.body.brand
+      });
+
+      newUser.save()
+      const token = newUser.generateToken();
+      const { _id, email, name, phone, role } = newUser;
+      res.cookie( "token", token, { expire: new Date() + 9999 } );
+      res.header( "x-auth-token", token ).json( {
+        token,
+        user: { _id, email, phone, role, name 
+      }});
+    })
+    .catch(err => {
+      res.status(400).json({ error: err.message });
+    })
+}
+
 /**
  * User account signup
  */

@@ -3,6 +3,10 @@ export const REGISTRATION_START = "REGISTRATION_START";
 export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
 export const REGISTRATION_FAILED = "REGISTRATION_FAILED";
 
+export const BRANDED_CARD_START = "BRANDED_CARD_START";
+export const BRANDED_CARD_SUCCESS = "BRANDED_CARD_SUCCESS";
+export const BRANDED_CARD_FAILED = "BRANDED_CARD_FAILED";
+
 export const DATA_UPLOAD_START = "DATA_UPLOAD_START";
 export const DATA_UPLOAD_SUCCESS = "DATA_UPLOAD_SUCCESS";
 export const DATA_UPLOAD_FAILED = "DATA_UPLOAD_FAILED";
@@ -58,6 +62,52 @@ export const register = ( data ) => {
       } )
       .catch( err => {
         dispatch( registrationFailed( `Network error. Please try again` ) )
+      } );
+  }
+}
+
+export const brandedCardStart = () => {
+  return {
+    type: BRANDED_CARD_START
+  }
+}
+
+export const brandedCardSuccess = (data) => {
+  return {
+    type: BRANDED_CARD_SUCCESS,
+    data
+  }
+}
+
+export const brandedCardFailed = (error) => {
+  return {
+    type: BRANDED_CARD_FAILED,
+    error
+  }
+}
+
+export const registerBrandedCard = ( data ) => {
+  return dispatch => {
+    dispatch( brandedCardStart() );
+    fetch( `${ BASE_URL }/signup`, {
+      method: "POST",
+      headers: {
+        ACCEPT: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify( data )
+    } )
+      .then( response => response.json() )
+      .then( resp => {
+        if ( resp.error ) {
+          dispatch( brandedCardFailed( resp.error ) );
+          return;
+        }
+        Auth.authenticateUser( JSON.stringify( resp ) );
+        dispatch( brandedCardSuccess( resp ) );
+      } )
+      .catch( err => {
+        dispatch( brandedCardFailed( `Failed to complete. ${err.message}` ) );
       } );
   }
 }

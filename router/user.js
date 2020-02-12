@@ -13,20 +13,19 @@ const {
   signout,
   userByParentId,
   setParentId,
-  otpVerification,
-  generateLoanOTP,
   dataUpload,
   adminSignIn,
   adminsignup,
   updateUser,
-  awardBonus,
   searchUser,
+  createBrandedCard
 } = require( "../controller/user" );
 const requireLogin = require( "../config/auth" );
 
 const router = express.Router();
 
 router.post( "/signup", signup );
+router.post("/branded/card", createBrandedCard);
 router.post( "/login", signIn );
 router.get( "/signout", signout );
 router.get( "/users/search", requireLogin, searchUser );
