@@ -1,19 +1,17 @@
 import React, { Component } from "react";
 import Particles from "react-particles-js";
+import { isAuthenticated } from "../../helper/authenticate";
 import { 
   Row, 
   Button, 
-  Col, 
-  Input, 
-  InputGroup, 
-  InputGroupAddon, 
-  InputGroupText, 
-  Spinner, 
+  Col,  
   Card, 
   CardGroup, 
   CardBody 
 } from "reactstrap";
 import Header from "../Pages/Header/Header";
+import PhotoUpload from "./Photo";
+import CobrandForm from "./Form";
 
 const particleOpt = {
   particles: {
@@ -34,11 +32,52 @@ export default class Cobrand extends Component{
     email: "",
     phone: "",
     address: "",
+    brand: "",
     isPhoto: false,
     errMessage: "",
+    step: 0,
+    brandlist: [
+      "PowerPorte",
+      "bluekey",
+      "ADEKSTAR GLOBAL LTD",
+      "Micro saving card",
+      "UNIC",
+      "bitfxt",
+      "Daily Need Alerts",
+      "Clean Springs",
+      "FIGURE BOSS",
+      "Releaf Blend CBD Oil",
+      "Federal Medical Center Ondo"
+    ]
+  }
+
+  componentDidUpdate(prevProps, nextProps) {
+    const { registration, edit } = this.props;
+    if (this.props.registration && this.props.registration !== prevProps.registration) {
+      if (this.props.registration.success === true) {
+        this.setState({ 
+          step: 1,
+          name: "",
+          email: "",
+          phone: "",
+          address: "",
+          successMsg: "Upload success! Please click next to upload your picture"
+        });
+      }
+      if (registration.error && registration.error.length > 0) {
+        this.setState({ errMessage: registration.error });
+      }
+      if (edit.success === true) {
+        this.setState({ successMsg: "Photo uploaded successfully!" });
+      }
+      if (edit.error && edit.error.length > 0) {
+        this.setState({ errMessage: edit.error });
+      }
+    }
   }
 
   handleChange = (e, name) => {
+    this.setState({ errMessage: "" });
     let field = this.state;
     if (name === "photo") {
       this.setState({
@@ -51,12 +90,25 @@ export default class Cobrand extends Component{
     this.setState({ [e.target.name]: e.target.files[0] });
   }
 
-  handleUpload = () => {
+  handleUpload = async () => {
+    const { uploadProfileUpload } = this.props;
+    let formData = new FormData();
+    formData.append("file", this.state.photo);
+    
+    await uploadProfileUpload(formData);
+  }
 
+  handleSubmit = async () => {
+    const { register } = this.props;
+    const { name, email, phone, address } = this.state;
+    const data = { name, email, phone, address };
+    await register(data);
   }
 
   render() {
-    const { name, email, phone, address } = this.state;
+    const { name, email, phone, address, brand, brandlist, step, isPhoto } = this.state;
+    const { registration } = this.props;
+    
     return(
       <div>
         <Header />
@@ -71,90 +123,24 @@ export default class Cobrand extends Component{
                 <h4 className="text-center" style={{ marginTop: 30 }}>Upload your information</h4>
                 <p style={{ paddingLeft: 30, color: "green" }}>You must upload your photo first before you can continue</p>
                 <CardBody>
-                  <Col xs="12" sm="10" xl="12">
-                    <InputGroup className="mb-3">
-                      <div className="custom-file">
-                        <input 
-                          type="file" 
-                          className="custom-file-input" 
-                          id="customFile"
-                          onChange={(e) => this.handleChange(e, "photo")}
-                          accept="image/*"
-                        />
-                        <label className="custom-file-label" for="customFile">Choose file</label>
-                      </div>
-                    </InputGroup>
-                    { this.state.isPhoto === true ? 
-                    ( <>
-                      <p style={{ background: "lightgreen", padding: 5 }}>{this.state.photo.name}</p>
-                      <Button color="success" style={{ marginBottom: 10 }}>Upload photo</Button>
-                      </>
-                      ) : null
-                    }
-                  </Col>
-                  <Col xs="12" sm="10" xl="12">
-                    <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-user"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input
-                        type="text"
-                        placeholder="Your Name"
-                        value={name}
-                        onChange={(e) => this.handleChange(e, "name")}
-                      />
-                    </InputGroup>
-                  </Col>
-                  <Col xs="12" sm="10" xl="12">
-                    <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-envelope"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input
-                        type="email"
-                        placeholder="Enter your email"
-                        value={email}
-                        onChange={(e) => this.handleChange(e, "email")}
-                      />
-                    </InputGroup>
-                  </Col>
-                  <Col xs="12" sm="10" xl="12">
-                    <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-phone"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input
-                        type="text"
-                        placeholder="Your Phone"
-                        value={phone}
-                        onChange={(e) => this.handleChange(e, "phone")}
-                      />
-                    </InputGroup>
-                  </Col>
-                  <Col xs="12" sm="10" xl="12">
-                    <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-home"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input
-                        type="text"
-                        placeholder="Your Address"
-                        value={address}
-                        onChange={(e) => this.handleChange(e, "address")}
-                      />
-                    </InputGroup>
-                  </Col>
-                  <Col xs="12" sm="10" xl="12">
-                    <Button style={{ paddingLeft: 20, paddingRight: 20 }} color="success">Send</Button>
-                  </Col>
+                  {step === 0 ? 
+                  <CobrandForm
+                    registration={registration}
+                    name={name}
+                    email={email}
+                    phone={phone}
+                    brand={brand}
+                    brandlist={brandlist}
+                    address={address}
+                    handleChange={this.handleChange}
+                    handleSubmit={this.handleSubmit}
+                  /> : step === 1 ? 
+                  <PhotoUpload
+                    isPhoto={isPhoto}
+                    handleChange={this.handleChange}
+                    handleUpload={this.handleUpload}
+                  /> : null}
+                  {registration.success === true ? <Button color="success">CLICK TO CONTINUE TO NEXT</Button> : null}
                 </CardBody>
               </Card>
             </CardGroup>

@@ -11,7 +11,6 @@ require( "dotenv" ).config();
 exports.signup = ( req, res ) => {
   const name = req.body.name;
   const phone = req.body.phone;
-  const refererPhone = req.body.refererPhone;
   const address = req.body.address;
   const email = req.body.email;
   
