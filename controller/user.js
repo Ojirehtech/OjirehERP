@@ -12,9 +12,9 @@ exports.signup = ( req, res ) => {
   const name = req.body.name;
   const phone = req.body.phone;
   const address = req.body.address;
-  const email = req.body.email;
+  // const email = req.body.email;
   
-  if ( !email ) return res.status( 400 ).json( { error: "Enter your email address" } );
+  // if ( !email ) return res.status( 400 ).json( { error: "Enter your email address" } );
   if ( !phone ) return res.status( 400 ).json( { error: "Phone number is missing" } );
   if ( !name ) return res.status( 400 ).json( { error: "Your first name is required" } );
   if ( !address ) return res.status( 400 ).json( { error: "Your last name is required" } );
@@ -80,7 +80,7 @@ exports.dataUpload = ( req, res ) => {
   const data = req.body;
   for ( let i = 0; i < data.length; i++ ) {
     if ( !data[i].name ) return res.status( 400 ).json( { error: "Name is required" } );
-    if ( !data[i].email ) return res.status( 400 ).json( { error: "User email is required" } );
+    // if ( !data[i].email ) return res.status( 400 ).json( { error: "User email is required" } );
     if ( !data[i].phone ) return res.status( 400 ).json( { error: "Phone number is required" } );
     if ( !data[i].address ) return res.status( 400 ).json( { error: "You must provide user address to continue" } );
     User.findOne( { phone: data[i].phone } )
@@ -96,7 +96,6 @@ exports.dataUpload = ( req, res ) => {
         return res.json( { message: "Success" } );
       } )
       .catch( err => {
-        console.log( err.message );
         return res.status(400).json({ error: err.message });
       } );
   }
